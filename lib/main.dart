@@ -1,11 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tipperapp/core/constants/route_names.dart';
+import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
+import 'package:tipperapp/core/navigation/navigation_service.dart';
+import 'package:tipperapp/core/navigation/router.dart';
+import 'package:tipperapp/locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  setupLocator();
   runApp(MyApp());
 }
 
@@ -14,63 +20,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await FirebaseFirestore.instance
-              .collection('test')
-              .doc()
-              .set({"name": "joseph"});
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
+      ],
+      child: Listener(
+        onPointerUp: (_) {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            currentFocus.focusedChild!.unfocus();
+          }
         },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: MaterialApp(
+          builder: (BuildContext context, Widget? child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaleFactor: 1.0,
+              ),
+              child: child!,
+            );
+          },
+          // theme: ThemeData(
+          //   textSelectionTheme: TextSelectionThemeData(
+          //     selectionColor: Colors.transparent,
+          //     selectionHandleColor: Colors.transparent,
+          //   ),
+          // ),
+          navigatorKey: locator<NavigationService>().navigatorKey,
+          debugShowCheckedModeBanner: false,
+          initialRoute: kStartingScreen,
+          onGenerateRoute: generateRoute,
+        ),
       ),
     );
   }
