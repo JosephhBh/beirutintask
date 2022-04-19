@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
@@ -72,24 +73,50 @@ class _LoginPageState extends State<LoginPage> {
                       passwordController:
                           authenticationProvider.passwordController,
                       isEmailVerified:
-                          (authenticationProvider.isEmailVerified == true &&
-                                  authenticationProvider
-                                          .isSignInButtonPressed ==
+                          (authenticationProvider.isEmailVerified == false &&
+                                  authenticationProvider.canPressLogin ==
                                       true) ==
-                              false,
+                              true,
                       isPasswordVerified:
-                          (authenticationProvider.isPasswordVerified == true &&
-                                  authenticationProvider
-                                          .isSignInButtonPressed ==
+                          (authenticationProvider.isPasswordVerified == false &&
+                                  authenticationProvider.canPressLogin ==
                                       true) ==
-                              false,
-                      onEmailFieldChanged: (val) {},
-                      onPasswordFieldChanged: (val) {},
+                              true,
+                      onEmailFieldChanged: (val) {
+                        var emailVerified = EmailValidator.validate(
+                            authenticationProvider.emailController.text.trim());
+                        if (emailVerified) {
+                          authenticationProvider.setIsEmailVerified(true);
+                          if (authenticationProvider
+                                  .passwordController.text.length >=
+                              6) {
+                            authenticationProvider.setCanPressLogin(true);
+                          }
+                        } else {
+                          authenticationProvider.setIsEmailVerified(false);
+                        }
+                      },
+                      onPasswordFieldChanged: (val) {
+                        if (authenticationProvider.passwordController.text
+                                .trim()
+                                .length >=
+                            6) {
+                          authenticationProvider.setIsPasswordVerified(true);
+
+                          if (authenticationProvider.isEmailVerified == true) {
+                            authenticationProvider.setCanPressLogin(true);
+                          }
+                        } else {
+                          authenticationProvider.setIsPasswordVerified(false);
+                        }
+                      },
                     ),
                     heighSpacer(18),
                     SignInButton(
                       text: "SIGN IN",
-                      onPressed: () {},
+                      onPressed: () {
+                        authenticationProvider.signInWithEmailAndPassword();
+                      },
                     ),
                     heighSpacer(18),
                     Row(

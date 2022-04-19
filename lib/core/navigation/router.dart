@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
+import 'package:tipperapp/reciever/view/receiver_home_page.dart';
 import 'package:tipperapp/root_page.dart';
 import 'package:tipperapp/starting_screen.dart';
 
@@ -15,6 +16,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _fadeRoute(
         settings.name,
         RootPage(),
+      );
+
+    case kReceiverHomePage:
+      return _fadeRoute(
+        settings.name,
+        ReceiverHomePage(),
       );
 
     default:

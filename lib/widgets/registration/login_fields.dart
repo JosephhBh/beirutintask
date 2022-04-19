@@ -138,9 +138,9 @@ class EmailView extends StatelessWidget {
             color: appColor.greyColor,
             border: Border.all(
               color: isEmailVerified
-                  ? appColor.transparentColor
-                  : appColor.redColor,
-              width: isEmailVerified ? 0.2 : 1,
+                  ? appColor.redColor
+                  : appColor.transparentColor,
+              width: isEmailVerified ? 1 : 0.2,
             ),
           ),
           child: TextFormField(
@@ -185,14 +185,14 @@ class EmailView extends StatelessWidget {
             color: appColor.greyColor,
             border: Border.all(
               color: isPasswordVerified
-                  ? appColor.transparentColor
-                  : appColor.redColor,
-              width: isPasswordVerified ? 0.2 : 1,
+                  ? appColor.redColor
+                  : appColor.transparentColor,
+              width: isPasswordVerified ? 1 : 0.2,
             ),
           ),
           child: TextFormField(
             controller: passwordController,
-            onChanged: (String value) => onEmailFieldChanged(value),
+            onChanged: (String value) => onPasswordFieldChanged(value),
             style: GoogleFonts.fredokaOne(
               color: appColor.blackColor,
               fontSize: 18,
