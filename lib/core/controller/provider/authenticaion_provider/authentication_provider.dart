@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
-import 'package:tipperapp/core/model/reciever_model.dart';
+import 'package:tipperapp/reciever/model/reciever_model.dart';
 import 'package:tipperapp/core/model/tipper_model.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
@@ -144,7 +144,7 @@ class AuthenticationProvider extends ChangeNotifier {
           print("the user is ${user_type}");
           _receiverModel = ReceiverModel.fromJson(data);
           notifyListeners();
-          _navigationService.navigateTo(name: kReceiverHomePage);
+          _navigationService.navigateTo(name: kReceiverRootPage);
         }
       } else {
         // _loading = false;
@@ -154,5 +154,10 @@ class AuthenticationProvider extends ChangeNotifier {
     } catch (e) {
       print('get user data error $e');
     }
+  }
+
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
+    _navigationService.navigateAndRemove(name: kRootPage);
   }
 }

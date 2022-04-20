@@ -33,13 +33,13 @@ class _StartingScreenState extends State<StartingScreen> {
   @override
   Widget build(BuildContext context) {
     return GlobalScaffold(
-      backgroundColor: appColor.blackColor,
+      backgroundColor: appColor.yellowColor,
       child: Container(
         height: Get.height,
         width: double.infinity,
         child: Center(
           child: GlobalText(
-            color: appColor.yellowColor,
+            color: appColor.whiteColor,
             text: "tipr",
             fontSize: 80,
           ),

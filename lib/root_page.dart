@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/view/login_page.dart';
-import 'package:tipperapp/reciever/view/receiver_home_page.dart';
+import 'package:tipperapp/reciever/view/receiver_root_page.dart';
 
 enum AuthStatus {
   unknown,
