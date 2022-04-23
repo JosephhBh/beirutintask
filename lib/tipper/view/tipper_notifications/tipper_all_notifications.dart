@@ -13,10 +13,32 @@ import 'package:tipperapp/widgets/notification/receiver_notification_widget.dart
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
-class TipperAllNotificationsPage extends StatelessWidget {
+class TipperAllNotificationsPage extends StatefulWidget {
+  @override
+  State<TipperAllNotificationsPage> createState() =>
+      _TipperAllNotificationsPageState();
+}
+
+class _TipperAllNotificationsPageState
+    extends State<TipperAllNotificationsPage> {
   final NavigationService _navigationService = locator<NavigationService>();
+
   final NotificationService _notificationService =
       locator<NotificationService>();
+
+  @override
+  void initState() {
+    super.initState();
+    updateUnreadNotificationStatus();
+  }
+
+  updateUnreadNotificationStatus() async {
+    var authenticationProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
+    await _notificationService.updateUnreadNotifcationsStatus(
+        authenticationProvider.tipperModel.userId!);
+  }
+
   @override
   Widget build(BuildContext context) {
     var authenticationProvider =

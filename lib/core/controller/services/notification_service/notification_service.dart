@@ -41,16 +41,6 @@ class NotificationService {
     }
   }
 
-  Stream<QuerySnapshot> getAllNotifications(String uid) {
-    return _firestore
-        .collection('users')
-        .doc(uid)
-        .collection('notifications')
-        .doc(uid)
-        .collection('notifications')
-        .snapshots();
-  }
-
   Stream<QuerySnapshot> getReadNotifications(String uid) {
     return _firestore
         .collection('users')
@@ -162,6 +152,36 @@ class NotificationService {
       });
     } catch (e) {
       debugPrint('send thank you message error : $e');
+    }
+  }
+
+  updateUnreadNotifcationsStatus(String tipperId) async {
+    try {
+      await Future.delayed(Duration(seconds: 7), () async {
+        await _firestore
+            .collection('users')
+            .doc(tipperId)
+            .collection('notifications')
+            .doc(tipperId)
+            .collection('notifications')
+            .where('is_read', isEqualTo: false)
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((doc) async {
+            print(doc["message"]);
+            await _firestore
+                .collection('users')
+                .doc(tipperId)
+                .collection('notifications')
+                .doc(tipperId)
+                .collection('notifications')
+                .doc(doc['id'])
+                .update({"is_read": true});
+          });
+        });
+      });
+    } catch (e) {
+      debugPrint("update unread notifcations error : $e");
     }
   }
 }
