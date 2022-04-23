@@ -285,6 +285,7 @@ class ReceiverAllNotificationsPage extends StatelessWidget {
                               heighSpacer(27),
                               ListView(
                                 shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
                                 children: snapshot.data!.docs
                                     .map((DocumentSnapshot document) {
                                   Map<String, dynamic> data =
@@ -353,6 +354,7 @@ class ReceiverAllNotificationsPage extends StatelessWidget {
                               heighSpacer(27),
                               ListView(
                                 shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
                                 children: snapshot.data!.docs
                                     .map((DocumentSnapshot document) {
                                   Map<String, dynamic> data =
