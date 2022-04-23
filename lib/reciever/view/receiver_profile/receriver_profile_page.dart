@@ -10,11 +10,12 @@ import 'package:tipperapp/widgets/icons/home_icon.dart';
 import 'package:tipperapp/widgets/icons/profile_support_icon.dart';
 import 'package:tipperapp/widgets/icons/settings_icon.dart';
 import 'package:tipperapp/widgets/icons/transactions_icon.dart';
+import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class ReceiverProfilePage extends StatelessWidget {
+  const ReceiverProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +37,7 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      CupertinoIcons.profile_circled,
-                      size: 60,
-                      color: appColor.darkBlueColor,
-                    ),
+                    UserIcon(),
                     heighSpacer(9),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

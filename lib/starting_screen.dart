@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
+import 'package:tipperapp/core/controller/provider/error_message_provider/error_message_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
@@ -22,6 +24,8 @@ class _StartingScreenState extends State<StartingScreen> {
   @override
   void initState() {
     super.initState();
+    errorMessageProvider =
+        Provider.of<ErrorMessageProvider>(context, listen: false);
     Timer(
       Duration(seconds: 1),
       () => _navigationService.navigateAndRemove(

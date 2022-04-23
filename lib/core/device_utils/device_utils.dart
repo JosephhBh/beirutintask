@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tipperapp/core/controller/provider/error_message_provider/error_message_provider.dart';
 import 'package:tipperapp/core/device_utils/app_colors.dart';
 
 final double finalDeviceHeigh = Get.height;
@@ -47,3 +48,5 @@ applyPadding(
       ),
       child: widget,
     );
+
+late ErrorMessageProvider errorMessageProvider;

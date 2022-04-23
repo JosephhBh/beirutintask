@@ -6,7 +6,7 @@ import 'package:tipperapp/widgets/containers/tipper_barcode_container.dart';
 import 'package:tipperapp/widgets/icons/notification_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 
-class HomePage extends StatelessWidget {
+class ReceiverHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var authenticationProvier =

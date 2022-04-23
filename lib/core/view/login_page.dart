@@ -1,9 +1,13 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
+import 'package:tipperapp/core/navigation/navigation_service.dart';
+import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/buttons/sign_in_button.dart';
+import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/face_id_icon.dart';
 import 'package:tipperapp/widgets/registration/login_fields.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
@@ -17,6 +21,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final NavigationService _navigationService = locator<NavigationService>();
+
   @override
   Widget build(BuildContext context) {
     return GlobalScaffold(
@@ -114,8 +120,9 @@ class _LoginPageState extends State<LoginPage> {
                     heighSpacer(18),
                     SignInButton(
                       text: "SIGN IN",
-                      onPressed: () {
-                        authenticationProvider.signInWithEmailAndPassword();
+                      onPressed: () async {
+                        // authenticationProvider.signInWithEmailAndPassword();
+                        await authenticationProvider.signIn();
                       },
                     ),
                     heighSpacer(18),
@@ -139,7 +146,9 @@ class _LoginPageState extends State<LoginPage> {
                     heighSpacer(26),
                     SignInButton(
                       text: "SIGN UP",
-                      onPressed: () {},
+                      onPressed: () {
+                        _navigationService.navigateTo(name: kSignUpPage);
+                      },
                     ),
                     heighSpacer(30),
                     Row(
@@ -157,6 +166,7 @@ class _LoginPageState extends State<LoginPage> {
               }),
             ),
           ),
+          FinalErrorWidget(),
         ],
       ),
     );

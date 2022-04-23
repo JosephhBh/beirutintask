@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
+import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class ReceiverBarcodeContainer extends StatelessWidget {
@@ -25,11 +27,7 @@ class ReceiverBarcodeContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               heighSpacer(29),
-              Icon(
-                CupertinoIcons.profile_circled,
-                size: 50,
-                color: appColor.darkBlueColor,
-              ),
+              UserIcon(),
               heighSpacer(9),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +48,14 @@ class ReceiverBarcodeContainer extends StatelessWidget {
               Container(
                 height: setCurrentHeight(240),
                 width: setCurrentWidth(240),
-                color: appColor.darkBlueColor,
+                color: appColor.transparentColor,
+                child: QrImage(
+                  backgroundColor: appColor.transparentColor,
+                  foregroundColor: appColor.darkBlueColor,
+                  data: receiverUid,
+                  version: QrVersions.auto,
+                  // size: 200.0,
+                ),
               ),
               heighSpacer(100),
               Row(

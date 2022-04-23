@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
+import 'package:tipperapp/core/controller/provider/error_message_provider/error_message_provider.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/core/navigation/router.dart';
 import 'package:tipperapp/locator.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
+        ChangeNotifierProvider(create: (context) => ErrorMessageProvider()),
       ],
       child: Listener(
         onPointerUp: (_) {

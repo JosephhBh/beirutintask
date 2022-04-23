@@ -2,10 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/view/login_page.dart';
 import 'package:tipperapp/reciever/view/receiver_root_page.dart';
+
+import 'package:tipperapp/tipper/view/tipper_root_page.dart';
 
 enum AuthStatus {
   unknown,
@@ -34,11 +37,13 @@ class _RootPageState extends State<RootPage> {
     //     _authStatus = AuthStatus.showHomePage;
     //   });
     // });
-    User? _firebaseUser = FirebaseAuth.instance.currentUser;
-    if (_firebaseUser != null) {
+    // User? _firebaseUser = FirebaseAuth.instance.currentUser;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString('uid');
+    if (uid != null) {
       var authenticationProvider =
           Provider.of<AuthenticationProvider>(context, listen: false);
-      var result = await authenticationProvider.getUserDataOnStartup();
+      var result = await authenticationProvider.getUserDataOnStartup(uid);
       if (result == UserType.receiver.name) {
         _authStatus = AuthStatus.showReceiverHomePage;
       } else {
@@ -69,7 +74,10 @@ class _RootPageState extends State<RootPage> {
         retVal = LoginPage();
         break;
       case AuthStatus.showReceiverHomePage:
-        retVal = ReceiverHomePage();
+        retVal = ReceiverRootPage();
+        break;
+      case AuthStatus.showTipperHomePage:
+        retVal = TipperRootPage();
         break;
       case AuthStatus.showTipperHomePage:
         retVal = Container();

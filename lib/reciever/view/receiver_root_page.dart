@@ -1,20 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
+import 'package:tipperapp/core/constants/route_names.dart';
+import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
+import 'package:tipperapp/core/controller/services/notification_service/notification_service.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
-import 'package:tipperapp/reciever/view/home_page/home_page.dart';
-import 'package:tipperapp/reciever/view/profile/profile_page.dart';
+import 'package:tipperapp/core/navigation/navigation_service.dart';
+import 'package:tipperapp/locator.dart';
+import 'package:tipperapp/reciever/view/receiver_home_page/receiver_home_page.dart';
+import 'package:tipperapp/reciever/view/receiver_profile/receriver_profile_page.dart';
+import 'package:tipperapp/reciever/view/receiver_support/receiver_support_page.dart';
+
 import 'package:tipperapp/widgets/icons/notification_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
-class ReceiverHomePage extends StatefulWidget {
+class ReceiverRootPage extends StatefulWidget {
   @override
-  State<ReceiverHomePage> createState() => _ReceiverHomePageState();
+  State<ReceiverRootPage> createState() => _ReceiverRootPageState();
 }
 
-class _ReceiverHomePageState extends State<ReceiverHomePage> {
+class _ReceiverRootPageState extends State<ReceiverRootPage> {
   late PersistentTabController _controller;
 
   @override
@@ -25,17 +34,9 @@ class _ReceiverHomePageState extends State<ReceiverHomePage> {
 
   List<Widget> _buildScreens() {
     return [
-      HomePage(),
-      ProfilePage(),
-      GlobalScaffold(
-        backgroundColor: appColor.greyColor,
-        child: Center(
-          child: GlobalText(
-            text: "Screen 3",
-            color: appColor.blackColor,
-          ),
-        ),
-      ),
+      ReceiverHomePage(),
+      ReceiverProfilePage(),
+      ReceiverSupportPage(),
     ];
   }
 
@@ -62,8 +63,14 @@ class _ReceiverHomePageState extends State<ReceiverHomePage> {
     ];
   }
 
+  final NotificationService _notificationService =
+      locator<NotificationService>();
+
+  final NavigationService _navigationService = locator<NavigationService>();
   @override
   Widget build(BuildContext context) {
+    var authenticaionProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: appColor.whiteColor,
       extendBody: true,
@@ -115,7 +122,87 @@ class _ReceiverHomePageState extends State<ReceiverHomePage> {
             360,
             0,
             0,
-            NotificationIcon(),
+            Container(
+                height: setCurrentHeight(35),
+                width: setCurrentWidth(32),
+                child: StreamBuilder(
+                  stream: _notificationService.getReceiverNotifications(
+                      authenticaionProvider.receiverModel.userId!),
+                  builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return NotificationIcon(
+                        color: appColor.darkBlueColor,
+                      );
+                    }
+                    if (!snapshot.hasData) {
+                      return NotificationIcon(
+                        color: appColor.darkBlueColor,
+                      );
+                    }
+                    var userDocument = snapshot.data;
+                    // return Text(userDocument!["is_read"].toString());
+                    return GestureDetector(
+                      onTap: () async {
+                        _navigationService.navigateTo(
+                            name: kReceiverAllNotificationsPage);
+                        if (!userDocument!["is_read"]) {
+                          await _notificationService
+                              .updateGlobalIsReadNotificationStatus(
+                                  authenticaionProvider.receiverModel.userId!);
+                        }
+                      },
+                      child: Stack(
+                        fit: StackFit.loose,
+                        children: [
+                          NotificationIcon(
+                            color: appColor.darkBlueColor,
+                          ),
+                          Visibility(
+                            visible: !userDocument!["is_read"],
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: setCurrentWidth(1),
+                              ),
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  height: setCurrentHeight(10),
+                                  width: setCurrentWidth(10),
+                                  decoration: BoxDecoration(
+                                      color: appColor.yellowColor,
+                                      shape: BoxShape.circle),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                )
+                // return Stack(
+                //   fit: StackFit.loose,
+                //   children: [
+                //     Padding(
+                //       padding: EdgeInsets.only(
+                //         top: setCurrentHeight(3),
+                //         left: setCurrentWidth(4),
+                //       ),
+                //       child: NotificationIcon(),
+                //     ),
+                //     Align(
+                //       alignment: Alignment.topRight,
+                //       child: Container(
+                //         height: 10,
+                //         width: 10,
+                //         decoration: BoxDecoration(
+                //             color: appColor.yellowColor, shape: BoxShape.circle),
+                //       ),
+                //     ),
+                //   ],
+                // );
+
+                ),
           ),
         ],
       ),

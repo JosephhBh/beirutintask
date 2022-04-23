@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
+import 'package:tipperapp/core/view/sign_up_page.dart';
+
+import 'package:tipperapp/reciever/view/receiver_notification_page/receiver_all_notifications_page.dart';
+import 'package:tipperapp/reciever/view/receiver_notification_page/receiver_notification_detail_page.dart';
 import 'package:tipperapp/reciever/view/receiver_root_page.dart';
 import 'package:tipperapp/root_page.dart';
 import 'package:tipperapp/starting_screen.dart';
+import 'package:tipperapp/tipper/view/tipper_notifications/tipper_all_notifications.dart';
+import 'package:tipperapp/tipper/view/tipper_root_page.dart';
+
+import 'package:tipperapp/tipper/view/top_up_wallet/top_up_wallet.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -21,7 +29,44 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case kReceiverRootPage:
       return _fadeRoute(
         settings.name,
-        ReceiverHomePage(),
+        ReceiverRootPage(),
+      );
+
+    case kReceiverAllNotificationsPage:
+      return _fadeRoute(
+        settings.name,
+        ReceiverAllNotificationsPage(),
+      );
+    case kReceiverNotificationsDetailPage:
+      return _fadeRoute(
+        settings.name,
+        ReceiverNotificationDetailsPage(
+          data: settings.arguments,
+        ),
+      );
+
+    case kSignUpPage:
+      return _fadeRoute(
+        settings.name,
+        SignUpPage(),
+      );
+
+    case kTipperRootPage:
+      return _fadeRoute(
+        settings.name,
+        TipperRootPage(),
+      );
+
+    case kTopUpWallet:
+      return _fadeRoute(
+        settings.name,
+        TopUpWallet(),
+      );
+
+    case kTipperAllNotificationsPage:
+      return _fadeRoute(
+        settings.name,
+        TipperAllNotificationsPage(),
       );
 
     default:

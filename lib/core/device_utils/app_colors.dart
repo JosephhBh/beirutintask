@@ -6,6 +6,7 @@ class AppColors {
   Color whiteColor = Colors.white;
   Color blackColor = Colors.black;
   Color greyColor = Color(0xFFE5E5E5);
+  Color darkGrey = Color(0xFFD3D3D3);
   Color darkBlueColor = Color(0xFF161A49);
   Color redColor = Colors.red;
 }

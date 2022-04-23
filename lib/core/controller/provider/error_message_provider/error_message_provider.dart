@@ -6,8 +6,12 @@ class ErrorMessageProvider extends ChangeNotifier {
   ErrorMessage _errorMessage = ErrorMessage(title: '', message: '');
   ErrorMessage get errorMessage => _errorMessage;
 
-  setErrorMessage(ErrorMessage errorMessage) {
-    _errorMessage = errorMessage;
+  setErrorMessage({String? title, required String message}) {
+    _errorMessage.title = title ?? "Error";
+    _errorMessage.message = message;
+    print(_errorMessage.title);
+    print(_errorMessage.message);
+
     notifyListeners();
   }
 

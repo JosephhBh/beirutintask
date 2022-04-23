@@ -4,9 +4,11 @@ import 'package:tipperapp/widgets/text/global_text.dart';
 
 class SignInButton extends StatelessWidget {
   final String text;
+  final bool isYellow;
   final Function() onPressed;
   SignInButton({
     required this.text,
+    this.isYellow = true,
     required this.onPressed,
   });
 
@@ -18,11 +20,11 @@ class SignInButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: Container(
           height: setCurrentHeight(41),
-          color: appColor.yellowColor,
+          color: isYellow ? appColor.yellowColor : appColor.whiteColor,
           child: Center(
             child: GlobalText(
               text: text,
-              color: appColor.whiteColor,
+              color: isYellow ? appColor.whiteColor : appColor.blackColor,
             ),
           ),
         ),
