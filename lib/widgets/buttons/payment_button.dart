@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
-import 'package:tipperapp/widgets/icons/home_icon.dart';
-import 'package:tipperapp/widgets/icons/logout_icon.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class PaymentButton extends StatelessWidget {

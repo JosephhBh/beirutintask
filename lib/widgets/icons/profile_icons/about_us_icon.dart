@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 
 class AboutUsIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Image(
-      image: AssetImage('assets/app_icons/about_us_icon.png'),
+    return SvgPicture.asset(
+      'assets/profile_icons/about_us_icon.svg',
       fit: BoxFit.fill,
-      height: setCurrentHeight(25),
-      width: setCurrentWidth(22),
+      height: setCurrentHeight(30),
     );
   }
 }

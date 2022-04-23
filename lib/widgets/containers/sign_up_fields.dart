@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
-import 'package:tipperapp/widgets/icons/home_icon.dart';
-import 'package:tipperapp/widgets/text/global_text.dart';
 
 class SignUpFields extends StatelessWidget {
   final Widget icon;

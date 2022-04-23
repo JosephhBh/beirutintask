@@ -9,12 +9,12 @@ import 'package:tipperapp/widgets/buttons/sign_in_button.dart';
 import 'package:tipperapp/widgets/containers/sign_up_fields.dart';
 import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/back_icon.dart';
-import 'package:tipperapp/widgets/icons/email_icon.dart';
-import 'package:tipperapp/widgets/icons/emirates_id_icon.dart';
+import 'package:tipperapp/widgets/icons/registration_icons/email_icon.dart';
+import 'package:tipperapp/widgets/icons/registration_icons/emirates_id_icon.dart';
 import 'package:tipperapp/widgets/icons/face_id_icon.dart';
-import 'package:tipperapp/widgets/icons/password_icon.dart';
-import 'package:tipperapp/widgets/icons/phone_number_icon.dart';
-import 'package:tipperapp/widgets/icons/username_yellow_icon.dart';
+import 'package:tipperapp/widgets/icons/registration_icons/password_icon.dart';
+import 'package:tipperapp/widgets/icons/registration_icons/phone_number_icon.dart';
+import 'package:tipperapp/widgets/icons/registration_icons/username_yellow_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 

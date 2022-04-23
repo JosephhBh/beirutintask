@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
-import 'package:tipperapp/widgets/icons/home_icon.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class ProfileSelectionContainer extends StatelessWidget {
@@ -20,9 +19,13 @@ class ProfileSelectionContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            widthSpacer(26),
-            icon,
-            widthSpacer(30),
+            Container(
+              width: setCurrentWidth(70),
+              color: appColor.transparentColor,
+              child: Center(
+                child: icon,
+              ),
+            ),
             GlobalText(
               text: text,
               color: appColor.blackColor.withOpacity(0.6),

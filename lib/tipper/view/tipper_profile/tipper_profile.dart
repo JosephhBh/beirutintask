@@ -5,11 +5,11 @@ import 'package:tipperapp/core/controller/provider/authenticaion_provider/authen
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/widgets/buttons/logout_button.dart';
 import 'package:tipperapp/widgets/containers/profile_selection_container.dart';
-import 'package:tipperapp/widgets/icons/about_us_icon.dart';
-import 'package:tipperapp/widgets/icons/home_icon.dart';
-import 'package:tipperapp/widgets/icons/profile_support_icon.dart';
-import 'package:tipperapp/widgets/icons/settings_icon.dart';
-import 'package:tipperapp/widgets/icons/transactions_icon.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/about_us_icon.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/home_icon.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/profile_support_icon.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/settings_icon.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/transactions_icon.dart';
 import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
