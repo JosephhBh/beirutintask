@@ -9,3 +9,5 @@ const String kSignUpPage = "SignUpPage";
 const String kTipperRootPage = "TipperRootPage";
 const String kTopUpWallet = "TopUpWallet";
 const String kTipperAllNotificationsPage = "TipperAllNotificationsPage";
+const String kQrPage = "QRPage";
+const String kTippingPage = "TippingPage";

@@ -9,6 +9,10 @@ class NavigationService {
     );
   }
 
+  Future<dynamic> replaceRoute({required String name, dynamic arguments}) {
+    return navigatorKey.currentState!.pushReplacementNamed(name);
+  }
+
   pop() {
     if (navigatorKey.currentState!.canPop()) {
       return navigatorKey.currentState!.pop();

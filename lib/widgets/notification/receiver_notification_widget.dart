@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/widgets/icons/new_tip_icon.dart';
+import 'package:tipperapp/widgets/icons/payment_success_icon.dart';
+import 'package:tipperapp/widgets/icons/thanks_message_icon.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class ReceiverNotificationWidget extends StatelessWidget {
@@ -40,7 +42,11 @@ class ReceiverNotificationWidget extends StatelessWidget {
                         height: setCurrentHeight(45),
                         width: setCurrentWidth(45),
                         child: Center(
-                          child: NewTipIcon(),
+                          child: title == "PAYMENT SUCCESSFUL"
+                              ? PaymentSuccessIcon()
+                              : title == "THANK YOU MESSAGE"
+                                  ? ThanksMessageIcon()
+                                  : NewTipIcon(),
                         ),
                       ),
                       widthSpacer(15),

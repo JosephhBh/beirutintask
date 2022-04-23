@@ -124,123 +124,132 @@ class _TipperAllNotificationsPageState
             Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              child: Column(
-                children: [
-                  StreamBuilder(
-                    stream: _notificationService.getUnreadNotifications(
-                        authenticationProvider.tipperModel.userId!),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container(
-                          height: 0,
-                          width: 0,
-                          // color: Colors.red,
-                        );
-                      } else if (snapshot.hasData) {
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                widthSpacer(27),
-                                GlobalText(
-                                  text: "NEW",
-                                  color: appColor.darkBlueColor,
-                                ),
-                              ],
-                            ),
-                            heighSpacer(27),
-                            ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data!.docs
-                                  .map((DocumentSnapshot document) {
-                                Map<String, dynamic> data =
-                                    document.data()! as Map<String, dynamic>;
-                                return Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        // _navigationService.navigateTo(
-                                        //     name: kReceiverNotificationsDetailPage,
-                                        //     arguments: data);
-                                      },
-                                      child: ReceiverNotificationWidget(
-                                        title: data['title'],
-                                        message: data['message'],
-                                        time: _notificationService
-                                            .getNotificationsTime(data['date']),
-                                        isRead: data['is_read'],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    StreamBuilder(
+                      stream: _notificationService.getUnreadNotifications(
+                          authenticationProvider.tipperModel.userId!),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Container(
+                            height: 0,
+                            width: 0,
+                            // color: Colors.red,
+                          );
+                        } else if (snapshot.hasData) {
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  widthSpacer(27),
+                                  GlobalText(
+                                    text: "NEW",
+                                    color: appColor.darkBlueColor,
+                                  ),
+                                ],
+                              ),
+                              heighSpacer(27),
+                              ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data!.docs
+                                    .map((DocumentSnapshot document) {
+                                  Map<String, dynamic> data =
+                                      document.data()! as Map<String, dynamic>;
+                                  return Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          // _navigationService.navigateTo(
+                                          //     name: kReceiverNotificationsDetailPage,
+                                          //     arguments: data);
+                                        },
+                                        child: ReceiverNotificationWidget(
+                                          title: data['title'],
+                                          message: data['message'],
+                                          time: _notificationService
+                                              .getNotificationsTime(
+                                                  data['date']),
+                                          isRead: data['is_read'],
+                                        ),
                                       ),
-                                    ),
-                                    heighSpacer(45),
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        );
-                      }
-                      return Container();
-                    },
-                  ),
-                  StreamBuilder(
-                    stream: _notificationService.getReadNotifications(
-                        authenticationProvider.tipperModel.userId!),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container(
-                          height: 0,
-                          width: 0,
-                          // color: Colors.red,
-                        );
-                      } else if (snapshot.hasData) {
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                widthSpacer(27),
-                                GlobalText(
-                                  text: "NEW",
-                                  color: appColor.darkBlueColor,
+                                      heighSpacer(45),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: _notificationService.getReadNotifications(
+                          authenticationProvider.tipperModel.userId!),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Container(
+                            height: 0,
+                            width: 0,
+                            // color: Colors.red,
+                          );
+                        } else if (snapshot.hasData) {
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  widthSpacer(27),
+                                  GlobalText(
+                                    text: "Earlier",
+                                    color: appColor.darkBlueColor,
+                                  ),
+                                ],
+                              ),
+                              heighSpacer(27),
+                              SingleChildScrollView(
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: snapshot.data!.docs
+                                      .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            // _navigationService.navigateTo(
+                                            //     name: kReceiverNotificationsDetailPage,
+                                            //     arguments: data);
+                                          },
+                                          child: ReceiverNotificationWidget(
+                                            title: data['title'],
+                                            message: data['message'],
+                                            time: _notificationService
+                                                .getNotificationsTime(
+                                                    data['date']),
+                                            isRead: data['is_read'],
+                                          ),
+                                        ),
+                                        heighSpacer(45),
+                                      ],
+                                    );
+                                  }).toList(),
                                 ),
-                              ],
-                            ),
-                            heighSpacer(27),
-                            ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data!.docs
-                                  .map((DocumentSnapshot document) {
-                                Map<String, dynamic> data =
-                                    document.data()! as Map<String, dynamic>;
-                                return Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        // _navigationService.navigateTo(
-                                        //     name: kReceiverNotificationsDetailPage,
-                                        //     arguments: data);
-                                      },
-                                      child: ReceiverNotificationWidget(
-                                        title: data['title'],
-                                        message: data['message'],
-                                        time: _notificationService
-                                            .getNotificationsTime(data['date']),
-                                        isRead: data['is_read'],
-                                      ),
-                                    ),
-                                    heighSpacer(45),
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        );
-                      }
-                      return Container();
-                    },
-                  ),
-                ],
+                              ),
+                            ],
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

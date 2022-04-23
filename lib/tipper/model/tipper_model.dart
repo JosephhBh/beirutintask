@@ -4,6 +4,11 @@
 
 import 'dart:convert';
 
+abstract class Copyable<T> {
+  T copy();
+  T copyWith();
+}
+
 TipperModel tipperModelFromJson(String str) =>
     TipperModel.fromJson(json.decode(str));
 
@@ -51,4 +56,38 @@ class TipperModel {
         "email": email,
         "username": username,
       };
+
+  @override
+  TipperModel copy() => TipperModel(
+        emiratesId: emiratesId,
+        password: password,
+        userType: userType,
+        balance: balance,
+        userId: userId,
+        phoneNumber: phoneNumber,
+        email: email,
+        username: username,
+      );
+
+  @override
+  TipperModel copyWith({
+    String? emiratesId,
+    String? password,
+    String? userType,
+    int? balance,
+    String? userId,
+    String? phoneNumber,
+    String? email,
+    String? username,
+  }) =>
+      TipperModel(
+        emiratesId: emiratesId ?? this.emiratesId,
+        password: password ?? this.password,
+        userType: userType ?? this.userType,
+        balance: balance ?? this.balance,
+        userId: userId ?? this.userId,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        email: email ?? this.email,
+        username: username ?? this.username,
+      );
 }

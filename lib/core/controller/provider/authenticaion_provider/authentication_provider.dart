@@ -64,6 +64,11 @@ class AuthenticationProvider extends ChangeNotifier {
   TextEditingController get tipperConfirmPasswordController =>
       _tipperConfirmPasswordController;
 
+  updateTipperModel(TipperModel tipperModel) {
+    _tipperModel = tipperModel;
+    notifyListeners();
+  }
+
   void setEmailAuthenticationType() {
     _authenticationType = AuthenticationType.Email;
     notifyListeners();

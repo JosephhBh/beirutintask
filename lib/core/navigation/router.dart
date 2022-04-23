@@ -7,8 +7,10 @@ import 'package:tipperapp/reciever/view/receiver_notification_page/receiver_noti
 import 'package:tipperapp/reciever/view/receiver_root_page.dart';
 import 'package:tipperapp/root_page.dart';
 import 'package:tipperapp/starting_screen.dart';
+import 'package:tipperapp/tipper/view/tipping_pages/tipping_page.dart';
 import 'package:tipperapp/tipper/view/tipper_notifications/tipper_all_notifications.dart';
 import 'package:tipperapp/tipper/view/tipper_root_page.dart';
+import 'package:tipperapp/tipper/view/tipping_pages/qr_page.dart';
 
 import 'package:tipperapp/tipper/view/top_up_wallet/top_up_wallet.dart';
 
@@ -67,6 +69,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _fadeRoute(
         settings.name,
         TipperAllNotificationsPage(),
+      );
+
+    case kQrPage:
+      return _fadeRoute(
+        settings.name,
+        QrPage(),
+      );
+
+    case kTippingPage:
+      return _fadeRoute(
+        settings.name,
+        TippingPage(),
       );
 
     default:

@@ -255,137 +255,143 @@ class ReceiverAllNotificationsPage extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              child: Column(
-                children: [
-                  StreamBuilder(
-                    stream: _notificationService.getUnreadNotifications(
-                        authenticationProvider.receiverModel.userId!),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container(
-                          height: 0,
-                          width: 0,
-                          // color: Colors.red,
-                        );
-                      } else if (snapshot.hasData) {
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                widthSpacer(27),
-                                GlobalText(
-                                  text: "NEW",
-                                  color: appColor.darkBlueColor,
-                                ),
-                              ],
-                            ),
-                            heighSpacer(27),
-                            ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data!.docs
-                                  .map((DocumentSnapshot document) {
-                                Map<String, dynamic> data =
-                                    document.data()! as Map<String, dynamic>;
-                                return Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (data['reply_sent'] == false) {
-                                          _navigationService.navigateTo(
-                                              name:
-                                                  kReceiverNotificationsDetailPage,
-                                              arguments: data);
-                                          _notificationService
-                                              .updateSingleNotificaitonStatus(
-                                            authenticationProvider
-                                                .receiverModel.userId!,
-                                            data['id'],
-                                          );
-                                        }
-                                      },
-                                      child: ReceiverNotificationWidget(
-                                        title: data['title'],
-                                        message: data['message'],
-                                        time: _notificationService
-                                            .getNotificationsTime(data['date']),
-                                        isRead: data['is_read'],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    StreamBuilder(
+                      stream: _notificationService.getUnreadNotifications(
+                          authenticationProvider.receiverModel.userId!),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Container(
+                            height: 0,
+                            width: 0,
+                            // color: Colors.red,
+                          );
+                        } else if (snapshot.hasData) {
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  widthSpacer(27),
+                                  GlobalText(
+                                    text: "NEW",
+                                    color: appColor.darkBlueColor,
+                                  ),
+                                ],
+                              ),
+                              heighSpacer(27),
+                              ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data!.docs
+                                    .map((DocumentSnapshot document) {
+                                  Map<String, dynamic> data =
+                                      document.data()! as Map<String, dynamic>;
+                                  return Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (data['reply_sent'] == false) {
+                                            _navigationService.navigateTo(
+                                                name:
+                                                    kReceiverNotificationsDetailPage,
+                                                arguments: data);
+                                            _notificationService
+                                                .updateSingleNotificaitonStatus(
+                                              authenticationProvider
+                                                  .receiverModel.userId!,
+                                              data['id'],
+                                            );
+                                          }
+                                        },
+                                        child: ReceiverNotificationWidget(
+                                          title: data['title'],
+                                          message: data['message'],
+                                          time: _notificationService
+                                              .getNotificationsTime(
+                                                  data['date']),
+                                          isRead: data['is_read'],
+                                        ),
                                       ),
-                                    ),
-                                    heighSpacer(45),
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        );
-                      }
-                      return Container();
-                    },
-                  ),
-                  StreamBuilder(
-                    stream: _notificationService.getReadNotifications(
-                        authenticationProvider.receiverModel.userId!),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container(
-                          height: 0,
-                          width: 0,
-                          // color: Colors.red,
-                        );
-                      } else if (snapshot.hasData) {
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                widthSpacer(27),
-                                GlobalText(
-                                  text: "Earlier",
-                                  color: appColor.darkBlueColor,
-                                ),
-                              ],
-                            ),
-                            heighSpacer(27),
-                            ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data!.docs
-                                  .map((DocumentSnapshot document) {
-                                Map<String, dynamic> data =
-                                    document.data()! as Map<String, dynamic>;
-                                return Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        // print();
-                                        if (data['reply_sent'] as bool ==
-                                            false) {
-                                          _navigationService.navigateTo(
-                                              name:
-                                                  kReceiverNotificationsDetailPage,
-                                              arguments: data);
-                                        }
-                                      },
-                                      child: ReceiverNotificationWidget(
-                                        title: data['title'],
-                                        message: data['message'],
-                                        time: _notificationService
-                                            .getNotificationsTime(data['date']),
-                                        isRead: data['is_read'],
+                                      heighSpacer(45),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                    StreamBuilder(
+                      stream: _notificationService.getReadNotifications(
+                          authenticationProvider.receiverModel.userId!),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Container(
+                            height: 0,
+                            width: 0,
+                            // color: Colors.red,
+                          );
+                        } else if (snapshot.hasData) {
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  widthSpacer(27),
+                                  GlobalText(
+                                    text: "Earlier",
+                                    color: appColor.darkBlueColor,
+                                  ),
+                                ],
+                              ),
+                              heighSpacer(27),
+                              ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data!.docs
+                                    .map((DocumentSnapshot document) {
+                                  Map<String, dynamic> data =
+                                      document.data()! as Map<String, dynamic>;
+                                  return Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          // print();
+                                          if (data['reply_sent'] as bool ==
+                                              false) {
+                                            _navigationService.navigateTo(
+                                                name:
+                                                    kReceiverNotificationsDetailPage,
+                                                arguments: data);
+                                          }
+                                        },
+                                        child: ReceiverNotificationWidget(
+                                          title: data['title'],
+                                          message: data['message'],
+                                          time: _notificationService
+                                              .getNotificationsTime(
+                                                  data['date']),
+                                          isRead: data['is_read'],
+                                        ),
                                       ),
-                                    ),
-                                    heighSpacer(45),
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        );
-                      }
-                      return Container();
-                    },
-                  ),
-                ],
+                                      heighSpacer(45),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
