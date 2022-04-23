@@ -174,13 +174,23 @@ class TippingProvider extends ChangeNotifier {
             .doc(tipperNotificationId)
             .set(tipperNotificaiton.toJson());
         // print(tipperNotificaiton.toJson());
-        _navigationService.pop();
-        _selectedReceiver = SelectedReceiver();
+        // _navigationService.pop();
+        // _selectedReceiver = SelectedReceiver();
+        _navigationService.replaceRoute(name: kPaymentSuccessPage);
       } else {
         errorMessageProvider.setErrorMessage(message: "Insufficient Funds");
       }
     } catch (e) {
       debugPrint("tip worker : $e");
+      errorMessageProvider.setSomethingWentWrrongMessage();
     }
+  }
+
+  clearTippingProvider() {
+    _scannedQrMessage = "";
+    _isScanned = false;
+    _selectedAmount = tippingAmount.first;
+    _selectedReceiver = SelectedReceiver();
+    notifyListeners();
   }
 }

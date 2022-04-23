@@ -11,3 +11,4 @@ const String kTopUpWallet = "TopUpWallet";
 const String kTipperAllNotificationsPage = "TipperAllNotificationsPage";
 const String kQrPage = "QRPage";
 const String kTippingPage = "TippingPage";
+const String kPaymentSuccessPage = "PaymentSuccessPage";
