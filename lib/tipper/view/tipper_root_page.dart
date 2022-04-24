@@ -14,6 +14,7 @@ import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/tipper/view/tipper_home_page/tipper_home_page.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_profile.dart';
 import 'package:tipperapp/tipper/view/tipper_support/tipper_support_page.dart';
+import 'package:tipperapp/widgets/icons/bottom_navigation_icons/home_icon.dart';
 import 'package:tipperapp/widgets/icons/notification_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
@@ -43,8 +44,11 @@ class _TipperRootPageState extends State<TipperRootPage> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.home),
+        // icon: Icon(CupertinoIcons.home),
+        icon: BtmNavigationHome(),
         title: ("Home"),
+        // iconSize: 1,
+        contentPadding: 0,
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
       ),
@@ -90,7 +94,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
             child: PersistentTabView(
               context,
               controller: _controller,
-              navBarHeight: setCurrentHeight(55),
+              // navBarHeight: setCurrentHeight(55),
               screens: _buildScreens(),
               items: _navBarsItems(),
               confineInSafeArea: true,
@@ -103,6 +107,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
                 borderRadius: BorderRadius.circular(31.0),
                 colorBehindNavBar: Colors.white,
               ),
+
               popAllScreensOnTapOfSelectedTab: true,
               popActionScreens: PopActionScreensType.all,
               itemAnimationProperties: ItemAnimationProperties(
@@ -114,7 +119,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
                 curve: Curves.easeInOut,
                 duration: Duration(milliseconds: 200),
               ),
-              navBarStyle: NavBarStyle.style6,
+              navBarStyle: NavBarStyle.style11,
             ),
           ),
           applyPadding(

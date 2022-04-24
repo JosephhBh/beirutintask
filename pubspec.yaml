@@ -74,6 +74,7 @@ flutter:
     - assets/app_icons/
     - assets/icons/
     - assets/profile_icons/
+    - assets/payment_icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
