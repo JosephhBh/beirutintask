@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
@@ -10,7 +12,8 @@ import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/reciever/model/selected_receiver.dart';
 import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
-import 'package:tipperapp/widgets/icons/tip_icon.dart';
+import 'package:tipperapp/widgets/icons/new_tip_icon.dart';
+
 import 'package:tipperapp/widgets/icons/top_up_icon.dart';
 import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/icons/wallet_icon.dart';
@@ -51,7 +54,15 @@ class TipperHomePage extends StatelessWidget {
                   Container(
                     height: setCurrentHeight(209),
                     width: double.infinity,
-                    color: appColor.whiteColor,
+                    // color: appColor.whiteColor,
+                    decoration: BoxDecoration(
+                        color: appColor.whiteColor,
+                        border: Border.all(
+                          width: 0.8,
+                          color: Color(
+                            0xFF707070,
+                          ),
+                        )),
                     child: applyPadding(
                       8,
                       17,
@@ -110,66 +121,56 @@ class TipperHomePage extends StatelessWidget {
                     ),
                   ),
                   heighSpacer(70),
-                  GestureDetector(
-                    onTap: () async {
-                      _navigationService.navigateTo(name: kQrPage);
-                      // String workerId = "6hBPOjs9JsWqPE2nJ30WraZV7hs2";
-                      // List<String> _listOfWorkersIds = [];
-                      // SelectedReceiver _selectedReceiver = SelectedReceiver();
-                      // await FirebaseFirestore.instance
-                      //     .collection('users')
-                      //     .where('user_id', isEqualTo: workerId)
-                      //     .limit(1)
-                      //     .get()
-                      //     .then((QuerySnapshot querySnapshot) {
-                      //   querySnapshot.docs.forEach((doc) {
-                      //     _listOfWorkersIds.add(doc.id);
-                      //     _selectedReceiver = SelectedReceiver(
-                      //       id: doc['user_id'],
-                      //       name: doc['name'],
-                      //       username: doc['username'],
-                      //       email: doc['email'],
-                      //     );
-                      //   });
-                      // });
-                      // if (_listOfWorkersIds.length != 0) {
-                      //   print(_selectedReceiver.email);
-                      // } else {
-                      //   errorMessageProvider.setErrorMessage(
-                      //       message: "No user found");
-                      // }
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(19),
-                      child: Container(
-                        height: setCurrentHeight(92),
-                        width: setCurrentWidth(140),
-                        color: appColor.whiteColor,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            TipIcon(),
-                            heighSpacer(11),
-                            GlobalText(
-                              text: 'Tip now',
-                              fontSize: 16,
-                            ),
-                          ],
+                  Consumer<AuthenticationProvider>(
+                      builder: (context, authenticationProvider, _) {
+                    return GestureDetector(
+                      onTap: () async {
+                        if (authenticationProvider.tipperModel.balance! <=
+                            tippingAmount.first) {
+                          _navigationService.navigateTo(name: kTopUpWallet);
+                        } else {
+                          var status = await Permission.camera.request();
+                          print(status);
+                          if (status.isPermanentlyDenied) {
+                            openAppSettings();
+                          } else if (status.isDenied) {
+                            await Permission.camera.request();
+                          } else if (status.isGranted) {
+                            _navigationService.navigateTo(name: kQrPage);
+                          }
+                        }
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(19),
+                        child: Container(
+                          height: setCurrentHeight(92),
+                          width: setCurrentWidth(140),
+                          color: appColor.whiteColor,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              heighSpacer(5),
+                              NewTipIcon(
+                                height: 35,
+                              ),
+                              heighSpacer(7),
+                              GlobalText(
+                                text: 'Tip now',
+                                fontSize: 16,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                   heighSpacer(83),
                   GestureDetector(
                     onTap: () async {
                       _navigationService.navigateTo(name: kTopUpWallet);
-                      // bool? formattedPhoneNumber =
-                      //     await PhoneNumberUtil.isValidNumber(
-                      //   phoneNumber: '76561376',
-                      //   isoCode: 'LB',
-                      // );
-                      // debugPrint(formattedPhoneNumber.toString());
+                      // print(Get.width);
+                      // print(setCurrentHeight(351));
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(19),
@@ -178,11 +179,12 @@ class TipperHomePage extends StatelessWidget {
                         width: setCurrentWidth(140),
                         color: appColor.whiteColor,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            heighSpacer(5),
                             TopUpIcon(),
-                            heighSpacer(11),
+                            heighSpacer(7),
                             Container(
                               width: setCurrentWidth(100),
                               child: GlobalText(

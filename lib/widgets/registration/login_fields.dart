@@ -153,6 +153,7 @@ class EmailView extends StatelessWidget {
               color: appColor.blackColor,
               fontSize: 18,
             ),
+            textInputAction: TextInputAction.next,
             cursorColor: appColor.blackColor,
             decoration: InputDecoration(
               alignLabelWithHint: false,
@@ -202,6 +203,7 @@ class EmailView extends StatelessWidget {
             ),
             obscureText: true,
             cursorColor: appColor.blackColor,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               alignLabelWithHint: false,
               contentPadding: EdgeInsets.fromLTRB(
@@ -283,6 +285,7 @@ class PhoneView extends StatelessWidget {
               ),
             ),
             child: TextFormField(
+              textInputAction: TextInputAction.next,
               controller: authenticationProvider.passwordController,
               onChanged: (String value) {
                 if (authenticationProvider.passwordController.text

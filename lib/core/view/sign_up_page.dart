@@ -172,6 +172,9 @@ class SignUpPage extends StatelessWidget {
                       text: 'Sign Up',
                       isYellow: false,
                       onPressed: () async {
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        currentFocus.unfocus();
+
                         await authenticationProvider.registerTipper();
                         // var result = await PhoneNumberUtil.isValidNumber(
                         //     phoneNumber: "550000000", isoCode: "AE");

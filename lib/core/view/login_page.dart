@@ -122,6 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                       text: "SIGN IN",
                       onPressed: () async {
                         // authenticationProvider.signInWithEmailAndPassword();
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        currentFocus.unfocus();
                         await authenticationProvider.signIn();
                       },
                     ),

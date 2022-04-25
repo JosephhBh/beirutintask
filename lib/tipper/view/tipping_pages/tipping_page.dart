@@ -252,7 +252,7 @@ class TippingPage extends StatelessWidget {
                                           text: "Code:" +
                                               tippingProvider
                                                   .selectedReceiver.id!
-                                                  .substring(18),
+                                                  .substring(4),
                                           isFredokaOne: false,
                                           showEllipsis: false,
                                           fontSize: 12,

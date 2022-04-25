@@ -7,10 +7,8 @@ class TopUpIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return SvgPicture.asset(
       'assets/icons/top_up_icon.svg',
-      // color: appColor.blackColor,
       fit: BoxFit.fill,
-      height: setCurrentHeight(30),
-      // width: setCurrentWidth(26),
+      height: setCurrentHeight(35),
     );
   }
 }

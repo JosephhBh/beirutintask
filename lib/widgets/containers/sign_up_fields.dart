@@ -78,6 +78,7 @@ class SignUpFields extends StatelessWidget {
                             color: appColor.blackColor,
                             fontSize: setFontSize(18),
                           ),
+                          textInputAction: TextInputAction.next,
                           keyboardType: isPhoneNumber
                               ? TextInputType.phone
                               : TextInputType.name,

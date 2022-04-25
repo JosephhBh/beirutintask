@@ -147,6 +147,7 @@ class _CustomPhoneInputState extends State<CustomPhoneInput> {
             Expanded(
               flex: 1,
               child: TextFormField(
+                textInputAction: TextInputAction.next,
                 controller: widget.controller,
                 onChanged: (String value) => onChanged(value),
                 // onChanged: (val) {},

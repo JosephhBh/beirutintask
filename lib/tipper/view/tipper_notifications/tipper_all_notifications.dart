@@ -118,8 +118,8 @@ class _TipperAllNotificationsPageState
           ),
           applyPadding(
             136,
-            27,
-            27,
+            0,
+            0,
             0,
             Container(
               height: MediaQuery.of(context).size.height,

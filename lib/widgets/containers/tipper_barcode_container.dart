@@ -62,7 +62,7 @@ class ReceiverBarcodeContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GlobalText(
-                    text: "Code : " + receiverUid.substring(18),
+                    text: "Code : " + receiverUid.substring(4),
                     color: appColor.darkBlueColor,
                     fontSize: 20,
                   ),

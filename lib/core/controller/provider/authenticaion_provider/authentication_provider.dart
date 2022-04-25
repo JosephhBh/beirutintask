@@ -210,6 +210,7 @@ class AuthenticationProvider extends ChangeNotifier {
   signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('uid');
+    clearAuthenticationProvider();
     await FirebaseAuth.instance.signOut();
     _navigationService.navigateAndRemove(name: kRootPage);
   }
@@ -263,7 +264,7 @@ class AuthenticationProvider extends ChangeNotifier {
         "username": _tipperUsernameController.text.trim(),
         "email": _tipperEmailAddressController.text.trim(),
         "phone_number": finalTipperPhoneNumber,
-        // "password": _tipperPasswordController.text.trim(),
+        "password": _tipperPasswordController.text.trim(),
         "balance": 100,
         "user_type": "tipper",
       });
@@ -289,8 +290,9 @@ class AuthenticationProvider extends ChangeNotifier {
       if (_authenticationType == AuthenticationType.Email) {
         if (!_isEmailVerified) {
           errorMessageProvider.setErrorMessage(message: "Enter valid email");
-        } else if (_isPasswordVerified) {
-          errorMessageProvider.setErrorMessage(message: "Enter password");
+        } else if (!_isPasswordVerified) {
+          errorMessageProvider.setErrorMessage(
+              message: "Enter valid password min 6 char");
         } else {
           final QuerySnapshot result = await FirebaseFirestore.instance
               .collection('users')
@@ -320,7 +322,7 @@ class AuthenticationProvider extends ChangeNotifier {
         } else {
           String finalPhoneNumber =
               '+971' + _phoneNumberController.text.replaceAll(' ', '');
-          print(finalPhoneNumber);
+
           final QuerySnapshot result = await FirebaseFirestore.instance
               .collection('users')
               .where('phone_number', isEqualTo: finalPhoneNumber)
@@ -334,7 +336,9 @@ class AuthenticationProvider extends ChangeNotifier {
               // debugPrint(jsonEncode(data));
               await getUserDataOnSignIn(data['user_id']);
             } else {
-              errorMessageProvider.setErrorMessage(message: 'Wrong password');
+              // errorMessageProvider.setErrorMessage(message: 'Wrong password');
+              print(
+                  "the number is $finalPhoneNumber - ${_passwordController.text.trim()} -${data['password']}");
             }
           } else {
             errorMessageProvider.setErrorMessage(message: 'No user found');
@@ -344,5 +348,26 @@ class AuthenticationProvider extends ChangeNotifier {
     } catch (e) {
       print('sign in error $e');
     }
+  }
+
+  clearAuthenticationProvider() {
+    _authenticationType = AuthenticationType.Email;
+    _emailController.clear();
+    _passwordController.clear();
+    _phoneNumberController.clear();
+    _isEmailVerified = false;
+    _isPasswordVerified = false;
+    _isPhoneNumberVerified = false;
+    _canPressLogin = false;
+    _loading = false;
+    _receiverModel = ReceiverModel();
+    _tipperModel = TipperModel();
+    _emiratesIdController = TextEditingController();
+    _tipperUsernameController = TextEditingController();
+    _tipperEmailAddressController.clear();
+    _tipperPhoneNumberController.clear();
+    _tipperPasswordController.clear();
+    _tipperConfirmPasswordController.clear();
+    notifyListeners();
   }
 }
