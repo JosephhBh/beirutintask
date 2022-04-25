@@ -12,6 +12,7 @@ import 'package:tipperapp/tipper/view/tipping_pages/tipping_page.dart';
 import 'package:tipperapp/tipper/view/tipper_notifications/tipper_all_notifications.dart';
 import 'package:tipperapp/tipper/view/tipper_root_page.dart';
 import 'package:tipperapp/tipper/view/tipping_pages/qr_page.dart';
+import 'package:tipperapp/tipper/view/top_up_wallet/top_up_bank.dart';
 
 import 'package:tipperapp/tipper/view/top_up_wallet/top_up_wallet.dart';
 
@@ -64,6 +65,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _fadeRoute(
         settings.name,
         TopUpWallet(),
+      );
+
+    case kTopUpBankAccount:
+      return _fadeRoute(
+        settings.name,
+        TopUpBank(),
       );
 
     case kTipperAllNotificationsPage:

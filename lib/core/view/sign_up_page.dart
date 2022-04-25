@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
@@ -127,6 +128,7 @@ class SignUpPage extends StatelessWidget {
                                 hint: "Phone number",
                                 condition: false,
                                 onChnaged: (val) {},
+                                isPhoneNumber: true,
                               ),
                               heighSpacer(28),
                               SignUpFields(
@@ -169,6 +171,9 @@ class SignUpPage extends StatelessWidget {
                       isYellow: false,
                       onPressed: () async {
                         await authenticationProvider.registerTipper();
+                        // var result = await PhoneNumberUtil.isValidNumber(
+                        //     phoneNumber: "550000000", isoCode: "AE");
+                        // print(result);
                       },
                     ),
                   ],

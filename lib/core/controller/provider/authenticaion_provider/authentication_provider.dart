@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
@@ -29,8 +30,10 @@ class AuthenticationProvider extends ChangeNotifier {
   AuthenticationType _authenticationType = AuthenticationType.Email;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
   bool _isEmailVerified = false;
   bool _isPasswordVerified = false;
+  bool _isPhoneNumberVerified = false;
   bool _canPressLogin = false;
   bool _loading = false;
   ReceiverModel _receiverModel = ReceiverModel();
@@ -46,8 +49,10 @@ class AuthenticationProvider extends ChangeNotifier {
   AuthenticationType get authenticationType => _authenticationType;
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
+  TextEditingController get phoneNumberController => _phoneNumberController;
   bool get isEmailVerified => _isEmailVerified;
   bool get isPasswordVerified => _isPasswordVerified;
+  bool get isPhoneNumberVerified => _isPhoneNumberVerified;
   bool get canPressLogin => _canPressLogin;
   bool get loading => _loading;
   ReceiverModel get receiverModel => _receiverModel;
@@ -71,11 +76,17 @@ class AuthenticationProvider extends ChangeNotifier {
 
   void setEmailAuthenticationType() {
     _authenticationType = AuthenticationType.Email;
+    _phoneNumberController.clear();
+    errorMessageProvider.clearErrorMessage();
+    _canPressLogin = false;
     notifyListeners();
   }
 
   void setPhoneAuthenticationType() {
     _authenticationType = AuthenticationType.Phone;
+    _emailController.clear();
+    errorMessageProvider.clearErrorMessage();
+    _canPressLogin = false;
     notifyListeners();
   }
 
@@ -86,6 +97,11 @@ class AuthenticationProvider extends ChangeNotifier {
 
   setIsPasswordVerified(bool val) {
     _isPasswordVerified = val;
+    notifyListeners();
+  }
+
+  setIsPhoneNumberVerified(bool val) {
+    _isPhoneNumberVerified = val;
     notifyListeners();
   }
 
@@ -228,7 +244,14 @@ class AuthenticationProvider extends ChangeNotifier {
     _loading = true;
     notifyListeners();
     bool isValid = validateRegistrationFields();
-    if (isValid) {
+    dynamic result = await PhoneNumberUtil.isValidNumber(
+        phoneNumber:
+            _tipperPhoneNumberController.text.trim().replaceAll(' ', ''),
+        isoCode: "AE");
+    if (result as bool == false) {
+      errorMessageProvider.setErrorMessage(message: "Enter valid phone number");
+    }
+    if (isValid && result) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String userId = _firestore.collection('users').doc().id;
       await _firestore.collection('users').doc(userId).set({
@@ -261,26 +284,59 @@ class AuthenticationProvider extends ChangeNotifier {
   signIn() async {
     try {
       if (_authenticationType == AuthenticationType.Email) {
-        final QuerySnapshot result = await FirebaseFirestore.instance
-            .collection('users')
-            .where('email', isEqualTo: _emailController.text.trim())
-            .limit(1)
-            .get();
-        final List<DocumentSnapshot> documents = result.docs;
-        if (documents.length > 0) {
-          dynamic? data = documents[0].data();
-          print(data);
-          if (_passwordController.text.trim() == data['password']) {
-            // debugPrint(jsonEncode(data));
-            await getUserDataOnSignIn(data['user_id']);
-          } else {
-            errorMessageProvider.setErrorMessage(message: 'Wrong password');
-          }
+        if (!_isEmailVerified) {
+          errorMessageProvider.setErrorMessage(message: "Enter valid email");
+        } else if (_isPasswordVerified) {
+          errorMessageProvider.setErrorMessage(message: "Enter password");
         } else {
-          errorMessageProvider.setErrorMessage(message: 'No user found');
+          final QuerySnapshot result = await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: _emailController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> documents = result.docs;
+          if (documents.length > 0) {
+            dynamic? data = documents[0].data();
+            print(data);
+            if (_passwordController.text.trim() == data['password']) {
+              // debugPrint(jsonEncode(data));
+              await getUserDataOnSignIn(data['user_id']);
+            } else {
+              errorMessageProvider.setErrorMessage(message: 'Wrong password');
+            }
+          } else {
+            errorMessageProvider.setErrorMessage(message: 'No user found');
+          }
         }
       } else {
-        /// TODO handle phone sign in
+        if (!_isPhoneNumberVerified) {
+          errorMessageProvider.setErrorMessage(
+              message: "Enter valid phone number");
+        } else if (!_isPasswordVerified) {
+          errorMessageProvider.setErrorMessage(message: "Enter password");
+        } else {
+          String finalPhoneNumber =
+              '+971' + _phoneNumberController.text.replaceAll(' ', '');
+          print(finalPhoneNumber);
+          final QuerySnapshot result = await FirebaseFirestore.instance
+              .collection('users')
+              .where('phone_number', isEqualTo: finalPhoneNumber)
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> documents = result.docs;
+          if (documents.length > 0) {
+            dynamic? data = documents[0].data();
+            print(data);
+            if (_passwordController.text.trim() == data['password']) {
+              // debugPrint(jsonEncode(data));
+              await getUserDataOnSignIn(data['user_id']);
+            } else {
+              errorMessageProvider.setErrorMessage(message: 'Wrong password');
+            }
+          } else {
+            errorMessageProvider.setErrorMessage(message: 'No user found');
+          }
+        }
       }
     } catch (e) {
       print('sign in error $e');

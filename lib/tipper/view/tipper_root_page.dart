@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
@@ -44,25 +45,31 @@ class _TipperRootPageState extends State<TipperRootPage> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        // icon: Icon(CupertinoIcons.home),
-        icon: BtmNavigationHome(),
+        icon: Icon(CupertinoIcons.home),
         title: ("Home"),
-        // iconSize: 1,
-        contentPadding: 0,
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
+        textStyle: GoogleFonts.fredokaOne(
+          fontSize: setFontSize(10),
+        ),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.profile_circled),
+        icon: Icon(CupertinoIcons.person_crop_circle_fill),
         title: ("Profile"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
+        textStyle: GoogleFonts.fredokaOne(
+          fontSize: setFontSize(10),
+        ),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.phone),
         title: ("Support"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
+        textStyle: GoogleFonts.fredokaOne(
+          fontSize: setFontSize(10),
+        ),
       ),
     ];
   }
@@ -119,7 +126,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
                 curve: Curves.easeInOut,
                 duration: Duration(milliseconds: 200),
               ),
-              navBarStyle: NavBarStyle.style11,
+              navBarStyle: NavBarStyle.style6,
             ),
           ),
           applyPadding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
@@ -90,34 +91,39 @@ class TopUpWallet extends StatelessWidget {
                     isFredokaOne: false,
                   ),
                   heighSpacer(31),
-                  Container(
-                    height: setCurrentHeight(58),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: appColor.transparentColor,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: appColor.whiteColor,
-                        width: 3,
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(name: kTopUpBankAccount);
+                    },
+                    child: Container(
+                      height: setCurrentHeight(58),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: appColor.transparentColor,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: appColor.whiteColor,
+                          width: 3,
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: setCurrentWidth(50),
-                            // color: Colors.red,
-                            child: Center(
-                              child: BankAccountIcon(),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: setCurrentWidth(50),
+                              // color: Colors.red,
+                              child: Center(
+                                child: BankAccountIcon(),
+                              ),
                             ),
-                          ),
-                          widthSpacer(8),
-                          GlobalText(
-                            text: 'top up using my bank account',
-                            fontSize: 18,
-                          ),
-                        ],
+                            widthSpacer(8),
+                            GlobalText(
+                              text: 'top up using my bank account',
+                              fontSize: 18,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

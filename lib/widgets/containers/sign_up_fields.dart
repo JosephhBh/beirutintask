@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
+import 'package:tipperapp/widgets/text/global_text.dart';
 
 class SignUpFields extends StatelessWidget {
   final Widget icon;
@@ -8,19 +11,20 @@ class SignUpFields extends StatelessWidget {
   final TextEditingController controller;
   final bool condition;
   final Function onChnaged;
+  final bool isPhoneNumber;
   SignUpFields({
     required this.icon,
     required this.hint,
     required this.controller,
     required this.condition,
     required this.onChnaged,
+    this.isPhoneNumber = false,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
       height: setCurrentHeight(50),
       width: double.infinity,
-
       decoration: BoxDecoration(
         color: appColor.whiteColor,
         border: Border.all(
@@ -28,25 +32,6 @@ class SignUpFields extends StatelessWidget {
           width: condition ? 1 : 0.2,
         ),
       ),
-      // child: Center(
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.start,
-      //     children: [
-      //       widthSpacer(26),
-      //       icon,
-      //       widthSpacer(30),
-      //       // GlobalText(
-      //       //   text: text,
-      //       //   color: appColor.blackColor.withOpacity(0.6),
-      //       // ),
-      //       Container(
-      //         height: setCurrentHeight(60),
-      //         width: double.infinity - 10,
-      //         child: TextFormField(),
-      //       ),
-      //     ],
-      //   ),
-      // ),
       child: Stack(
         fit: StackFit.loose,
         children: [
@@ -68,38 +53,73 @@ class SignUpFields extends StatelessWidget {
               width: setCurrentWidth(260),
               color: appColor.transparentColor,
               child: Center(
-                child: TextField(
-                  controller: controller,
-                  onChanged: (String value) => onChnaged(value),
-                  style: GoogleFonts.fredokaOne(
-                    color: appColor.blackColor,
-                    fontSize: 18,
-                  ),
-                  cursorColor: appColor.blackColor,
-                  decoration: InputDecoration(
-                    alignLabelWithHint: false,
-                    contentPadding: EdgeInsets.fromLTRB(
-                        setCurrentWidth(16), setCurrentHeight(8), 8, 12),
-                    fillColor: appColor.transparentColor,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
+                child: Row(
+                  children: [
+                    Visibility(
+                      visible: isPhoneNumber,
+                      child: Row(
+                        children: [
+                          widthSpacer(8),
+                          GlobalText(
+                            text: "+971",
+                            fontSize: 18,
+                          ),
+                        ],
                       ),
-                      borderRadius: BorderRadius.circular(9),
                     ),
-                    hintText: hint,
-                    hintStyle: GoogleFonts.fredokaOne(
-                      color: appColor.blackColor.withOpacity(0.6),
-                      fontSize: 16,
+                    Expanded(
+                      flex: 1,
+                      child: TextField(
+                          controller: controller,
+                          onChanged: (String value) => onChnaged(value),
+                          style: GoogleFonts.fredokaOne(
+                            color: appColor.blackColor,
+                            fontSize: setFontSize(18),
+                          ),
+                          keyboardType: isPhoneNumber
+                              ? TextInputType.phone
+                              : TextInputType.name,
+                          cursorColor: appColor.blackColor,
+                          decoration: InputDecoration(
+                            alignLabelWithHint: false,
+                            contentPadding: EdgeInsets.fromLTRB(
+                                setCurrentWidth(16),
+                                setCurrentHeight(8),
+                                8,
+                                12),
+                            fillColor: appColor.transparentColor,
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                              borderRadius: BorderRadius.circular(9),
+                            ),
+                            hintText: hint,
+                            hintStyle: GoogleFonts.fredokaOne(
+                              color: appColor.blackColor.withOpacity(0.6),
+                              fontSize: setFontSize(16),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          inputFormatters: isPhoneNumber
+                              ? [
+                                  AsYouTypeFormatter(
+                                    isoCode: "ARE",
+                                    dialCode: "+971",
+                                    onInputFormatted: (TextEditingValue value) {
+                                      controller.value = value;
+                                    },
+                                  )
+                                ]
+                              : []),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),

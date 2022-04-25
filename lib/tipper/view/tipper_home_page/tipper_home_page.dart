@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
@@ -15,6 +16,7 @@ import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/icons/wallet_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class TipperHomePage extends StatelessWidget {
   final NavigationService _navigationService = locator<NavigationService>();
@@ -160,8 +162,14 @@ class TipperHomePage extends StatelessWidget {
                   ),
                   heighSpacer(83),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       _navigationService.navigateTo(name: kTopUpWallet);
+                      // bool? formattedPhoneNumber =
+                      //     await PhoneNumberUtil.isValidNumber(
+                      //   phoneNumber: '76561376',
+                      //   isoCode: 'LB',
+                      // );
+                      // debugPrint(formattedPhoneNumber.toString());
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(19),

@@ -4,15 +4,17 @@ import 'package:tipperapp/widgets/text/global_text.dart';
 
 class PaymentContainer extends StatelessWidget {
   final String text;
+  final double height;
   final Widget icon;
   PaymentContainer({
     required this.text,
+    this.height = 76,
     required this.icon,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: setCurrentHeight(76),
+      height: setCurrentHeight(height),
       width: double.infinity,
       decoration: BoxDecoration(
         color: appColor.transparentColor,

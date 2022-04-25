@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
@@ -9,6 +10,8 @@ import 'package:tipperapp/core/view/login_page.dart';
 import 'package:tipperapp/reciever/view/receiver_root_page.dart';
 
 import 'package:tipperapp/tipper/view/tipper_root_page.dart';
+import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
+import 'package:tipperapp/widgets/text/global_text.dart';
 
 enum AuthStatus {
   unknown,
@@ -61,11 +64,17 @@ class _RootPageState extends State<RootPage> {
     Widget retVal = Container();
     switch (_authStatus) {
       case AuthStatus.unknown:
-        retVal = Scaffold(
-          backgroundColor: appColor.blackColor,
-          body: Center(
-            child: CupertinoActivityIndicator(
-              radius: 15,
+        retVal = GlobalScaffold(
+          backgroundColor: appColor.yellowColor,
+          child: Container(
+            height: Get.height,
+            width: double.infinity,
+            child: Center(
+              child: GlobalText(
+                color: appColor.whiteColor,
+                text: "tipr",
+                fontSize: 80,
+              ),
             ),
           ),
         );

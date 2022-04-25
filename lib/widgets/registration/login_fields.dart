@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
+import 'package:tipperapp/widgets/registration/custom_phone_inout.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class LoginFields extends StatelessWidget {
@@ -231,10 +234,104 @@ class EmailView extends StatelessWidget {
 }
 
 class PhoneView extends StatelessWidget {
-  const PhoneView({Key? key}) : super(key: key);
+  final TextEditingController controller = TextEditingController();
+  final String initialCountry = 'ARE';
+  final PhoneNumber number = PhoneNumber(isoCode: 'ARE');
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Consumer<AuthenticationProvider>(
+        builder: (context, authenticationProvider, _) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CustomPhoneInput(
+            controller: authenticationProvider.phoneNumberController,
+            isPhoneNumberVerified:
+                (authenticationProvider.isPhoneNumberVerified == false &&
+                        authenticationProvider.canPressLogin == true) ==
+                    true,
+            onInputChanged: (PhoneNumber val) {
+              // print(val.isoCode);
+            },
+            onInputValidated: (bool val) {
+              if (val) {
+                authenticationProvider.setIsPhoneNumberVerified(true);
+                // errorMessageProvider.setErrorMessage(message: 'validated');
+                if (authenticationProvider.passwordController.text.length >=
+                    6) {
+                  authenticationProvider.setCanPressLogin(true);
+                }
+              } else {
+                authenticationProvider.setIsPhoneNumberVerified(false);
+              }
+            },
+          ),
+          heighSpacer(15),
+          Container(
+            height: setCurrentHeight(54),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: appColor.greyColor,
+              border: Border.all(
+                color: (authenticationProvider.isPasswordVerified == false &&
+                            authenticationProvider.canPressLogin == true) ==
+                        true
+                    ? appColor.redColor
+                    : appColor.transparentColor,
+                width: authenticationProvider.isPasswordVerified ? 1 : 0.2,
+              ),
+            ),
+            child: TextFormField(
+              controller: authenticationProvider.passwordController,
+              onChanged: (String value) {
+                if (authenticationProvider.passwordController.text
+                        .trim()
+                        .length >=
+                    6) {
+                  authenticationProvider.setIsPasswordVerified(true);
+
+                  if (authenticationProvider.isPhoneNumberVerified == true) {
+                    authenticationProvider.setCanPressLogin(true);
+                  }
+                } else {
+                  authenticationProvider.setIsPasswordVerified(false);
+                }
+              },
+              style: GoogleFonts.fredokaOne(
+                color: appColor.blackColor,
+                fontSize: 18,
+              ),
+              obscureText: true,
+              cursorColor: appColor.blackColor,
+              decoration: InputDecoration(
+                alignLabelWithHint: false,
+                contentPadding: EdgeInsets.fromLTRB(
+                    setCurrentWidth(16), setCurrentHeight(8), 8, 12),
+                fillColor: appColor.transparentColor,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                  borderRadius: BorderRadius.circular(9),
+                ),
+                hintText: "Password",
+                hintStyle: GoogleFonts.fredokaOne(
+                  color: appColor.blackColor.withOpacity(0.6),
+                  fontSize: 16,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
