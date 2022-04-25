@@ -12,6 +12,7 @@ class SignUpFields extends StatelessWidget {
   final bool condition;
   final Function onChnaged;
   final bool isPhoneNumber;
+  final bool isPassword;
   SignUpFields({
     required this.icon,
     required this.hint,
@@ -19,6 +20,7 @@ class SignUpFields extends StatelessWidget {
     required this.condition,
     required this.onChnaged,
     this.isPhoneNumber = false,
+    this.isPassword = false,
   });
   @override
   Widget build(BuildContext context) {
@@ -107,6 +109,7 @@ class SignUpFields extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
+                          obscureText: isPassword ? true : false,
                           inputFormatters: isPhoneNumber
                               ? [
                                   AsYouTypeFormatter(

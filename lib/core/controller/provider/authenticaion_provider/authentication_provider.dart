@@ -252,6 +252,9 @@ class AuthenticationProvider extends ChangeNotifier {
       errorMessageProvider.setErrorMessage(message: "Enter valid phone number");
     }
     if (isValid && result) {
+      String finalTipperPhoneNumber =
+          '+971' + _tipperPhoneNumberController.text.replaceAll(' ', '');
+      print(finalTipperPhoneNumber);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String userId = _firestore.collection('users').doc().id;
       await _firestore.collection('users').doc(userId).set({
@@ -259,7 +262,7 @@ class AuthenticationProvider extends ChangeNotifier {
         "emirates_id": _emiratesIdController.text.trim(),
         "username": _tipperUsernameController.text.trim(),
         "email": _tipperEmailAddressController.text.trim(),
-        "phone_number": _tipperPhoneNumberController.text.trim(),
+        "phone_number": finalTipperPhoneNumber,
         // "password": _tipperPasswordController.text.trim(),
         "balance": 100,
         "user_type": "tipper",

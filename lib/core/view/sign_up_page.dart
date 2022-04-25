@@ -138,6 +138,7 @@ class SignUpPage extends StatelessWidget {
                                 hint: "Password",
                                 condition: false,
                                 onChnaged: (val) {},
+                                isPassword: true,
                               ),
                               heighSpacer(28),
                               SignUpFields(
@@ -146,6 +147,7 @@ class SignUpPage extends StatelessWidget {
                                     .tipperConfirmPasswordController,
                                 hint: "Confirm password",
                                 condition: false,
+                                isPassword: true,
                                 onChnaged: (val) {},
                               ),
                               heighSpacer(30),
