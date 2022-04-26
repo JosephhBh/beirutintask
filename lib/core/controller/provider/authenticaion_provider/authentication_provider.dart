@@ -38,7 +38,7 @@ class AuthenticationProvider extends ChangeNotifier {
   bool _loading = false;
   ReceiverModel _receiverModel = ReceiverModel();
   TipperModel _tipperModel = TipperModel();
-  TextEditingController _emiratesIdController = TextEditingController();
+  // TextEditingController _emiratesIdController = TextEditingController();
   TextEditingController _tipperUsernameController = TextEditingController();
   TextEditingController _tipperEmailAddressController = TextEditingController();
   TextEditingController _tipperPhoneNumberController = TextEditingController();
@@ -57,7 +57,7 @@ class AuthenticationProvider extends ChangeNotifier {
   bool get loading => _loading;
   ReceiverModel get receiverModel => _receiverModel;
   TipperModel get tipperModel => _tipperModel;
-  TextEditingController get emiratesIdController => _emiratesIdController;
+  // TextEditingController get emiratesIdController => _emiratesIdController;
   TextEditingController get tipperUsernameController =>
       _tipperUsernameController;
   TextEditingController get tipperEmailAddressController =>
@@ -219,9 +219,11 @@ class AuthenticationProvider extends ChangeNotifier {
 
   bool validateRegistrationFields() {
     bool valid = false;
-    if (_emiratesIdController.text.length <= 2) {
-      errorMessageProvider.setErrorMessage(message: 'Invalid emirates id');
-    } else if (_tipperUsernameController.text.trim().length <= 2) {
+    // if (_emiratesIdController.text.length <= 2) {
+    //   errorMessageProvider.setErrorMessage(message: 'Invalid emirates id');
+    // }
+    // else
+    if (_tipperUsernameController.text.trim().length <= 2) {
       errorMessageProvider.setErrorMessage(message: 'Invalid username');
     } else if (!EmailValidator.validate(
         _tipperEmailAddressController.text.trim())) {
@@ -260,7 +262,7 @@ class AuthenticationProvider extends ChangeNotifier {
       String userId = _firestore.collection('users').doc().id;
       await _firestore.collection('users').doc(userId).set({
         "user_id": userId,
-        "emirates_id": _emiratesIdController.text.trim(),
+        // "emirates_id": _emiratesIdController.text.trim(),
         "username": _tipperUsernameController.text.trim(),
         "email": _tipperEmailAddressController.text.trim(),
         "phone_number": finalTipperPhoneNumber,
@@ -362,7 +364,7 @@ class AuthenticationProvider extends ChangeNotifier {
     _loading = false;
     _receiverModel = ReceiverModel();
     _tipperModel = TipperModel();
-    _emiratesIdController = TextEditingController();
+    // _emiratesIdController = TextEditingController();
     _tipperUsernameController = TextEditingController();
     _tipperEmailAddressController.clear();
     _tipperPhoneNumberController.clear();

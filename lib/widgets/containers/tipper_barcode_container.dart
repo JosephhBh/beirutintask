@@ -57,7 +57,7 @@ class ReceiverBarcodeContainer extends StatelessWidget {
                   // size: 200.0,
                 ),
               ),
-              heighSpacer(100),
+              heighSpacer(125),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

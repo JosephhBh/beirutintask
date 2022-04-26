@@ -29,7 +29,7 @@ class ReceiverProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: setCurrentHeight(280),
+              height: setCurrentHeight(290),
               width: double.infinity,
               color: appColor.greyColor,
               child: Center(
@@ -37,8 +37,10 @@ class ReceiverProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    UserIcon(),
-                    heighSpacer(9),
+                    UserIcon(
+                      height: 105,
+                    ),
+                    heighSpacer(17),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -86,7 +88,7 @@ class ReceiverProfilePage extends StatelessWidget {
                     icon: ProfileSupportIcon(),
                     text: "Support",
                   ),
-                  heighSpacer(45),
+                  heighSpacer(56),
                   LogoutButton(
                     onPressed: () async {
                       await authenticationProvier.signOut();

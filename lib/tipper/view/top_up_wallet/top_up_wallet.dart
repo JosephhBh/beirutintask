@@ -96,7 +96,7 @@ class TopUpWallet extends StatelessWidget {
                       _navigationService.navigateTo(name: kTopUpBankAccount);
                     },
                     child: Container(
-                      height: setCurrentHeight(58),
+                      height: setCurrentHeight(76),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: appColor.transparentColor,
@@ -119,7 +119,7 @@ class TopUpWallet extends StatelessWidget {
                             ),
                             widthSpacer(8),
                             GlobalText(
-                              text: 'top up using my bank account',
+                              text: 'Top up using my bank account',
                               fontSize: 18,
                             ),
                           ],
@@ -127,22 +127,22 @@ class TopUpWallet extends StatelessWidget {
                       ),
                     ),
                   ),
-                  heighSpacer(31),
+                  heighSpacer(32),
                   GlobalText(
                     text: 'Top up using:',
                     isFredokaOne: false,
                   ),
-                  heighSpacer(31),
+                  heighSpacer(32),
                   PaymentContainer(
                     text: 'Credit cards',
                     icon: CreditCardIcon(),
                   ),
-                  heighSpacer(31),
+                  heighSpacer(21),
                   PaymentContainer(
                     text: 'Apple pay',
                     icon: ApplyPayeIcon(),
                   ),
-                  heighSpacer(31),
+                  heighSpacer(21),
                   PaymentContainer(
                     text: 'Google pay',
                     icon: GooglePayIcon(),

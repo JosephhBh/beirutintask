@@ -51,73 +51,76 @@ class TipperHomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    height: setCurrentHeight(209),
-                    width: double.infinity,
-                    // color: appColor.whiteColor,
-                    decoration: BoxDecoration(
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(19),
+                    child: Container(
+                      height: setCurrentHeight(209),
+                      width: double.infinity,
+                      // color: appColor.whiteColor,
+                      decoration: BoxDecoration(
                         color: appColor.whiteColor,
-                        border: Border.all(
-                          width: 0.8,
-                          color: Color(
-                            0xFF707070,
-                          ),
-                        )),
-                    child: applyPadding(
-                      8,
-                      17,
-                      0,
-                      0,
-                      Consumer<AuthenticationProvider>(
-                          builder: (context, authenticationProvider, _) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              textBaseline: TextBaseline.ideographic,
-                              children: [
-                                UserIcon(),
-                                widthSpacer(7),
-                                GlobalText(
-                                  text: authenticationProvider
-                                      .tipperModel.username!,
-                                ),
-                              ],
-                            ),
-                            heighSpacer(39),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              textBaseline: TextBaseline.ideographic,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                GlobalText(
-                                  text: 'WALLET',
-                                ),
-                                widthSpacer(5),
-                                WalletIcon(),
-                              ],
-                            ),
-                            heighSpacer(17),
-                            GlobalText(
-                              text: 'Current Balance',
-                              isFredokaOne: false,
-                              fontSize: 12,
-                              isBold: true,
-                            ),
-                            heighSpacer(5),
-                            GlobalText(
-                              text: authenticationProvider.tipperModel.balance
-                                      .toString() +
-                                  " AED",
-                              isFredokaOne: false,
-                              fontSize: 20,
-                              isBold: true,
-                            ),
-                          ],
-                        );
-                      }),
+                        // border: Border.all(
+                        //   width: 0.8,
+                        //   color: appColor.dividerColor,
+                        // ),
+                      ),
+                      child: applyPadding(
+                        8,
+                        17,
+                        0,
+                        0,
+                        Consumer<AuthenticationProvider>(
+                            builder: (context, authenticationProvider, _) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                textBaseline: TextBaseline.ideographic,
+                                children: [
+                                  UserIcon(),
+                                  widthSpacer(7),
+                                  GlobalText(
+                                    text: authenticationProvider
+                                            .tipperModel.username ??
+                                        "",
+                                  ),
+                                ],
+                              ),
+                              heighSpacer(39),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                textBaseline: TextBaseline.ideographic,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GlobalText(
+                                    text: 'WALLET',
+                                  ),
+                                  widthSpacer(5),
+                                  WalletIcon(),
+                                ],
+                              ),
+                              heighSpacer(17),
+                              GlobalText(
+                                text: 'Current Balance',
+                                isFredokaOne: false,
+                                fontSize: 12,
+                                isBold: true,
+                              ),
+                              heighSpacer(5),
+                              GlobalText(
+                                text: authenticationProvider.tipperModel.balance
+                                        .toString() +
+                                    " AED",
+                                isFredokaOne: false,
+                                fontSize: 20,
+                                isBold: true,
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
                     ),
                   ),
                   heighSpacer(70),
@@ -143,14 +146,14 @@ class TipperHomePage extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(19),
                         child: Container(
-                          height: setCurrentHeight(92),
+                          height: setCurrentHeight(110),
                           width: setCurrentWidth(140),
                           color: appColor.whiteColor,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              heighSpacer(5),
+                              heighSpacer(20),
                               NewTipIcon(
                                 height: 35,
                               ),
@@ -175,14 +178,14 @@ class TipperHomePage extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(19),
                       child: Container(
-                        height: setCurrentHeight(92),
+                        height: setCurrentHeight(110),
                         width: setCurrentWidth(140),
                         color: appColor.whiteColor,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            heighSpacer(5),
+                            heighSpacer(20),
                             TopUpIcon(),
                             heighSpacer(7),
                             Container(

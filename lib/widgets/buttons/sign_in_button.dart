@@ -14,10 +14,10 @@ class SignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: GestureDetector(
+        onTap: onPressed,
         child: Container(
           height: setCurrentHeight(41),
           color: isYellow ? appColor.yellowColor : appColor.whiteColor,

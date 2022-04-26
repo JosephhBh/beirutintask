@@ -37,7 +37,9 @@ class TipperProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    UserIcon(),
+                    UserIcon(
+                      height: 105,
+                    ),
                     heighSpacer(9),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +88,7 @@ class TipperProfilePage extends StatelessWidget {
                     icon: ProfileSupportIcon(),
                     text: "Support",
                   ),
-                  heighSpacer(45),
+                  heighSpacer(56),
                   LogoutButton(
                     onPressed: () async {
                       await authenticationProvier.signOut();

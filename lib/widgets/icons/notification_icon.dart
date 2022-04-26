@@ -6,7 +6,7 @@ class NotificationIcon extends StatelessWidget {
   final double size;
   NotificationIcon({
     required this.color,
-    this.size = 35,
+    this.size = 25,
   });
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class NotificationIcon extends StatelessWidget {
     // );
     return Icon(
       Icons.notifications,
-      size: size,
+      size: setCurrentHeight(size),
       color: color,
     );
   }

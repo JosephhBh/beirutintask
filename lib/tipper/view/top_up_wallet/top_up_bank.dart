@@ -103,7 +103,7 @@ class TopUpBank extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  heighSpacer(25),
+                  heighSpacer(30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -123,7 +123,7 @@ class TopUpBank extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  heighSpacer(25),
+                  heighSpacer(30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -178,7 +178,7 @@ class TopUpBank extends StatelessWidget {
                       ),
                     ],
                   ),
-                  heighSpacer(25),
+                  heighSpacer(30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -205,10 +205,10 @@ class TopUpBank extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: appColor.yellowColor,
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: appColor.whiteColor,
-                        width: 3,
-                      ),
+                      // border: Border.all(
+                      //   color: appColor.whiteColor,
+                      //   width: 3,
+                      // ),
                     ),
                     child: Center(
                       child: GlobalText(
@@ -252,23 +252,23 @@ class TopUpBank extends StatelessWidget {
                       ),
                     ],
                   ),
-                  heighSpacer(12),
+                  heighSpacer(15),
                   PaymentContainer(
                     text: 'Credit cards',
                     icon: CreditCardIcon(),
-                    height: 52,
+                    height: 48,
                   ),
-                  heighSpacer(13),
+                  heighSpacer(15),
                   PaymentContainer(
                     text: 'Apple pay',
                     icon: ApplyPayeIcon(),
-                    height: 52,
+                    height: 48,
                   ),
-                  heighSpacer(13),
+                  heighSpacer(15),
                   PaymentContainer(
                     text: 'Google pay',
                     icon: GooglePayIcon(),
-                    height: 52,
+                    height: 48,
                   ),
                 ],
               ),

@@ -9,4 +9,5 @@ class AppColors {
   Color darkGrey = Color(0xFFD3D3D3);
   Color darkBlueColor = Color(0xFF161A49);
   Color redColor = Colors.red;
+  Color dividerColor = Color(0xFF707070);
 }

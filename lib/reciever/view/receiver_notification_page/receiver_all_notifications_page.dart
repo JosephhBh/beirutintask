@@ -181,7 +181,7 @@ class ReceiverAllNotificationsPage extends StatelessWidget {
         children: [
           applyPadding(
             15,
-            13,
+            0,
             0,
             0,
             Stack(
@@ -193,53 +193,64 @@ class ReceiverAllNotificationsPage extends StatelessWidget {
                   },
                   child: Container(
                     color: appColor.transparentColor,
-                    height: setCurrentHeight(70),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      textBaseline: TextBaseline.alphabetic,
+                    // height: setCurrentHeight(70),
+                    child: Column(
                       children: [
-                        BackIcon(),
-                        widthSpacer(15),
-                        GlobalText(
-                          text: 'NOTIFICATIONS',
-                          color: appColor.darkBlueColor,
-                        ),
-                        Spacer(),
-                        Container(
-                          width: setCurrentWidth(67),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(18),
-                                child: Container(
-                                  height: setCurrentHeight(49),
-                                  width: setCurrentWidth(67),
-                                  color: appColor.darkBlueColor,
-                                  child: Center(
-                                    child: NotificationIcon(
-                                      color: appColor.whiteColor,
-                                      size: 25,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            widthSpacer(13),
+                            BackIcon(),
+                            widthSpacer(15),
+                            GlobalText(
+                              text: 'NOTIFICATIONS',
+                              color: appColor.darkBlueColor,
+                            ),
+                            Spacer(),
+                            Container(
+                              width: setCurrentWidth(67),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(18),
+                                    child: Container(
+                                      height: setCurrentHeight(49),
+                                      width: setCurrentWidth(67),
+                                      color: appColor.darkBlueColor,
+                                      child: Center(
+                                        child: NotificationIcon(
+                                          color: appColor.whiteColor,
+                                          size: 25,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  heighSpacer(7),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: setCurrentWidth(4),
+                                      right: setCurrentWidth(4),
+                                    ),
+                                    child: Divider(
+                                      height: 1,
+                                      thickness: setCurrentHeight(3),
+                                      color: appColor.yellowColor,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              heighSpacer(7),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: setCurrentWidth(4),
-                                  right: setCurrentWidth(4),
-                                ),
-                                child: Divider(
-                                  height: 1,
-                                  thickness: 3,
-                                  color: appColor.yellowColor,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                            widthSpacer(19),
+                          ],
                         ),
-                        widthSpacer(19),
+                        heighSpacer(20),
+                        Divider(
+                          height: 1,
+                          thickness: setCurrentHeight(1),
+                          color: appColor.dividerColor,
+                        ),
                       ],
                     ),
                   ),
@@ -270,58 +281,67 @@ class ReceiverAllNotificationsPage extends StatelessWidget {
                             // color: Colors.red,
                           );
                         } else if (snapshot.hasData) {
-                          return Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  widthSpacer(27),
-                                  GlobalText(
-                                    text: "NEW",
-                                    color: appColor.darkBlueColor,
-                                  ),
-                                ],
-                              ),
-                              heighSpacer(27),
-                              ListView(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                children: snapshot.data!.docs
-                                    .map((DocumentSnapshot document) {
-                                  Map<String, dynamic> data =
-                                      document.data()! as Map<String, dynamic>;
-                                  return Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          if (data['reply_sent'] == false) {
-                                            _navigationService.navigateTo(
-                                                name:
-                                                    kReceiverNotificationsDetailPage,
-                                                arguments: data);
-                                            _notificationService
-                                                .updateSingleNotificaitonStatus(
-                                              authenticationProvider
-                                                  .receiverModel.userId!,
-                                              data['id'],
-                                            );
-                                          }
-                                        },
-                                        child: ReceiverNotificationWidget(
-                                          title: data['title'],
-                                          message: data['message'],
-                                          time: _notificationService
-                                              .getNotificationsTime(
-                                                  data['date']),
-                                          isRead: data['is_read'],
+                          return Visibility(
+                            visible: snapshot.data!.size != 0,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    widthSpacer(27),
+                                    GlobalText(
+                                      text: "New",
+                                      color: appColor.darkBlueColor,
+                                    ),
+                                  ],
+                                ),
+                                heighSpacer(27),
+                                ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: snapshot.data!.docs
+                                      .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (data['reply_sent'] == false) {
+                                              _navigationService.navigateTo(
+                                                  name:
+                                                      kReceiverNotificationsDetailPage,
+                                                  arguments: data);
+                                              _notificationService
+                                                  .updateSingleNotificaitonStatus(
+                                                authenticationProvider
+                                                    .receiverModel.userId!,
+                                                data['id'],
+                                              );
+                                            }
+                                          },
+                                          child: ReceiverNotificationWidget(
+                                            title: data['title'],
+                                            message: data['message'],
+                                            time: _notificationService
+                                                .getNotificationsTime(
+                                                    data['date']),
+                                            isRead: data['is_read'],
+                                          ),
                                         ),
-                                      ),
-                                      heighSpacer(45),
-                                    ],
-                                  );
-                                }).toList(),
-                              ),
-                            ],
+                                        // heighSpacer(45),
+                                        Divider(
+                                          height: 1,
+                                          thickness: 1,
+                                          color: appColor.yellowColor,
+                                        ),
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+                                heighSpacer(20),
+                              ],
+                            ),
                           );
                         }
                         return Container();
@@ -339,54 +359,62 @@ class ReceiverAllNotificationsPage extends StatelessWidget {
                             // color: Colors.red,
                           );
                         } else if (snapshot.hasData) {
-                          return Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  widthSpacer(27),
-                                  GlobalText(
-                                    text: "Earlier",
-                                    color: appColor.darkBlueColor,
-                                  ),
-                                ],
-                              ),
-                              heighSpacer(27),
-                              ListView(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                children: snapshot.data!.docs
-                                    .map((DocumentSnapshot document) {
-                                  Map<String, dynamic> data =
-                                      document.data()! as Map<String, dynamic>;
-                                  return Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          // print();
-                                          if (data['reply_sent'] as bool ==
-                                              false) {
-                                            _navigationService.navigateTo(
-                                                name:
-                                                    kReceiverNotificationsDetailPage,
-                                                arguments: data);
-                                          }
-                                        },
-                                        child: ReceiverNotificationWidget(
-                                          title: data['title'],
-                                          message: data['message'],
-                                          time: _notificationService
-                                              .getNotificationsTime(
-                                                  data['date']),
-                                          isRead: data['is_read'],
+                          return Visibility(
+                            visible: snapshot.data!.size != 0,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    widthSpacer(27),
+                                    GlobalText(
+                                      text: "Earlier",
+                                      color: appColor.darkBlueColor,
+                                    ),
+                                  ],
+                                ),
+                                heighSpacer(27),
+                                ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: snapshot.data!.docs
+                                      .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            // print();
+                                            if (data['reply_sent'] as bool ==
+                                                false) {
+                                              _navigationService.navigateTo(
+                                                  name:
+                                                      kReceiverNotificationsDetailPage,
+                                                  arguments: data);
+                                            }
+                                          },
+                                          child: ReceiverNotificationWidget(
+                                            title: data['title'],
+                                            message: data['message'],
+                                            time: _notificationService
+                                                .getNotificationsTime(
+                                                    data['date']),
+                                            isRead: data['is_read'],
+                                          ),
                                         ),
-                                      ),
-                                      heighSpacer(45),
-                                    ],
-                                  );
-                                }).toList(),
-                              ),
-                            ],
+                                        // heighSpacer(45),
+                                        Divider(
+                                          height: 1,
+                                          thickness: 1,
+                                          color: appColor.dividerColor,
+                                        ),
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
                           );
                         }
                         return Container();

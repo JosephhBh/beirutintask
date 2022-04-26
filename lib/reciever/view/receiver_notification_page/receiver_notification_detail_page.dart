@@ -31,7 +31,7 @@ class ReceiverNotificationDetailsPage extends StatelessWidget {
         children: [
           applyPadding(
             15,
-            13,
+            0,
             0,
             0,
             Stack(
@@ -43,53 +43,64 @@ class ReceiverNotificationDetailsPage extends StatelessWidget {
                   },
                   child: Container(
                     color: appColor.transparentColor,
-                    height: setCurrentHeight(70),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      textBaseline: TextBaseline.alphabetic,
+                    // height: setCurrentHeight(70),
+                    child: Column(
                       children: [
-                        BackIcon(),
-                        widthSpacer(15),
-                        GlobalText(
-                          text: 'NOTIFICATIONS',
-                          color: appColor.darkBlueColor,
-                        ),
-                        Spacer(),
-                        Container(
-                          width: setCurrentWidth(67),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(18),
-                                child: Container(
-                                  height: setCurrentHeight(49),
-                                  width: setCurrentWidth(67),
-                                  color: appColor.darkBlueColor,
-                                  child: Center(
-                                    child: NotificationIcon(
-                                      color: appColor.whiteColor,
-                                      size: 25,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            widthSpacer(13),
+                            BackIcon(),
+                            widthSpacer(15),
+                            GlobalText(
+                              text: 'NOTIFICATIONS',
+                              color: appColor.darkBlueColor,
+                            ),
+                            Spacer(),
+                            Container(
+                              width: setCurrentWidth(67),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(18),
+                                    child: Container(
+                                      height: setCurrentHeight(49),
+                                      width: setCurrentWidth(67),
+                                      color: appColor.darkBlueColor,
+                                      child: Center(
+                                        child: NotificationIcon(
+                                          color: appColor.whiteColor,
+                                          size: 25,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  heighSpacer(7),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: setCurrentWidth(4),
+                                      right: setCurrentWidth(4),
+                                    ),
+                                    child: Divider(
+                                      height: 1,
+                                      thickness: setCurrentHeight(3),
+                                      color: appColor.yellowColor,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              heighSpacer(7),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: setCurrentWidth(4),
-                                  right: setCurrentWidth(4),
-                                ),
-                                child: Divider(
-                                  height: 1,
-                                  thickness: 3,
-                                  color: appColor.yellowColor,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                            widthSpacer(19),
+                          ],
                         ),
-                        widthSpacer(19),
+                        heighSpacer(20),
+                        Divider(
+                          height: 1,
+                          thickness: setCurrentHeight(1),
+                          color: appColor.dividerColor,
+                        ),
                       ],
                     ),
                   ),
@@ -98,7 +109,7 @@ class ReceiverNotificationDetailsPage extends StatelessWidget {
             ),
           ),
           applyPadding(
-            136,
+            189,
             27,
             27,
             0,
@@ -109,7 +120,7 @@ class ReceiverNotificationDetailsPage extends StatelessWidget {
                   time: _notificationService.getNotificationsTime(data['date']),
                   message: data['message'],
                 ),
-                heighSpacer(80),
+                heighSpacer(81),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),
                   child: Container(

@@ -12,8 +12,8 @@ class BtmNavigationHome extends StatelessWidget {
     return SvgPicture.asset(
       'assets/profile_icons/home_icon.svg',
       fit: BoxFit.fill,
-      // height: setCurrentHeight(30),
       color: color,
+      height: setCurrentHeight(35),
     );
   }
 }

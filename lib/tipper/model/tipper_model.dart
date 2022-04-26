@@ -16,7 +16,7 @@ String tipperModelToJson(TipperModel data) => json.encode(data.toJson());
 
 class TipperModel {
   TipperModel({
-    this.emiratesId,
+    // this.emiratesId,
     this.password,
     this.userType,
     this.balance,
@@ -26,7 +26,7 @@ class TipperModel {
     this.username,
   });
 
-  String? emiratesId;
+  // String? emiratesId;
   String? password;
   String? userType;
   int? balance;
@@ -36,7 +36,7 @@ class TipperModel {
   String? username;
 
   factory TipperModel.fromJson(Map<String, dynamic> json) => TipperModel(
-        emiratesId: json["emirates_id"],
+        // emiratesId: json["emirates_id"],
         password: json["password"],
         userType: json["user_type"],
         balance: json["balance"],
@@ -47,7 +47,7 @@ class TipperModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "emirates_id": emiratesId,
+        // "emirates_id": emiratesId,
         "password": password,
         "user_type": userType,
         "balance": balance,
@@ -59,7 +59,7 @@ class TipperModel {
 
   @override
   TipperModel copy() => TipperModel(
-        emiratesId: emiratesId,
+        // emiratesId: emiratesId,
         password: password,
         userType: userType,
         balance: balance,
@@ -81,7 +81,7 @@ class TipperModel {
     String? username,
   }) =>
       TipperModel(
-        emiratesId: emiratesId ?? this.emiratesId,
+        // emiratesId: emiratesId ?? this.emiratesId,
         password: password ?? this.password,
         userType: userType ?? this.userType,
         balance: balance ?? this.balance,

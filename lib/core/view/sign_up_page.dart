@@ -62,7 +62,7 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
             applyPadding(
-              135,
+              155,
               45,
               45,
               0,
@@ -82,7 +82,7 @@ class SignUpPage extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(25),
                       child: Container(
-                        height: setCurrentHeight(595),
+                        height: setCurrentHeight(514),
                         width: double.infinity,
                         color: appColor.yellowColor,
                         child: Padding(
@@ -93,16 +93,16 @@ class SignUpPage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              heighSpacer(36),
-                              SignUpFields(
-                                icon: EmiratesIdIcon(),
-                                controller:
-                                    authenticationProvider.emiratesIdController,
-                                hint: "Emirates ID",
-                                condition: false,
-                                onChnaged: (val) {},
-                              ),
-                              heighSpacer(28),
+                              heighSpacer(38),
+                              // SignUpFields(
+                              //   icon: EmiratesIdIcon(),
+                              //   controller:
+                              //       authenticationProvider.emiratesIdController,
+                              //   hint: "Emirates ID",
+                              //   condition: false,
+                              //   onChnaged: (val) {},
+                              // ),
+                              // heighSpacer(31),
                               SignUpFields(
                                 icon: UsernameYellowIcon(),
                                 controller: authenticationProvider
@@ -111,7 +111,7 @@ class SignUpPage extends StatelessWidget {
                                 condition: false,
                                 onChnaged: (val) {},
                               ),
-                              heighSpacer(28),
+                              heighSpacer(31),
                               SignUpFields(
                                 icon: EmailIcon(),
                                 controller: authenticationProvider
@@ -120,7 +120,7 @@ class SignUpPage extends StatelessWidget {
                                 condition: false,
                                 onChnaged: (val) {},
                               ),
-                              heighSpacer(28),
+                              heighSpacer(31),
                               SignUpFields(
                                 icon: PhoneNumberIcon(),
                                 controller: authenticationProvider
@@ -130,7 +130,7 @@ class SignUpPage extends StatelessWidget {
                                 onChnaged: (val) {},
                                 isPhoneNumber: true,
                               ),
-                              heighSpacer(28),
+                              heighSpacer(31),
                               SignUpFields(
                                 icon: PasswordIcon(),
                                 controller: authenticationProvider
@@ -140,7 +140,7 @@ class SignUpPage extends StatelessWidget {
                                 onChnaged: (val) {},
                                 isPassword: true,
                               ),
-                              heighSpacer(28),
+                              heighSpacer(31),
                               SignUpFields(
                                 icon: PasswordIcon(),
                                 controller: authenticationProvider
@@ -150,7 +150,7 @@ class SignUpPage extends StatelessWidget {
                                 isPassword: true,
                                 onChnaged: (val) {},
                               ),
-                              heighSpacer(30),
+                              heighSpacer(40),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

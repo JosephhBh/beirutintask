@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 18,
                       isFredokaOne: false,
                     ),
-                    heighSpacer(42),
+                    heighSpacer(92),
                     LoginFields(
                       authenticationType:
                           authenticationProvider.authenticationType,
@@ -127,14 +127,14 @@ class _LoginPageState extends State<LoginPage> {
                         await authenticationProvider.signIn();
                       },
                     ),
-                    heighSpacer(18),
+                    heighSpacer(15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FaceIdIcon(),
                       ],
                     ),
-                    heighSpacer(10),
+                    heighSpacer(15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                         _navigationService.navigateTo(name: kSignUpPage);
                       },
                     ),
-                    heighSpacer(30),
+                    heighSpacer(45),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [

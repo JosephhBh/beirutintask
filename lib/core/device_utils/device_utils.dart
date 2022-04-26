@@ -6,7 +6,7 @@ import 'package:tipperapp/core/device_utils/app_colors.dart';
 final double finalDeviceHeigh = Get.height;
 final double finalDeviceWidth = Get.width;
 final double adjustedDeviceHeight = 926;
-final double givenDeviceHeight = 926;
+final double givenDeviceHeight = 950;
 final double givenDeviceWidth = 428;
 late double finalHeight;
 late double finalWidth;
@@ -23,18 +23,18 @@ setCurrentWidth(double width) {
 }
 
 setFontSize(double fontSize) {
-  finalFontSize = fontSize * (finalDeviceWidth) / givenDeviceWidth;
+  finalFontSize = fontSize * (finalDeviceHeigh) / givenDeviceHeight;
   return finalFontSize;
 }
 
 AppColors appColor = AppColors();
 
 heighSpacer(double height) => SizedBox(
-      height: height,
+      height: setCurrentHeight(height),
     );
 
 widthSpacer(double width) => SizedBox(
-      width: width,
+      width: setCurrentWidth(width),
     );
 
 applyPadding(

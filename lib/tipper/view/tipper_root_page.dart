@@ -16,6 +16,8 @@ import 'package:tipperapp/tipper/view/tipper_home_page/tipper_home_page.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_profile.dart';
 import 'package:tipperapp/tipper/view/tipper_support/tipper_support_page.dart';
 import 'package:tipperapp/widgets/icons/bottom_navigation_icons/home_icon.dart';
+import 'package:tipperapp/widgets/icons/bottom_navigation_icons/phone_icon.dart';
+import 'package:tipperapp/widgets/icons/bottom_navigation_icons/profile_icon.dart';
 import 'package:tipperapp/widgets/icons/notification_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
@@ -46,29 +48,52 @@ class _TipperRootPageState extends State<TipperRootPage> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
+        // icon: BtmNavigationHome(
+        //   color: _controller.index == 0
+        //       ? appColor.yellowColor
+        //       : appColor.greyColor,
+        // ),
         title: ("Home"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
+        iconSize: setCurrentHeight(38),
         textStyle: GoogleFonts.fredokaOne(
           fontSize: setFontSize(10),
+          letterSpacing: 0.4,
         ),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.person_crop_circle_fill),
+        // icon: BtmNavigationProfile(
+        //   color: _controller.index == 1
+        //       ? appColor.yellowColor
+        //       : appColor.greyColor,
+        // ),
         title: ("Profile"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
+        iconSize: setCurrentHeight(42),
+        contentPadding: 0,
+
         textStyle: GoogleFonts.fredokaOne(
           fontSize: setFontSize(10),
+          letterSpacing: 0.4,
         ),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.phone),
+        // icon: BtmNavigationPhone(
+        //   color: _controller.index == 2
+        //       ? appColor.yellowColor
+        //       : appColor.greyColor,
+        // ),
         title: ("Support"),
+        iconSize: setCurrentHeight(38),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
         textStyle: GoogleFonts.fredokaOne(
           fontSize: setFontSize(10),
+          letterSpacing: 0.4,
         ),
       ),
     ];
@@ -101,7 +126,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
             child: PersistentTabView(
               context,
               controller: _controller,
-              // navBarHeight: setCurrentHeight(55),
+              navBarHeight: setCurrentHeight(80),
               screens: _buildScreens(),
               items: _navBarsItems(),
               confineInSafeArea: true,
@@ -114,7 +139,9 @@ class _TipperRootPageState extends State<TipperRootPage> {
                 borderRadius: BorderRadius.circular(31.0),
                 colorBehindNavBar: Colors.white,
               ),
-
+              onItemSelected: (val) {
+                setState(() {});
+              },
               popAllScreensOnTapOfSelectedTab: true,
               popActionScreens: PopActionScreensType.all,
               itemAnimationProperties: ItemAnimationProperties(
@@ -126,7 +153,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
                 curve: Curves.easeInOut,
                 duration: Duration(milliseconds: 200),
               ),
-              navBarStyle: NavBarStyle.style6,
+              navBarStyle: NavBarStyle.style8,
             ),
           ),
           applyPadding(
@@ -168,6 +195,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
                         children: [
                           NotificationIcon(
                             color: appColor.darkBlueColor,
+                            size: 35,
                           ),
                           Visibility(
                             visible: !userDocument!["is_read"],
