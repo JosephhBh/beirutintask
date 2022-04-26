@@ -20,7 +20,7 @@ class ReceiverModel {
   });
 
   String? userType;
-  int? balance;
+  dynamic? balance;
   String? userId;
   String? email;
   String? username;

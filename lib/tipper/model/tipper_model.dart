@@ -29,7 +29,7 @@ class TipperModel {
   // String? emiratesId;
   String? password;
   String? userType;
-  int? balance;
+  dynamic? balance;
   String? userId;
   String? phoneNumber;
   String? email;
@@ -74,7 +74,7 @@ class TipperModel {
     String? emiratesId,
     String? password,
     String? userType,
-    int? balance,
+    dynamic? balance,
     String? userId,
     String? phoneNumber,
     String? email,

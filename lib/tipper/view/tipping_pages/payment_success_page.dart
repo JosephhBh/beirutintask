@@ -62,7 +62,7 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
               ),
               heighSpacer(20),
               GlobalText(
-                text: tippingProvider.selectedAmount.toString() +
+                text: tippingProvider.finalAmount.toString() +
                     ' AED has been transferred to',
                 color: appColor.blackColor,
                 fontSize: 18,

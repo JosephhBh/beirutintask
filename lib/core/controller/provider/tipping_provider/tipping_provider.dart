@@ -27,6 +27,9 @@ class TippingProvider extends ChangeNotifier {
   GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   int _selectedAmount = tippingAmount.first;
   SelectedReceiver _selectedReceiver = SelectedReceiver();
+  TextEditingController _otherAmount = TextEditingController(text: "50");
+  bool _isOtherAmountSelected = false;
+  dynamic _finalAmount = 0.0;
 
   String get scannedQrMessage => _scannedQrMessage;
   bool get isScanned => _isScanned;
@@ -35,6 +38,9 @@ class TippingProvider extends ChangeNotifier {
   GlobalKey get qrKey => _qrKey;
   int get selectedAmount => _selectedAmount;
   SelectedReceiver get selectedReceiver => _selectedReceiver;
+  bool get isOtherAmountSelected => _isOtherAmountSelected;
+  TextEditingController get otherAmount => _otherAmount;
+  dynamic get finalAmount => _finalAmount;
 
   void setScannedQrMessage(String val) {
     _scannedQrMessage = val;
@@ -47,7 +53,15 @@ class TippingProvider extends ChangeNotifier {
   }
 
   void setSelectedAmount(int val) {
+    _isOtherAmountSelected = false;
     _selectedAmount = val;
+    _otherAmount = TextEditingController(text: "");
+    notifyListeners();
+  }
+
+  void toggleIsOtherAmountSelected() {
+    _isOtherAmountSelected = !_isOtherAmountSelected;
+    _selectedAmount = 0;
     notifyListeners();
   }
 
@@ -91,94 +105,108 @@ class TippingProvider extends ChangeNotifier {
       /// update receiver with new balance
       /// send message to receiver
       /// send message to tipper
-      var authenticationProvider =
-          Provider.of<AuthenticationProvider>(context, listen: false);
-      String tipperId = authenticationProvider.tipperModel.userId!;
-      String tipperName = authenticationProvider.tipperModel.username!;
-      String receiverId = _selectedReceiver.id!;
-      if (authenticationProvider.tipperModel.balance! >= _selectedAmount) {
-        int tipperNewBalance =
-            authenticationProvider.tipperModel.balance! - _selectedAmount;
-        int receiverNewBalance = _selectedReceiver.balance! + selectedAmount;
-        authenticationProvider
-            .updateTipperModel(authenticationProvider.tipperModel.copyWith(
-          balance: tipperNewBalance,
-        ));
-        await _firestore.collection('users').doc(tipperId).update({
-          "balance": tipperNewBalance,
-        });
-        await _firestore.collection('users').doc(receiverId).update({
-          "balance": receiverNewBalance,
-        });
-        String tipperNotificationId = await _firestore
-            .collection('users')
-            .doc(tipperId)
-            .collection('notifications')
-            .doc(tipperId)
-            .collection('notifications')
-            .doc()
-            .id;
-        String receiverNotificationId = await _firestore
-            .collection('users')
-            .doc(receiverId)
-            .collection('notifications')
-            .doc(receiverId)
-            .collection('notifications')
-            .doc()
-            .id;
-        NotificationModel tipperNotificaiton = NotificationModel(
-          id: tipperNotificationId,
-          sentFrom: tipperId,
-          sentTo: receiverId,
-          title: 'PAYMENT SUCCESSFUL',
-          message: _selectedAmount.toString() +
-              " AED transfered to ${_selectedReceiver.name}",
-          date: Timestamp.now(),
-          isRead: false,
-          replySent: false,
-        );
-        NotificationModel receiverNotificaiton = NotificationModel(
-          id: receiverNotificationId,
-          sentFrom: tipperId,
-          sentTo: receiverId,
-          title: 'NEW TIP',
-          message: tipperName +
-              " just sent you $_selectedAmount AED,click down below to say thank you",
-          date: Timestamp.now(),
-          isRead: false,
-          replySent: false,
-        );
-        await _firestore
-            .collection('users')
-            .doc(receiverId)
-            .collection('notifications')
-            .doc(receiverId)
-            .update({
-          "is_read": false,
-        });
-
-        await _firestore
-            .collection('users')
-            .doc(receiverId)
-            .collection('notifications')
-            .doc(receiverId)
-            .collection('notifications')
-            .doc(receiverNotificationId)
-            .set(receiverNotificaiton.toJson());
-        await _firestore
-            .collection('users')
-            .doc(tipperId)
-            .collection('notifications')
-            .doc(tipperId)
-            .collection('notifications')
-            .doc(tipperNotificationId)
-            .set(tipperNotificaiton.toJson());
-        // print(tipperNotificaiton.toJson());
-        // _navigationService.pop();
-        // _selectedReceiver = SelectedReceiver();
-        _navigationService.replaceRoute(name: kPaymentSuccessPage);
+      if (_isOtherAmountSelected && _otherAmount.text.trim().length == 0) {
+        errorMessageProvider.setErrorMessage(message: "Enter amount");
       } else {
-        errorMessageProvider.setErrorMessage(message: "Insufficient Funds");
+        var authenticationProvider =
+            Provider.of<AuthenticationProvider>(context, listen: false);
+        String tipperId = authenticationProvider.tipperModel.userId!;
+        String tipperName = authenticationProvider.tipperModel.username!;
+        String receiverId = _selectedReceiver.id!;
+        _finalAmount = _isOtherAmountSelected
+            ? double.tryParse(_otherAmount.text.trim())
+            : double.tryParse(_selectedAmount.toString());
+
+        // dynamic tipperNewBalance =
+        //     authenticationProvider.tipperModel.balance! - finalAmount;
+        // dynamic receiverNewBalance =
+        //     _selectedReceiver.balance! + tipperNewBalance;
+        // print(receiverNewBalance);
+        if (authenticationProvider.tipperModel.balance! >= _finalAmount) {
+          print(receiverId);
+          dynamic tipperNewBalance =
+              authenticationProvider.tipperModel.balance! - _finalAmount;
+          dynamic receiverNewBalance =
+              _selectedReceiver.balance! + _finalAmount;
+          // print(tipperNewBalance);
+          // print(receiverNewBalance);
+          authenticationProvider
+              .updateTipperModel(authenticationProvider.tipperModel.copyWith(
+            balance: tipperNewBalance,
+          ));
+          await _firestore.collection('users').doc(tipperId).update({
+            "balance": tipperNewBalance,
+          });
+          await _firestore.collection('users').doc(receiverId).update({
+            "balance": receiverNewBalance,
+          });
+          String tipperNotificationId = await _firestore
+              .collection('users')
+              .doc(tipperId)
+              .collection('notifications')
+              .doc(tipperId)
+              .collection('notifications')
+              .doc()
+              .id;
+          String receiverNotificationId = await _firestore
+              .collection('users')
+              .doc(receiverId)
+              .collection('notifications')
+              .doc(receiverId)
+              .collection('notifications')
+              .doc()
+              .id;
+          NotificationModel tipperNotificaiton = NotificationModel(
+            id: tipperNotificationId,
+            sentFrom: tipperId,
+            sentTo: receiverId,
+            title: 'PAYMENT SUCCESSFUL',
+            message: finalAmount.toString() +
+                " AED transfered to ${_selectedReceiver.name}",
+            date: Timestamp.now(),
+            isRead: false,
+            replySent: false,
+          );
+          NotificationModel receiverNotificaiton = NotificationModel(
+            id: receiverNotificationId,
+            sentFrom: tipperId,
+            sentTo: receiverId,
+            title: 'NEW TIP',
+            message: tipperName +
+                " just sent you $finalAmount AED,click down below to say thank you",
+            date: Timestamp.now(),
+            isRead: false,
+            replySent: false,
+          );
+          await _firestore
+              .collection('users')
+              .doc(receiverId)
+              .collection('notifications')
+              .doc(receiverId)
+              .update({
+            "is_read": false,
+          });
+
+          await _firestore
+              .collection('users')
+              .doc(receiverId)
+              .collection('notifications')
+              .doc(receiverId)
+              .collection('notifications')
+              .doc(receiverNotificationId)
+              .set(receiverNotificaiton.toJson());
+          await _firestore
+              .collection('users')
+              .doc(tipperId)
+              .collection('notifications')
+              .doc(tipperId)
+              .collection('notifications')
+              .doc(tipperNotificationId)
+              .set(tipperNotificaiton.toJson());
+          _navigationService.replaceRoute(name: kPaymentSuccessPage);
+        } else {
+          errorMessageProvider.setErrorMessage(message: "Insufficient Funds");
+        }
       }
     } catch (e) {
       debugPrint("tip worker : $e");
@@ -191,6 +219,9 @@ class TippingProvider extends ChangeNotifier {
     _isScanned = false;
     _selectedAmount = tippingAmount.first;
     _selectedReceiver = SelectedReceiver();
+    _otherAmount = TextEditingController(text: "50");
+    _isOtherAmountSelected = false;
+    _finalAmount = 0.0;
     notifyListeners();
   }
 }

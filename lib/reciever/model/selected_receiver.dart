@@ -3,12 +3,12 @@ class SelectedReceiver {
   String? name;
   String? username;
   String? email;
-  int? balance;
+  dynamic? balance;
   SelectedReceiver({
     this.id = "",
     this.name = "",
     this.username = "",
     this.email = "",
-    this.balance = 0,
+    this.balance = 0.0,
   });
 }

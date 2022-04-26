@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,8 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class TipperHomePage extends StatelessWidget {
   final NavigationService _navigationService = locator<NavigationService>();
-
+  var formatter = NumberFormat('#,##,000.00');
+  NumberFormat numberFormat = NumberFormat.decimalPattern('hi');
   @override
   Widget build(BuildContext context) {
     // var authenticationProvider =
@@ -110,8 +112,14 @@ class TipperHomePage extends StatelessWidget {
                               ),
                               heighSpacer(5),
                               GlobalText(
-                                text: authenticationProvider.tipperModel.balance
-                                        .toString() +
+                                // text: authenticationProvider.tipperModel.balance
+                                //         .toString() +
+                                //     " AED",
+                                // text: formatter.format(authenticationProvider
+                                //         .tipperModel.balance) +
+                                //     " AED",
+                                text: numberFormat.format(authenticationProvider
+                                        .tipperModel.balance) +
                                     " AED",
                                 isFredokaOne: false,
                                 fontSize: 20,
@@ -128,6 +136,7 @@ class TipperHomePage extends StatelessWidget {
                       builder: (context, authenticationProvider, _) {
                     return GestureDetector(
                       onTap: () async {
+                        // print(authenticationProvider.tipperModel.toJson());
                         if (authenticationProvider.tipperModel.balance! <=
                             tippingAmount.first) {
                           _navigationService.navigateTo(name: kTopUpWallet);
