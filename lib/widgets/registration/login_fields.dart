@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/widgets/registration/custom_phone_inout.dart';
+import 'package:tipperapp/widgets/registration/custom_triangle.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class LoginFields extends StatelessWidget {
@@ -96,7 +97,7 @@ class LoginFields extends StatelessWidget {
               ),
             ],
           ),
-          heighSpacer(28),
+          heighSpacer(1),
           authenticationType == AuthenticationType.Email
               ? EmailView(
                   emailController: emailController,
@@ -134,52 +135,74 @@ class EmailView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: setCurrentHeight(54),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: appColor.greyColor,
-            border: Border.all(
-              color: isEmailVerified
-                  ? appColor.redColor
-                  : appColor.transparentColor,
-              width: isEmailVerified ? 1 : 0.2,
-            ),
-          ),
-          child: TextFormField(
-            controller: emailController,
-            onChanged: (String value) => onEmailFieldChanged(value),
-            style: GoogleFonts.fredokaOne(
-              color: appColor.blackColor,
-              fontSize: 18,
-            ),
-            textInputAction: TextInputAction.next,
-            cursorColor: appColor.blackColor,
-            decoration: InputDecoration(
-              alignLabelWithHint: false,
-              contentPadding: EdgeInsets.fromLTRB(
-                  setCurrentWidth(16), setCurrentHeight(8), 8, 12),
-              fillColor: appColor.transparentColor,
-              filled: true,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.transparent,
+        Stack(
+          fit: StackFit.loose,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: setCurrentHeight(19),
+              ),
+              child: Container(
+                height: setCurrentHeight(54),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: appColor.greyColor,
+                  border: Border.all(
+                    color: isEmailVerified
+                        ? appColor.redColor
+                        : appColor.transparentColor,
+                    width: isEmailVerified ? 1 : 0.2,
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(9),
-              ),
-              hintText: "Email",
-              hintStyle: GoogleFonts.fredokaOne(
-                color: appColor.blackColor.withOpacity(0.6),
-                fontSize: 16,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.transparent,
+                child: TextFormField(
+                  controller: emailController,
+                  onChanged: (String value) => onEmailFieldChanged(value),
+                  style: GoogleFonts.fredokaOne(
+                    color: appColor.blackColor,
+                    fontSize: 18,
+                  ),
+                  textInputAction: TextInputAction.next,
+                  cursorColor: appColor.blackColor,
+                  decoration: InputDecoration(
+                    alignLabelWithHint: false,
+                    contentPadding: EdgeInsets.fromLTRB(
+                        setCurrentWidth(16), setCurrentHeight(8), 8, 12),
+                    fillColor: appColor.transparentColor,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    hintText: "Email",
+                    hintStyle: GoogleFonts.fredokaOne(
+                      color: appColor.blackColor.withOpacity(0.6),
+                      fontSize: 16,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(8),
               ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: setCurrentWidth(6),
+              ),
+              child: Container(
+                height: setCurrentHeight(35),
+                width: setCurrentWidth(35),
+                child: CustomPaint(
+                  foregroundPainter: TrianglePainter(),
+                ),
+              ),
+            ),
+          ],
         ),
         heighSpacer(15),
         Container(
@@ -247,27 +270,50 @@ class PhoneView extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CustomPhoneInput(
-            controller: authenticationProvider.phoneNumberController,
-            isPhoneNumberVerified:
-                (authenticationProvider.isPhoneNumberVerified == false &&
-                        authenticationProvider.canPressLogin == true) ==
-                    true,
-            onInputChanged: (PhoneNumber val) {
-              // print(val.isoCode);
-            },
-            onInputValidated: (bool val) {
-              if (val) {
-                authenticationProvider.setIsPhoneNumberVerified(true);
-                // errorMessageProvider.setErrorMessage(message: 'validated');
-                if (authenticationProvider.passwordController.text.length >=
-                    6) {
-                  authenticationProvider.setCanPressLogin(true);
-                }
-              } else {
-                authenticationProvider.setIsPhoneNumberVerified(false);
-              }
-            },
+          Stack(
+            fit: StackFit.loose,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: setCurrentHeight(19),
+                ),
+                child: CustomPhoneInput(
+                  controller: authenticationProvider.phoneNumberController,
+                  isPhoneNumberVerified:
+                      (authenticationProvider.isPhoneNumberVerified == false &&
+                              authenticationProvider.canPressLogin == true) ==
+                          true,
+                  onInputChanged: (PhoneNumber val) {
+                    // print(val.isoCode);
+                  },
+                  onInputValidated: (bool val) {
+                    if (val) {
+                      authenticationProvider.setIsPhoneNumberVerified(true);
+                      // errorMessageProvider.setErrorMessage(message: 'validated');
+                      if (authenticationProvider
+                              .passwordController.text.length >=
+                          6) {
+                        authenticationProvider.setCanPressLogin(true);
+                      }
+                    } else {
+                      authenticationProvider.setIsPhoneNumberVerified(false);
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: setCurrentWidth(108),
+                ),
+                child: Container(
+                  height: setCurrentHeight(35),
+                  width: setCurrentWidth(35),
+                  child: CustomPaint(
+                    foregroundPainter: TrianglePainter(),
+                  ),
+                ),
+              ),
+            ],
           ),
           heighSpacer(15),
           Container(
