@@ -27,7 +27,7 @@ class TippingProvider extends ChangeNotifier {
   GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   int _selectedAmount = tippingAmount.first;
   SelectedReceiver _selectedReceiver = SelectedReceiver();
-  TextEditingController _otherAmount = TextEditingController(text: "50");
+  TextEditingController _otherAmount = TextEditingController(text: "0");
   bool _isOtherAmountSelected = false;
   dynamic _finalAmount = 0.0;
 
@@ -59,8 +59,8 @@ class TippingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleIsOtherAmountSelected() {
-    _isOtherAmountSelected = !_isOtherAmountSelected;
+  void setIsselectedAmountSelected(bool val) {
+    _isOtherAmountSelected = val;
     _selectedAmount = 0;
     notifyListeners();
   }
@@ -117,19 +117,14 @@ class TippingProvider extends ChangeNotifier {
             ? double.tryParse(_otherAmount.text.trim())
             : double.tryParse(_selectedAmount.toString());
 
-        // dynamic tipperNewBalance =
-        //     authenticationProvider.tipperModel.balance! - finalAmount;
-        // dynamic receiverNewBalance =
-        //     _selectedReceiver.balance! + tipperNewBalance;
-        // print(receiverNewBalance);
         if (authenticationProvider.tipperModel.balance! >= _finalAmount) {
           print(receiverId);
           dynamic tipperNewBalance =
               authenticationProvider.tipperModel.balance! - _finalAmount;
           dynamic receiverNewBalance =
               _selectedReceiver.balance! + _finalAmount;
-          // print(tipperNewBalance);
-          // print(receiverNewBalance);
+          print(tipperNewBalance);
+          print(receiverNewBalance);
           authenticationProvider
               .updateTipperModel(authenticationProvider.tipperModel.copyWith(
             balance: tipperNewBalance,
@@ -219,7 +214,7 @@ class TippingProvider extends ChangeNotifier {
     _isScanned = false;
     _selectedAmount = tippingAmount.first;
     _selectedReceiver = SelectedReceiver();
-    _otherAmount = TextEditingController(text: "50");
+    _otherAmount = TextEditingController(text: "");
     _isOtherAmountSelected = false;
     _finalAmount = 0.0;
     notifyListeners();

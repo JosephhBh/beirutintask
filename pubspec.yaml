@@ -45,6 +45,7 @@ dependencies:
   camera: ^0.9.4+20
   permission_handler: ^9.2.0
   intl: ^0.17.0
+  url_launcher: ^6.1.0
   # intl_phone_number_input: ^0.7.0+2
   intl_phone_number_input:
     path: /Users/josephbhanini/Desktop/tipper-packages/intl_phone_number_input
@@ -88,6 +89,7 @@ flutter:
     - assets/payment_icons/
     - assets/flags/
     - assets/support/
+    - assets/social/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

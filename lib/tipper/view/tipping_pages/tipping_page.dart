@@ -140,135 +140,146 @@ class _TippingPageState extends State<TippingPage> {
                         ),
                       ),
                       heighSpacer(40),
-                      GestureDetector(
-                        onTap: () {
-                          tippingProvider.toggleIsOtherAmountSelected();
-                        },
-                        child: Container(
-                          width: setCurrentWidth(135),
-                          decoration: BoxDecoration(
+                      Container(
+                        width: setCurrentWidth(135),
+                        decoration: BoxDecoration(
+                          color: appColor.transparentColor,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            // color: tippingProvider.isOtherAmountSelected
+                            //     ? appColor.yellowColor
+                            //     : appColor.transparentColor,
                             color: appColor.transparentColor,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: tippingProvider.isOtherAmountSelected
-                                  ? appColor.yellowColor
-                                  : appColor.transparentColor,
-                              width: 2,
-                            ),
+                            width: 2,
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                GlobalText(
-                                  text: 'Other amount:',
-                                  isBold: true,
-                                  isFredokaOne: false,
-                                  fontSize: 16,
-                                ),
-                                heighSpacer(10),
-                                // GlobalText(
-                                //   text: '50 AED',
-                                //   isBold: true,
-                                //   isFredokaOne: false,
-                                //   fontSize: 20,
-                                // ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Focus(
-                                        // focusNode: FocusNode(
-                                        //   canRequestFocus: false,
-                                        // ),
-                                        onFocusChange: (focus) {
-                                          if (tippingProvider
-                                                  .isOtherAmountSelected ==
-                                              false) {
-                                            tippingProvider
-                                                .toggleIsOtherAmountSelected();
-                                          }
-                                        },
-                                        child: TextField(
-                                          // au: false,
-                                          style: GoogleFonts.fredokaOne(
-                                            color: appColor.blackColor,
-                                            fontSize: 18,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              GlobalText(
+                                text: 'Other amount:',
+                                isBold: true,
+                                isFredokaOne: false,
+                                fontSize: 16,
+                              ),
+                              heighSpacer(10),
+                              // GlobalText(
+                              //   text: '50 AED',
+                              //   isBold: true,
+                              //   isFredokaOne: false,
+                              //   fontSize: 20,
+                              // ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    // child: Focus(
+                                    // focusNode: FocusNode(
+                                    //   canRequestFocus: false,
+                                    // ),
+                                    // onFocusChange: (focus) {
+                                    //   if (tippingProvider
+                                    //           .isOtherAmountSelected ==
+                                    //       false) {
+                                    //     tippingProvider
+                                    //         .toggleIsOtherAmountSelected();
+                                    //   }
+                                    // },
+                                    child: TextField(
+                                      // au: false,
+                                      style: GoogleFonts.fredokaOne(
+                                        color: appColor.blackColor,
+                                        fontSize: 18,
+                                      ),
+                                      decoration: InputDecoration(
+                                        alignLabelWithHint: false,
+                                        contentPadding: EdgeInsets.fromLTRB(
+                                            setCurrentWidth(16),
+                                            setCurrentHeight(8),
+                                            8,
+                                            12),
+                                        fillColor: appColor.transparentColor,
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
                                           ),
-                                          decoration: InputDecoration(
-                                            alignLabelWithHint: false,
-                                            contentPadding: EdgeInsets.fromLTRB(
-                                                setCurrentWidth(16),
-                                                setCurrentHeight(8),
-                                                8,
-                                                12),
-                                            fillColor:
-                                                appColor.transparentColor,
-                                            filled: true,
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.transparent,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(9),
-                                            ),
-                                            hintText: "50",
-                                            hintStyle: GoogleFonts.fredokaOne(
-                                              color: appColor.blackColor
-                                                  .withOpacity(0.3),
-                                              fontSize: 16,
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.transparent,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
+                                          borderRadius:
+                                              BorderRadius.circular(9),
+                                        ),
+                                        hintText: "50",
+                                        hintStyle: GoogleFonts.fredokaOne(
+                                          color: appColor.blackColor
+                                              .withOpacity(0.3),
+                                          fontSize: 16,
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
                                           ),
-                                          controller:
-                                              tippingProvider.otherAmount,
-                                          autofocus: false,
-                                          cursorColor: appColor.blackColor,
-                                          textInputAction: TextInputAction.next,
-                                          keyboardType: TextInputType.number,
-                                          onChanged: (val) {
-                                            dynamic result =
-                                                double.tryParse(val);
-                                            if (result > 100) {
-                                              tippingProvider.otherAmount
-                                                  .clear();
-                                            }
-                                            print("the result $result");
-                                          },
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                       ),
+                                      controller: tippingProvider.otherAmount,
+                                      autofocus: false,
+                                      cursorColor: appColor.blackColor,
+                                      textInputAction: TextInputAction.next,
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (String val) {
+                                        print("length is ${val.trim().length}");
+                                        if (val.trim().length > 0) {
+                                          print(
+                                              "length is1 ${val.trim().length}");
+                                          dynamic result = double.tryParse(val);
+                                          if (result > 100) {
+                                            tippingProvider.otherAmount.clear();
+                                            tippingProvider
+                                                .setIsselectedAmountSelected(
+                                                    true);
+                                          } else {
+                                            tippingProvider
+                                                .setIsselectedAmountSelected(
+                                                    true);
+                                          }
+                                        } else if (val.trim().length == 0) {
+                                          tippingProvider
+                                              .setIsselectedAmountSelected(
+                                                  false);
+                                          tippingProvider.setSelectedAmount(
+                                              tippingAmount.first);
+                                          FocusScope.of(context).unfocus();
+                                        }
+                                        // print("the result $result");
+                                      },
                                     ),
-                                    // Spacer(),
-                                    GlobalText(
-                                      text: 'AED',
-                                      isBold: true,
-                                      isFredokaOne: false,
-                                      fontSize: 20,
-                                    ),
-                                  ],
-                                ),
-                                heighSpacer(10),
-                                Divider(
-                                  height: 1,
-                                  thickness: 2,
-                                  color: appColor.yellowColor,
-                                ),
-                                heighSpacer(10),
-                                GlobalText(
-                                  text: 'MAX 100 AED',
-                                  isBold: true,
-                                  isFredokaOne: false,
-                                  fontSize: 16,
-                                ),
-                              ],
-                            ),
+                                    // ),
+                                  ),
+                                  // Spacer(),
+                                  GlobalText(
+                                    text: 'AED',
+                                    isBold: true,
+                                    isFredokaOne: false,
+                                    fontSize: 20,
+                                  ),
+                                ],
+                              ),
+                              heighSpacer(10),
+                              Divider(
+                                height: 1,
+                                thickness: 2,
+                                color: appColor.yellowColor,
+                              ),
+                              heighSpacer(10),
+                              GlobalText(
+                                text: 'MAX 100 AED',
+                                isBold: true,
+                                isFredokaOne: false,
+                                fontSize: 16,
+                              ),
+                            ],
                           ),
                         ),
                       ),

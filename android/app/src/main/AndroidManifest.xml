@@ -3,6 +3,15 @@
     <uses-permission android:name="android.permission.INTERNET"/>
           <uses-permission android:name="android.permission.RECORD_AUDIO" />
   <uses-permission android:name="android.permission.CAMERA"/>
+
+    <queries>
+  <!-- If your app sends emails -->
+  <intent>
+    <action android:name="android.intent.action.SEND" />
+    <data android:mimeType="*/*" />
+  </intent>
+</queries>
+
    <application
         android:label="tipr"
         android:name="${applicationName}"
