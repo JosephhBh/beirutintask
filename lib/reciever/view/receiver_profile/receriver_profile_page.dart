@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
+import 'package:tipperapp/core/navigation/navigation_service.dart';
+import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/buttons/logout_button.dart';
 import 'package:tipperapp/widgets/containers/profile_selection_container.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/about_us_icon.dart';
@@ -15,7 +18,7 @@ import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class ReceiverProfilePage extends StatelessWidget {
-  const ReceiverProfilePage({Key? key}) : super(key: key);
+  final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +77,14 @@ class ReceiverProfilePage extends StatelessWidget {
                     text: "Account settings",
                   ),
                   heighSpacer(18),
-                  ProfileSelectionContainer(
-                    icon: TransactionsIcon(),
-                    text: "Transactions",
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(name: kReceiverTransaction);
+                    },
+                    child: ProfileSelectionContainer(
+                      icon: TransactionsIcon(),
+                      text: "Transactions",
+                    ),
                   ),
                   heighSpacer(18),
                   ProfileSelectionContainer(

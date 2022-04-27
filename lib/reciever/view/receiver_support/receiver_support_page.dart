@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/controller/services/notification_service/notification_service.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
+import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/icons/social/facebook_icon.dart';
 import 'package:tipperapp/widgets/icons/social/instagram_icon.dart';
