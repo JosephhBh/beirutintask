@@ -22,8 +22,9 @@ class TipperProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authenticationProvier =
-        Provider.of<AuthenticationProvider>(context, listen: false);
+    // var authenticationProvier =
+    //     Provider.of<AuthenticationProvider>(context, listen: false);
+
     return GlobalScaffold(
       backgroundColor: appColor.yellowColor,
       child: SingleChildScrollView(
@@ -31,33 +32,37 @@ class TipperProfilePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: setCurrentHeight(280),
-              width: double.infinity,
-              color: appColor.greyColor,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    UserIcon(
-                      height: 105,
-                    ),
-                    heighSpacer(9),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GlobalText(
-                          text: authenticationProvier.tipperModel.username!,
-                          color: appColor.darkBlueColor,
-                          fontSize: 20,
-                        ),
-                      ],
-                    ),
-                  ],
+            Consumer<AuthenticationProvider>(
+                builder: (context, authenticationProvider, _) {
+              return Container(
+                height: setCurrentHeight(280),
+                width: double.infinity,
+                color: appColor.greyColor,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      UserIcon(
+                        height: 105,
+                      ),
+                      heighSpacer(9),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GlobalText(
+                            text: authenticationProvider.tipperModel.username ??
+                                "",
+                            color: appColor.darkBlueColor,
+                            fontSize: 20,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
             heighSpacer(28),
             applyPadding(
               0,
@@ -67,14 +72,20 @@ class TipperProfilePage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ProfileSelectionContainer(
-                    icon: HomeIcon(),
-                    text: "Home",
-                  ),
-                  heighSpacer(18),
-                  ProfileSelectionContainer(
-                    icon: SettingsIcon(),
-                    text: "Account settings",
+                  // ProfileSelectionContainer(
+                  //   icon: HomeIcon(),
+                  //   text: "Home",
+                  // ),
+                  // heighSpacer(18),
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(
+                          name: kTipperAccountSettings);
+                    },
+                    child: ProfileSelectionContainer(
+                      icon: SettingsIcon(),
+                      text: "Account settings",
+                    ),
                   ),
                   heighSpacer(18),
                   GestureDetector(
@@ -87,21 +98,29 @@ class TipperProfilePage extends StatelessWidget {
                     ),
                   ),
                   heighSpacer(18),
-                  ProfileSelectionContainer(
-                    icon: AboutUsIcon(),
-                    text: "About us",
-                  ),
-                  heighSpacer(18),
-                  ProfileSelectionContainer(
-                    icon: ProfileSupportIcon(),
-                    text: "Support",
-                  ),
-                  heighSpacer(56),
-                  LogoutButton(
-                    onPressed: () async {
-                      await authenticationProvier.signOut();
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(name: kAboutUsPage);
                     },
+                    child: ProfileSelectionContainer(
+                      icon: AboutUsIcon(),
+                      text: "About us",
+                    ),
                   ),
+                  // heighSpacer(18),
+                  // ProfileSelectionContainer(
+                  //   icon: ProfileSupportIcon(),
+                  //   text: "Support",
+                  // ),
+                  heighSpacer(56),
+                  Consumer<AuthenticationProvider>(
+                      builder: (context, authenticationProvider, _) {
+                    return LogoutButton(
+                      onPressed: () async {
+                        await authenticationProvider.signOut();
+                      },
+                    );
+                  }),
                 ],
               ),
             ),

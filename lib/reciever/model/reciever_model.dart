@@ -4,6 +4,11 @@
 
 import 'dart:convert';
 
+abstract class Copyable<T> {
+  T copy();
+  T copyWith();
+}
+
 ReceiverModel receiverModelFromJson(String str) =>
     ReceiverModel.fromJson(json.decode(str));
 
@@ -17,6 +22,7 @@ class ReceiverModel {
     this.email,
     this.username,
     this.name,
+    this.password,
   });
 
   String? userType;
@@ -25,6 +31,7 @@ class ReceiverModel {
   String? email;
   String? username;
   String? name;
+  String? password;
 
   factory ReceiverModel.fromJson(Map<String, dynamic> json) => ReceiverModel(
         userType: json["user_type"],
@@ -33,6 +40,7 @@ class ReceiverModel {
         email: json["email"],
         username: json["username"],
         name: json["name"],
+        password: json["password"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,5 +50,35 @@ class ReceiverModel {
         "email": email,
         "username": username,
         "name": name,
+        "password": password,
       };
+
+  @override
+  ReceiverModel copy() => ReceiverModel(
+      userType: userType,
+      balance: balance,
+      userId: userId,
+      email: email,
+      username: username,
+      name: name,
+      password: password);
+  @override
+  ReceiverModel copyWith({
+    String? userType,
+    dynamic? balance,
+    String? userId,
+    String? email,
+    String? username,
+    String? name,
+    String? password,
+  }) =>
+      ReceiverModel(
+        userType: userType ?? this.userType,
+        balance: balance ?? this.balance,
+        userId: userId ?? this.userId,
+        email: email ?? this.email,
+        username: username ?? this.username,
+        name: name ?? this.name,
+        password: password ?? this.password,
+      );
 }

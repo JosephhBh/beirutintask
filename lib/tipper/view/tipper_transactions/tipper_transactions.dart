@@ -147,7 +147,8 @@ class TipperTransactions extends StatelessWidget {
                                                 ),
                                                 Spacer(),
                                                 GlobalText(
-                                                  text: data['amount']
+                                                  text: "- " +
+                                                      data['amount']
                                                           .toString() +
                                                       " AED",
                                                   color: appColor.redColor,

@@ -118,9 +118,13 @@ class TipperHomePage extends StatelessWidget {
                                 // text: formatter.format(authenticationProvider
                                 //         .tipperModel.balance) +
                                 //     " AED",
-                                text: numberFormat.format(authenticationProvider
-                                        .tipperModel.balance) +
-                                    " AED",
+                                text: authenticationProvider
+                                            .tipperModel.balance ==
+                                        null
+                                    ? ""
+                                    : numberFormat.format(authenticationProvider
+                                            .tipperModel.balance) +
+                                        " AED",
                                 isFredokaOne: false,
                                 fontSize: 20,
                                 isBold: true,

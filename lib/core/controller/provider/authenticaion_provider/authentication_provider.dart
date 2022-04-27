@@ -428,6 +428,9 @@ class AuthenticationProvider extends ChangeNotifier {
   TextEditingController _tipperPasswordController = TextEditingController();
   TextEditingController _tipperConfirmPasswordController =
       TextEditingController();
+  TextEditingController _editUsernameController = TextEditingController();
+  TextEditingController _editPassController = TextEditingController();
+  TextEditingController _editConfirmPassController = TextEditingController();
 
   AuthenticationType get authenticationType => _authenticationType;
   TextEditingController get emailController => _emailController;
@@ -451,9 +454,25 @@ class AuthenticationProvider extends ChangeNotifier {
       _tipperPasswordController;
   TextEditingController get tipperConfirmPasswordController =>
       _tipperConfirmPasswordController;
+  TextEditingController get editUsernameController => _editUsernameController;
+  TextEditingController get editPassController => _editPassController;
+  TextEditingController get editConfirmPassController =>
+      _editConfirmPassController;
+
+  clearEditFunction() {
+    _editUsernameController.clear();
+    _editPassController.clear();
+    _editConfirmPassController.clear();
+    notifyListeners();
+  }
 
   updateTipperModel(TipperModel tipperModel) {
     _tipperModel = tipperModel;
+    notifyListeners();
+  }
+
+  updateReciverModel(ReceiverModel receiverModel) {
+    _receiverModel = receiverModel;
     notifyListeners();
   }
 
@@ -633,94 +652,103 @@ class AuthenticationProvider extends ChangeNotifier {
   //           .get();
 
   registerTipper() async {
-    _loading = true;
-    notifyListeners();
-    bool emailExist = false;
-    bool usernameExist = false;
-    bool phoneExist = false;
-    bool isValid = validateRegistrationFields();
-    dynamic result = await PhoneNumberUtil.isValidNumber(
-        phoneNumber:
-            _tipperPhoneNumberController.text.trim().replaceAll(' ', ''),
-        isoCode: "AE");
-    if (result as bool == false) {
-      errorMessageProvider.setErrorMessage(message: "Enter valid phone number");
-    }
-    if (isValid && result) {
-      /// check if email exist
-      final QuerySnapshot emailResult = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: _tipperEmailAddressController.text.trim())
-          .limit(1)
-          .get();
-      final List<DocumentSnapshot> emailDocs = emailResult.docs;
-      if (emailDocs.length > 0) {
-        emailExist = true;
-        errorMessageProvider.setErrorMessage(message: "Email already exist");
+    try {
+      _loading = true;
+      notifyListeners();
+      bool emailExist = false;
+      bool usernameExist = false;
+      bool phoneExist = false;
+      bool isValid = validateRegistrationFields();
+      dynamic result = await PhoneNumberUtil.isValidNumber(
+          phoneNumber:
+              _tipperPhoneNumberController.text.trim().replaceAll(' ', ''),
+          isoCode: "AE");
+      if (result as bool == false) {
+        errorMessageProvider.setErrorMessage(
+            message: "Enter valid phone number");
       }
-
-      /// check if username exist
-      if (!emailExist) {
-        final QuerySnapshot usernameResult = await FirebaseFirestore.instance
+      if (isValid && result) {
+        /// check if email exist
+        final QuerySnapshot emailResult = await FirebaseFirestore.instance
             .collection('users')
-            .where('username', isEqualTo: _tipperUsernameController.text.trim())
+            .where('email',
+                isEqualTo: _tipperEmailAddressController.text.trim())
             .limit(1)
             .get();
-        final List<DocumentSnapshot> usernameDocs = usernameResult.docs;
-        if (usernameDocs.length > 0) {
-          usernameExist = true;
-          errorMessageProvider.setErrorMessage(
-              message: "Username already exist");
+        final List<DocumentSnapshot> emailDocs = emailResult.docs;
+        if (emailDocs.length > 0) {
+          emailExist = true;
+          errorMessageProvider.setErrorMessage(message: "Email already exist");
+        }
+
+        /// check if username exist
+        if (!emailExist) {
+          final QuerySnapshot usernameResult = await FirebaseFirestore.instance
+              .collection('users')
+              .where('username',
+                  isEqualTo: _tipperUsernameController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> usernameDocs = usernameResult.docs;
+          if (usernameDocs.length > 0) {
+            usernameExist = true;
+            errorMessageProvider.setErrorMessage(
+                message: "Username already exist");
+          }
+        }
+        String finalTipperPhoneNumber =
+            '+971' + _tipperPhoneNumberController.text.replaceAll(' ', '');
+
+        /// check if phoneNumber exist
+        if (!emailExist && !usernameExist) {
+          final QuerySnapshot phoneResults = await FirebaseFirestore.instance
+              .collection('users')
+              .where("user_type", isEqualTo: UserType.tipper.name)
+              .where('phone_number', isEqualTo: finalTipperPhoneNumber)
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> phoneDocs = phoneResults.docs;
+          if (phoneDocs.length > 0) {
+            phoneExist = true;
+            errorMessageProvider.setErrorMessage(
+                message: "Phone number already exist");
+          }
+        }
+
+        if (!emailExist && !usernameExist && !phoneExist) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          String userId = _firestore.collection('users').doc().id;
+          await _firestore.collection('users').doc(userId).set({
+            "user_id": userId,
+            // "emirates_id": _emiratesIdController.text.trim(),
+            "username": _tipperUsernameController.text.trim(),
+            "email": _tipperEmailAddressController.text.trim(),
+            "phone_number": finalTipperPhoneNumber,
+            "password": _tipperPasswordController.text.trim(),
+            "balance": 1320.5,
+            "user_type": "tipper",
+          });
+
+          await _firestore
+              .collection('users')
+              .doc(userId)
+              .collection('notifications')
+              .doc(userId)
+              .set({
+            "is_read": true,
+          });
+
+          await prefs.setString('uid', userId);
+          _navigationService.navigateAndRemove(name: kRootPage);
         }
       }
-      String finalTipperPhoneNumber =
-          '+971' + _tipperPhoneNumberController.text.replaceAll(' ', '');
-
-      /// check if phoneNumber exist
-      if (!emailExist && !usernameExist) {
-        final QuerySnapshot phoneResults = await FirebaseFirestore.instance
-            .collection('users')
-            .where("user_type", isEqualTo: UserType.tipper.name)
-            .where('phone_number', isEqualTo: finalTipperPhoneNumber)
-            .limit(1)
-            .get();
-        final List<DocumentSnapshot> phoneDocs = phoneResults.docs;
-        if (phoneDocs.length > 0) {
-          phoneExist = true;
-          errorMessageProvider.setErrorMessage(
-              message: "Phone number already exist");
-        }
-      }
-
-      if (!emailExist && !usernameExist && !phoneExist) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String userId = _firestore.collection('users').doc().id;
-        await _firestore.collection('users').doc(userId).set({
-          "user_id": userId,
-          // "emirates_id": _emiratesIdController.text.trim(),
-          "username": _tipperUsernameController.text.trim(),
-          "email": _tipperEmailAddressController.text.trim(),
-          "phone_number": finalTipperPhoneNumber,
-          "password": _tipperPasswordController.text.trim(),
-          "balance": 1320.5,
-          "user_type": "tipper",
-        });
-
-        await _firestore
-            .collection('users')
-            .doc(userId)
-            .collection('notifications')
-            .doc(userId)
-            .set({
-          "is_read": true,
-        });
-
-        await prefs.setString('uid', userId);
-        _navigationService.navigateAndRemove(name: kRootPage);
-      }
+      _loading = false;
+      notifyListeners();
+    } catch (e) {
+      _loading = false;
+      notifyListeners();
+      errorMessageProvider.setSomethingWentWrrongMessage();
     }
-    _loading = false;
-    notifyListeners();
   }
 
   signIn() async {
@@ -788,7 +816,184 @@ class AuthenticationProvider extends ChangeNotifier {
       _loading = false;
       notifyListeners();
     } catch (e) {
+      _loading = false;
+      notifyListeners();
       print('sign in error $e');
+    }
+  }
+
+  updateTipperProfile() async {
+    try {
+      errorMessageProvider.clearErrorMessage();
+      _loading = true;
+      notifyListeners();
+      // if(_editPassController.text.trim() == _editConfirmPassController.text.trim())
+
+      if (_editUsernameController.text.trim().length <= 2) {
+        errorMessageProvider.setErrorMessage(message: 'Invalid username');
+      } else if (_editPassController.text.trim() !=
+          _editConfirmPassController.text.trim()) {
+        errorMessageProvider.setErrorMessage(
+            message: 'Password does not match');
+      } else if (_editPassController.text.trim() ==
+              _editConfirmPassController.text.trim() &&
+          _editPassController.text.trim().length < 6 &&
+          _editPassController.text.trim().length != 0) {
+        errorMessageProvider.setErrorMessage(message: "At leaset 6 characters");
+      } else {
+        if (_editUsernameController.text.trim() != _tipperModel.username) {
+          bool usernameExist = false;
+          final QuerySnapshot usernameResult = await FirebaseFirestore.instance
+              .collection('users')
+              .where('username', isEqualTo: _editUsernameController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> usernameDocs = usernameResult.docs;
+          if (usernameDocs.length > 0) {
+            usernameExist = true;
+            errorMessageProvider.setErrorMessage(
+                message: "Username already exist");
+          } else {
+            await _firestore
+                .collection('users')
+                .doc(_tipperModel.userId)
+                .update({
+              "username": _editUsernameController.text.trim(),
+            });
+            updateTipperModel(_tipperModel.copyWith(
+              username: _editUsernameController.text.trim(),
+            ));
+            if (_editPassController.text.trim() ==
+                    _editConfirmPassController.text.trim() &&
+                _editPassController.text.trim().length >= 6) {
+              await _firestore
+                  .collection('users')
+                  .doc(_tipperModel.userId)
+                  .update({
+                "password": _editPassController.text.trim(),
+              });
+              updateTipperModel(_tipperModel.copyWith(
+                password: _editPassController.text.trim(),
+              ));
+            }
+
+            _navigationService.pop();
+            clearEditFunction();
+          }
+        } else {
+          if (_editPassController.text.trim() ==
+                  _editConfirmPassController.text.trim() &&
+              _editPassController.text.trim().length >= 6) {
+            await _firestore
+                .collection('users')
+                .doc(_tipperModel.userId)
+                .update({
+              "password": _editPassController.text.trim(),
+            });
+            updateTipperModel(_tipperModel.copyWith(
+              password: _editPassController.text.trim(),
+            ));
+            _navigationService.pop();
+            clearEditFunction();
+          }
+        }
+      }
+
+      _loading = false;
+      notifyListeners();
+    } catch (e) {
+      print("update user error $e");
+      _loading = false;
+      notifyListeners();
+      errorMessageProvider.setSomethingWentWrrongMessage();
+    }
+  }
+
+  updateReciverProfile() async {
+    try {
+      errorMessageProvider.clearErrorMessage();
+      _loading = true;
+      notifyListeners();
+      // if(_editPassController.text.trim() == _editConfirmPassController.text.trim())
+
+      if (_editUsernameController.text.trim().length <= 2) {
+        errorMessageProvider.setErrorMessage(message: 'Invalid username');
+      } else if (_editPassController.text.trim() !=
+          _editConfirmPassController.text.trim()) {
+        errorMessageProvider.setErrorMessage(
+            message: 'Password does not match');
+      } else if (_editPassController.text.trim() ==
+              _editConfirmPassController.text.trim() &&
+          _editPassController.text.trim().length < 6 &&
+          _editPassController.text.trim().length != 0) {
+        errorMessageProvider.setErrorMessage(message: "At leaset 6 characters");
+      } else {
+        if (_editUsernameController.text.trim() != _receiverModel.username) {
+          bool usernameExist = false;
+          final QuerySnapshot usernameResult = await FirebaseFirestore.instance
+              .collection('users')
+              .where('username', isEqualTo: _editUsernameController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> usernameDocs = usernameResult.docs;
+          if (usernameDocs.length > 0) {
+            usernameExist = true;
+            errorMessageProvider.setErrorMessage(
+                message: "Username already exist");
+          } else {
+            await _firestore
+                .collection('users')
+                .doc(_receiverModel.userId)
+                .update({
+              "username": _editUsernameController.text.trim(),
+            });
+            updateReciverModel(_receiverModel.copyWith(
+              username: _editUsernameController.text.trim(),
+            ));
+            if (_editPassController.text.trim() ==
+                    _editConfirmPassController.text.trim() &&
+                _editPassController.text.trim().length >= 6) {
+              await _firestore
+                  .collection('users')
+                  .doc(_receiverModel.userId)
+                  .update({
+                "password": _editPassController.text.trim(),
+              });
+              updateReciverModel(_receiverModel.copyWith(
+                password: _editPassController.text.trim(),
+              ));
+            }
+
+            _navigationService.pop();
+            clearEditFunction();
+          }
+        } else {
+          if (_editPassController.text.trim() ==
+                  _editConfirmPassController.text.trim() &&
+              _editPassController.text.trim().length >= 6) {
+            print(_receiverModel.userId);
+            await _firestore
+                .collection('users')
+                .doc(_receiverModel.userId)
+                .update({
+              "password": _editPassController.text.trim(),
+            });
+            updateReciverModel(_receiverModel.copyWith(
+              password: _editPassController.text.trim(),
+            ));
+            _navigationService.pop();
+            clearEditFunction();
+          }
+        }
+      }
+
+      _loading = false;
+      notifyListeners();
+    } catch (e) {
+      print("update user error $e");
+      _loading = false;
+      notifyListeners();
+      errorMessageProvider.setSomethingWentWrrongMessage();
     }
   }
 
@@ -810,6 +1015,9 @@ class AuthenticationProvider extends ChangeNotifier {
     _tipperPhoneNumberController.clear();
     _tipperPasswordController.clear();
     _tipperConfirmPasswordController.clear();
+    _editUsernameController.clear();
+    _editPassController.clear();
+    _editConfirmPassController.clear();
     notifyListeners();
   }
 }

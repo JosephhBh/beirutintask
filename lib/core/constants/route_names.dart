@@ -15,3 +15,6 @@ const String kTippingPage = "TippingPage";
 const String kPaymentSuccessPage = "PaymentSuccessPage";
 const String kTipperTransactions = "TipperTransactions";
 const String kReceiverTransaction = "ReceiverTransacctions";
+const String kTipperAccountSettings = "TipperAccountSettings";
+const String kReceiverAccountSettings = "ReceiverAccountSettings";
+const String kAboutUsPage = "AboutUsPage";
