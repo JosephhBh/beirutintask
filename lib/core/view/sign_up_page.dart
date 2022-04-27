@@ -16,6 +16,7 @@ import 'package:tipperapp/widgets/icons/face_id_icon.dart';
 import 'package:tipperapp/widgets/icons/registration_icons/password_icon.dart';
 import 'package:tipperapp/widgets/icons/registration_icons/phone_number_icon.dart';
 import 'package:tipperapp/widgets/icons/registration_icons/username_yellow_icon.dart';
+import 'package:tipperapp/widgets/loading/global_loading.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
@@ -186,6 +187,12 @@ class SignUpPage extends StatelessWidget {
               }),
             ),
             FinalErrorWidget(),
+            Consumer<AuthenticationProvider>(
+                builder: (context, authenticationProvider, _) {
+              return authenticationProvider.loading
+                  ? GlobalLoading()
+                  : SizedBox.shrink();
+            }),
           ],
         ),
       ),

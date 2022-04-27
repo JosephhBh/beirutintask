@@ -9,6 +9,7 @@ import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/buttons/sign_in_button.dart';
 import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/face_id_icon.dart';
+import 'package:tipperapp/widgets/loading/global_loading.dart';
 import 'package:tipperapp/widgets/registration/login_fields.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
@@ -169,6 +170,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           FinalErrorWidget(),
+          Consumer<AuthenticationProvider>(
+              builder: (context, authenticationProvider, _) {
+            return authenticationProvider.loading
+                ? GlobalLoading()
+                : SizedBox.shrink();
+          }),
         ],
       ),
     );

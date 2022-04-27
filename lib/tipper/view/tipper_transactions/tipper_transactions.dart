@@ -4,61 +4,180 @@ import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/controller/services/transactions_service/transactions_service.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
+import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
+import 'package:tipperapp/widgets/icons/back_icon.dart';
+import 'package:tipperapp/widgets/icons/back_icon_withcolor.dart';
+import 'package:tipperapp/widgets/icons/notification_icon.dart';
+import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
+import 'package:tipperapp/widgets/text/global_text.dart';
 
 class TipperTransactions extends StatelessWidget {
   final TransactionsService _transactionsService =
       locator<TransactionsService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
     var authenticationProvider =
         Provider.of<AuthenticationProvider>(context, listen: false);
     return GlobalScaffold(
-      backgroundColor: appColor.greyColor,
+      backgroundColor: appColor.yellowColor,
       child: SingleChildScrollView(
-        child: Column(
+        child: Stack(
+          fit: StackFit.loose,
           children: [
-            StreamBuilder(
-              stream: _transactionsService
-                  .getTransactions(authenticationProvider.tipperModel.userId!),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return Container(
-                    height: 0,
-                    width: 0,
-                    // color: Colors.red,
-                  );
-                } else if (snapshot.hasData) {
-                  return Column(
-                    children: [
-                      ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: snapshot.data!.docs
-                            .map((DocumentSnapshot document) {
-                          Map<String, dynamic> data =
-                              document.data()! as Map<String, dynamic>;
-                          return Column(
+            applyPadding(
+              15,
+              0,
+              0,
+              0,
+              Stack(
+                fit: StackFit.loose,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.pop();
+                    },
+                    child: Container(
+                      color: appColor.transparentColor,
+                      // height: setCurrentHeight(70),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            textBaseline: TextBaseline.alphabetic,
                             children: [
-                              Text(
-                                data['id'].toString(),
+                              widthSpacer(13),
+                              BackIconWithColor(
+                                color: appColor.whiteColor,
                               ),
-                              Divider(
-                                height: 1,
-                                thickness: 1,
-                                color: appColor.yellowColor,
+                              // widthSpacer(15),
+
+                              Spacer(),
+                              GlobalText(
+                                text: "hello, " +
+                                    authenticationProvider
+                                        .tipperModel.username!,
+                                color: appColor.whiteColor,
+                                fontSize: 16,
                               ),
+                              widthSpacer(9),
+                              UserIcon(),
+
+                              widthSpacer(19),
                             ],
-                          );
-                        }).toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            applyPadding(
+              101,
+              0,
+              0,
+              0,
+              Container(
+                height: setCurrentHeight(825),
+                decoration: BoxDecoration(
+                    color: appColor.whiteColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(70),
+                      topRight: Radius.circular(70),
+                    )),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      heighSpacer(33),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          widthSpacer(33),
+                          GlobalText(
+                            text: 'Transactions',
+                            color: appColor.blackColor.withOpacity(0.66),
+                          ),
+                        ],
+                      ),
+                      heighSpacer(43),
+                      StreamBuilder(
+                        stream: _transactionsService.getTransactions(
+                            authenticationProvider.tipperModel.userId!),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return Container(
+                              height: 0,
+                              width: 0,
+                              // color: Colors.red,
+                            );
+                          } else if (snapshot.hasData) {
+                            return Column(
+                              children: [
+                                ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: snapshot.data!.docs
+                                      .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data = document.data()!
+                                        as Map<String, dynamic>;
+                                    return Column(
+                                      children: [
+                                        Container(
+                                          height: setCurrentHeight(53),
+                                          width: double.infinity,
+                                          color: appColor.greyColor,
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                widthSpacer(40),
+                                                GlobalText(
+                                                  text: 'To ' +
+                                                      data['receiver_username'],
+                                                  color: appColor.blackColor
+                                                      .withOpacity(0.66),
+                                                  fontSize: 16,
+                                                ),
+                                                Spacer(),
+                                                GlobalText(
+                                                  text: data['amount']
+                                                          .toString() +
+                                                      " AED",
+                                                  color: appColor.redColor,
+                                                  fontSize: 16,
+                                                ),
+                                                widthSpacer(40),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        // Divider(
+                                        //   height: 1,
+                                        //   thickness: 0.4,
+                                        //   color: appColor.dividerColor,
+                                        // ),
+                                        heighSpacer(10),
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          }
+                          return Container();
+                        },
                       ),
                     ],
-                  );
-                }
-                return Container();
-              },
+                  ),
+                ),
+              ),
             ),
           ],
         ),
