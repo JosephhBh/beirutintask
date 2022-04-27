@@ -30,6 +30,7 @@ class TippingProvider extends ChangeNotifier {
   TextEditingController _otherAmount = TextEditingController(text: "0");
   bool _isOtherAmountSelected = false;
   dynamic _finalAmount = 0.0;
+  bool _isLoading = false;
 
   String get scannedQrMessage => _scannedQrMessage;
   bool get isScanned => _isScanned;
@@ -41,6 +42,7 @@ class TippingProvider extends ChangeNotifier {
   bool get isOtherAmountSelected => _isOtherAmountSelected;
   TextEditingController get otherAmount => _otherAmount;
   dynamic get finalAmount => _finalAmount;
+  bool get isLoading => _isLoading;
 
   void setScannedQrMessage(String val) {
     _scannedQrMessage = val;
@@ -105,6 +107,8 @@ class TippingProvider extends ChangeNotifier {
       /// update receiver with new balance
       /// send message to receiver
       /// send message to tipper
+      _isLoading = true;
+      notifyListeners();
       if (_isOtherAmountSelected && _otherAmount.text.trim().length == 0) {
         errorMessageProvider.setErrorMessage(message: "Enter amount");
       } else {
@@ -198,11 +202,82 @@ class TippingProvider extends ChangeNotifier {
               .collection('notifications')
               .doc(tipperNotificationId)
               .set(tipperNotificaiton.toJson());
+
+          /////////// TRANSACTIONS ///////////////
+
+          await _firestore
+              .collection('users')
+              .doc(tipperId)
+              .collection('transactions')
+              .doc(tipperId)
+              .update({
+            "have_transaction": true,
+          });
+          await _firestore
+              .collection('users')
+              .doc(receiverId)
+              .collection('transactions')
+              .doc(receiverId)
+              .update({
+            "have_transaction": true,
+          });
+          String tipperTransactionnId = await _firestore
+              .collection('users')
+              .doc(tipperId)
+              .collection('transactions')
+              .doc(tipperId)
+              .collection('transactions')
+              .doc()
+              .id;
+          String receiverTransactionId = await _firestore
+              .collection('users')
+              .doc(receiverId)
+              .collection('transactions')
+              .doc(receiverId)
+              .collection('transactions')
+              .doc()
+              .id;
+
+          await _firestore
+              .collection('users')
+              .doc(receiverId)
+              .collection('transactions')
+              .doc(receiverId)
+              .collection('transactions')
+              .doc(receiverTransactionId)
+              .set({
+            "id": receiverTransactionId,
+            "sent_from": tipperId,
+            "sent_to": receiverId,
+            "amount": finalAmount,
+            "date": Timestamp.now(),
+            "receiver_username": _selectedReceiver.username,
+            "tipper_name": tipperName,
+          });
+          await _firestore
+              .collection('users')
+              .doc(tipperId)
+              .collection('transactions')
+              .doc(tipperId)
+              .collection('transactions')
+              .doc(tipperTransactionnId)
+              .set({
+            "id": tipperTransactionnId,
+            "sent_from": tipperId,
+            "sent_to": receiverId,
+            "amount": finalAmount,
+            "date": Timestamp.now(),
+            "receiver_username": _selectedReceiver.username,
+            "tipper_name": tipperName,
+          });
+
           _navigationService.replaceRoute(name: kPaymentSuccessPage);
         } else {
           errorMessageProvider.setErrorMessage(message: "Insufficient Funds");
         }
       }
+      _isLoading = false;
+      notifyListeners();
     } catch (e) {
       debugPrint("tip worker : $e");
       errorMessageProvider.setSomethingWentWrrongMessage();
@@ -217,6 +292,7 @@ class TippingProvider extends ChangeNotifier {
     _otherAmount = TextEditingController(text: "");
     _isOtherAmountSelected = false;
     _finalAmount = 0.0;
+    _isLoading = false;
     notifyListeners();
   }
 }

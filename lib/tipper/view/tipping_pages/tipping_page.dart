@@ -11,6 +11,7 @@ import 'package:tipperapp/widgets/buttons/payment_button.dart';
 import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/back_icon.dart';
 import 'package:tipperapp/widgets/icons/user_icon.dart';
+import 'package:tipperapp/widgets/loading/global_loading.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
@@ -59,7 +60,9 @@ class _TippingPageState extends State<TippingPage> {
                     height: setCurrentHeight(70),
                     child: Row(
                       children: [
-                        BackIcon(),
+                        BackIcon(
+                            // color: appColor.darkBlueColor,
+                            ),
                       ],
                     ),
                   ),
@@ -422,6 +425,11 @@ class _TippingPageState extends State<TippingPage> {
             }),
           ),
           FinalErrorWidget(),
+          Consumer<TippingProvider>(builder: (context, tippingProvider, _) {
+            return tippingProvider.isLoading
+                ? GlobalLoading()
+                : SizedBox.shrink();
+          }),
         ],
       ),
     );

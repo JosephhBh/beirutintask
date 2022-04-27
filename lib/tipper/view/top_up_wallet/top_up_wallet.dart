@@ -47,7 +47,9 @@ class TopUpWallet extends StatelessWidget {
                         height: setCurrentHeight(70),
                         child: Row(
                           children: [
-                            BackIcon(),
+                            BackIcon(
+                                // color: appColor.darkBlueColor,
+                                ),
                           ],
                         ),
                       ),
