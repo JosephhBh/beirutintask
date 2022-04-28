@@ -738,6 +738,15 @@ class AuthenticationProvider extends ChangeNotifier {
             "is_read": true,
           });
 
+          await _firestore
+              .collection('users')
+              .doc(userId)
+              .collection('transactions')
+              .doc(userId)
+              .set({
+            "have_transaction": false,
+          });
+
           await prefs.setString('uid', userId);
           _navigationService.navigateAndRemove(name: kRootPage);
         }

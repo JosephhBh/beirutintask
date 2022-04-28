@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "132416023028",
-    "project_id": "tipr-730a6",
-    "storage_bucket": "tipr-730a6.appspot.com"
+    "project_number": "122010163163",
+    "project_id": "tipr-f2ed1",
+    "storage_bucket": "tipr-f2ed1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:132416023028:android:635586146ccc9c26a9f1a1",
+        "mobilesdk_app_id": "1:122010163163:android:2c1ac4db3c4c0e96b579fe",
         "android_client_info": {
           "package_name": "com.beirutin.tipperapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "132416023028-ults8nmvpoitjhqgerd6kj09g98kbt4p.apps.googleusercontent.com",
+          "client_id": "122010163163-95kn3j3mq78f1egkp7u1n3q7vngonnlf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGQqUg7SOr568OZV8UAOygM55xhFpcHsI"
+          "current_key": "AIzaSyAnFKhHhsJhVWgFp3lUi9q2-MaASPqyfU4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "132416023028-ults8nmvpoitjhqgerd6kj09g98kbt4p.apps.googleusercontent.com",
+              "client_id": "122010163163-95kn3j3mq78f1egkp7u1n3q7vngonnlf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
