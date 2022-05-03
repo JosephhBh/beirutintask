@@ -59,6 +59,8 @@ import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/icons/back_icon.dart';
 import 'package:tipperapp/widgets/icons/back_icon_withcolor.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/about_us_icon.dart';
+import 'package:tipperapp/widgets/icons/support/about_us_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
@@ -124,49 +126,69 @@ class AboutUsPage extends StatelessWidget {
             0,
             24,
             0,
-            Row(
-              // textBaseline: TextBaseline.ideographic,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Stack(
+              fit: StackFit.loose,
               children: [
-                applyPadding(
-                  20,
-                  0,
-                  0,
-                  0,
-                  Container(
-                    width: setCurrentWidth(70),
-                    child: Divider(
-                      height: 2,
-                      thickness: 3,
-                      color: appColor.yellowColor,
-                    ),
-                  ),
-                ),
-                widthSpacer(5),
-                Expanded(
-                  flex: 1,
-                  child: RichText(
-                    text: TextSpan(
-                      text: '',
-                      // style: DefaultTextStyle.of(context).style,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Tipr',
-                          style: GoogleFonts.fredokaOne(
-                              fontSize: setFontSize(30),
-                              color: appColor.yellowColor.withOpacity(0.6)),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      // textBaseline: TextBaseline.ideographic,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        applyPadding(
+                          20,
+                          0,
+                          0,
+                          0,
+                          Container(
+                            width: setCurrentWidth(70),
+                            child: Divider(
+                              height: 2,
+                              thickness: 3,
+                              color: appColor.yellowColor,
+                            ),
+                          ),
                         ),
-                        TextSpan(
-                          text:
-                              ' is a mobile application that allows customers to pay cashless tips directly to service workers using QR Code reader technology.',
-                          style: GoogleFonts.fredokaOne(
-                              fontSize: setFontSize(30),
-                              color: appColor.blackColor.withOpacity(0.6)),
+                        widthSpacer(5),
+                        Expanded(
+                          flex: 1,
+                          child: RichText(
+                            text: TextSpan(
+                              text: '',
+                              // style: DefaultTextStyle.of(context).style,
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Tipr',
+                                  style: GoogleFonts.fredokaOne(
+                                      fontSize: setFontSize(30),
+                                      color: appColor.yellowColor
+                                          .withOpacity(0.6)),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' is a mobile application that allows customers to pay cashless tips directly to service workers using QR Code reader technology.',
+                                  style: GoogleFonts.fredokaOne(
+                                      fontSize: setFontSize(30),
+                                      color:
+                                          appColor.blackColor.withOpacity(0.6)),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                  ],
+                ),
+                applyPadding(
+                  210,
+                  200,
+                  0,
+                  0,
+                  AboutUsIconLogo(),
                 ),
               ],
             ),
