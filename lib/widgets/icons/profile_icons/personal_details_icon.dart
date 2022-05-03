@@ -8,7 +8,7 @@ class PersonalDetailsIcon extends StatelessWidget {
     return SvgPicture.asset(
       'assets/profile_icons/personal_details.svg',
       fit: BoxFit.fill,
-      height: setCurrentHeight(26),
+      height: setCurrentHeight(30),
     );
   }
 }

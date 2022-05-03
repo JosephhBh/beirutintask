@@ -43,14 +43,21 @@ class _RootPageState extends State<RootPage> {
     // User? _firebaseUser = FirebaseAuth.instance.currentUser;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString('uid');
+    print("the uid is $uid");
     if (uid != null) {
       var authenticationProvider =
           Provider.of<AuthenticationProvider>(context, listen: false);
       var result = await authenticationProvider.getUserDataOnStartup(uid);
-      if (result == UserType.receiver.name) {
-        _authStatus = AuthStatus.showReceiverHomePage;
+      print("the uid is $result");
+      if (result == "") {
+        _authStatus = AuthStatus.showLoginPage;
+        prefs.remove('uid');
       } else {
-        _authStatus = AuthStatus.showTipperHomePage;
+        if (result == UserType.receiver.name) {
+          _authStatus = AuthStatus.showReceiverHomePage;
+        } else {
+          _authStatus = AuthStatus.showTipperHomePage;
+        }
       }
     } else {
       _authStatus = AuthStatus.showLoginPage;

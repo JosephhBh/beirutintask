@@ -1,8 +1,12 @@
 import 'package:flutter/widgets.dart';
+import 'package:tipperapp/core/device_utils/device_utils.dart';
 
 class NavigationService {
   GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
   Future<dynamic> navigateTo({required String name, dynamic arguments}) {
+    if (errorMessageProvider.errorMessage.message != "") {
+      errorMessageProvider.clearErrorMessage();
+    }
     return navigatorKey.currentState!.pushNamed(
       name,
       arguments: arguments,
@@ -15,6 +19,9 @@ class NavigationService {
 
   pop() {
     if (navigatorKey.currentState!.canPop()) {
+      if (errorMessageProvider.errorMessage.message != "") {
+        errorMessageProvider.clearErrorMessage();
+      }
       return navigatorKey.currentState!.pop();
     }
   }
@@ -24,6 +31,9 @@ class NavigationService {
   }
 
   Future<dynamic> navigateAndRemove({required String name, dynamic arguments}) {
+    if (errorMessageProvider.errorMessage.message != "") {
+      errorMessageProvider.clearErrorMessage();
+    }
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
       name,
       (route) => false,

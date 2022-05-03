@@ -8,7 +8,7 @@ class PaymentMethodsIcon extends StatelessWidget {
     return SvgPicture.asset(
       'assets/profile_icons/payment_methods.svg',
       fit: BoxFit.fill,
-      height: setCurrentHeight(26),
+      height: setCurrentHeight(30),
     );
   }
 }

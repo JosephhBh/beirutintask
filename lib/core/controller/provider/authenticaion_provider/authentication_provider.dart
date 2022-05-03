@@ -746,7 +746,7 @@ class AuthenticationProvider extends ChangeNotifier {
             "email": _tipperEmailAddressController.text.trim(),
             "phone_number": finalTipperPhoneNumber,
             "password": _tipperPasswordController.text.trim(),
-            "balance": 0,
+            "balance": 1320,
             "user_type": "tipper",
             "name": "",
             "image_path": ''

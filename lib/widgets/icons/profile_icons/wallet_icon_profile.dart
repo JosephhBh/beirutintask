@@ -8,7 +8,7 @@ class WalletIconProfile extends StatelessWidget {
     return SvgPicture.asset(
       'assets/profile_icons/wallet_icon_profile.svg',
       fit: BoxFit.fill,
-      height: setCurrentHeight(26),
+      height: setCurrentHeight(30),
     );
   }
 }
