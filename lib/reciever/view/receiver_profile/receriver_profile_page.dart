@@ -93,7 +93,10 @@ class ReceiverProfilePage extends StatelessWidget {
                   ),
                   heighSpacer(16),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      _navigationService.navigateTo(
+                          name: kReceiverAccountSettings);
+                    },
                     child: ProfileSelectionContainer(
                       icon: SettingsIcon(),
                       text: "Account settings",

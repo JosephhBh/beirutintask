@@ -7,6 +7,7 @@ import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/back_icon.dart';
+import 'package:tipperapp/widgets/icons/flags/emirates_flag.dart';
 import 'package:tipperapp/widgets/loading/global_loading.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
@@ -240,7 +241,46 @@ class _TipperAccountSettingsState extends State<TipperAccountSettings> {
                             ),
                           ),
                         ),
-                        heighSpacer(38),
+                        heighSpacer(53),
+                        GlobalText(
+                          text: "Change language",
+                          color: appColor.blackColor.withOpacity(0.66),
+                        ),
+                        heighSpacer(7),
+                        Container(
+                          height: setCurrentHeight(63),
+                          width: double.infinity,
+                          color: appColor.whiteColor,
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                widthSpacer(16),
+                                Container(
+                                  height: setCurrentHeight(25),
+                                  width: setCurrentWidth(51),
+                                  child: Image(
+                                    image: AssetImage('assets/flags/ae.png'),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                widthSpacer(33),
+                                GlobalText(
+                                  text: "Arabic",
+                                  fontSize: 14,
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.search_sharp,
+                                  color: appColor.blackColor.withOpacity(0.6),
+                                  size: setCurrentHeight(30),
+                                ),
+                                widthSpacer(16),
+                              ],
+                            ),
+                          ),
+                        ),
+                        heighSpacer(62),
                         Divider(
                           height: 1,
                           thickness: 0.5,
