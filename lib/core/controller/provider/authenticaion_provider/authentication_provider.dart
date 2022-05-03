@@ -720,13 +720,14 @@ class AuthenticationProvider extends ChangeNotifier {
           String userId = _firestore.collection('users').doc().id;
           await _firestore.collection('users').doc(userId).set({
             "user_id": userId,
-            // "emirates_id": _emiratesIdController.text.trim(),
             "username": _tipperUsernameController.text.trim(),
             "email": _tipperEmailAddressController.text.trim(),
             "phone_number": finalTipperPhoneNumber,
             "password": _tipperPasswordController.text.trim(),
-            "balance": 1320.5,
+            "balance": 0,
             "user_type": "tipper",
+            "name": "",
+            "image_path": ''
           });
 
           await _firestore

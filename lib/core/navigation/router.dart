@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/view/about_us_screen.dart';
 import 'package:tipperapp/core/view/sign_up_page.dart';
-import 'package:tipperapp/reciever/view/receiver_account_settings/receiver_account_settings.dart';
+import 'package:tipperapp/reciever/view/receiver_profile/receiver_account_settings.dart';
 
 import 'package:tipperapp/reciever/view/receiver_notification_page/receiver_all_notifications_page.dart';
 import 'package:tipperapp/reciever/view/receiver_notification_page/receiver_notification_detail_page.dart';
+import 'package:tipperapp/reciever/view/receiver_profile/receiver_wallet_page.dart';
 import 'package:tipperapp/reciever/view/receiver_root_page.dart';
-import 'package:tipperapp/reciever/view/receiver_transactions/receiver_transactions.dart';
+import 'package:tipperapp/reciever/view/receiver_profile/receiver_transactions.dart';
 import 'package:tipperapp/root_page.dart';
 import 'package:tipperapp/starting_screen.dart';
-import 'package:tipperapp/tipper/view/tipper_account_settings/tipper_account_settings.dart';
-import 'package:tipperapp/tipper/view/tipper_transactions/tipper_transactions.dart';
+import 'package:tipperapp/tipper/view/tipper_profile/tipper_account_settings.dart';
+import 'package:tipperapp/tipper/view/tipper_profile/tipper_transactions.dart';
+import 'package:tipperapp/tipper/view/tipper_profile/tipper_wallet_page.dart';
 import 'package:tipperapp/tipper/view/tipping_pages/payment_success_page.dart';
 import 'package:tipperapp/tipper/view/tipping_pages/tipping_page.dart';
 import 'package:tipperapp/tipper/view/tipper_notifications/tipper_all_notifications.dart';
@@ -129,7 +131,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         settings.name,
         AboutUsPage(),
       );
-
+    case kTipperWalletPage:
+      return _fadeRoute(
+        settings.name,
+        TipperWalletPage(),
+      );
+    case kReceiverWalletPage:
+      return _fadeRoute(
+        settings.name,
+        ReceiverWalletPage(),
+      );
     default:
       return _errorRoute();
   }

@@ -14,6 +14,7 @@ import 'package:tipperapp/widgets/icons/profile_icons/profile_support_icon.dart'
 import 'package:tipperapp/widgets/icons/profile_icons/settings_icon.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/transactions_icon.dart';
 import 'package:tipperapp/widgets/icons/user_icon.dart';
+import 'package:tipperapp/widgets/icons/wallet_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
@@ -72,22 +73,15 @@ class ReceiverProfilePage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // ProfileSelectionContainer(
-                  //   icon: HomeIcon(),
-                  //   text: "Home",
-                  // ),
-                  // heighSpacer(18),
+                  heighSpacer(11),
                   GestureDetector(
-                    onTap: () {
-                      _navigationService.navigateTo(
-                          name: kReceiverAccountSettings);
-                    },
+                    onTap: () {},
                     child: ProfileSelectionContainer(
                       icon: SettingsIcon(),
-                      text: "Account settings",
+                      text: "Personal details",
                     ),
                   ),
-                  heighSpacer(18),
+                  heighSpacer(16),
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(name: kReceiverTransaction);
@@ -97,7 +91,26 @@ class ReceiverProfilePage extends StatelessWidget {
                       text: "Transactions",
                     ),
                   ),
-                  heighSpacer(18),
+                  heighSpacer(16),
+                  GestureDetector(
+                    onTap: () {},
+                    child: ProfileSelectionContainer(
+                      icon: SettingsIcon(),
+                      text: "Account settings",
+                    ),
+                  ),
+                  heighSpacer(16),
+
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(name: kReceiverWalletPage);
+                    },
+                    child: ProfileSelectionContainer(
+                      icon: WalletIcon(),
+                      text: "Wallet",
+                    ),
+                  ),
+                  heighSpacer(16),
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(name: kAboutUsPage);

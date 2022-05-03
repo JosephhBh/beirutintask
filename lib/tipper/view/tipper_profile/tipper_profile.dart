@@ -14,6 +14,7 @@ import 'package:tipperapp/widgets/icons/profile_icons/profile_support_icon.dart'
 import 'package:tipperapp/widgets/icons/profile_icons/settings_icon.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/transactions_icon.dart';
 import 'package:tipperapp/widgets/icons/user_icon.dart';
+import 'package:tipperapp/widgets/icons/wallet_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
@@ -72,11 +73,29 @@ class TipperProfilePage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // ProfileSelectionContainer(
-                  //   icon: HomeIcon(),
-                  //   text: "Home",
-                  // ),
-                  // heighSpacer(18),
+                  heighSpacer(11),
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(
+                          name: kTipperAccountSettings);
+                    },
+                    child: ProfileSelectionContainer(
+                      icon: SettingsIcon(),
+                      text: "Personal details",
+                    ),
+                  ),
+                  heighSpacer(16),
+
+                  GestureDetector(
+                    onTap: () {
+                      _navigationService.navigateTo(name: kTipperTransactions);
+                    },
+                    child: ProfileSelectionContainer(
+                      icon: TransactionsIcon(),
+                      text: "Transactions",
+                    ),
+                  ),
+                  heighSpacer(16),
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(
@@ -87,17 +106,17 @@ class TipperProfilePage extends StatelessWidget {
                       text: "Account settings",
                     ),
                   ),
-                  heighSpacer(18),
+                  heighSpacer(16),
                   GestureDetector(
                     onTap: () {
-                      _navigationService.navigateTo(name: kTipperTransactions);
+                      _navigationService.navigateTo(name: kTipperWalletPage);
                     },
                     child: ProfileSelectionContainer(
-                      icon: TransactionsIcon(),
-                      text: "Transactions",
+                      icon: WalletIcon(),
+                      text: "Wallet",
                     ),
                   ),
-                  heighSpacer(18),
+                  heighSpacer(16),
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(name: kAboutUsPage);
