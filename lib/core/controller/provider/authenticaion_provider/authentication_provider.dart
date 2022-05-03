@@ -725,7 +725,7 @@ class AuthenticationProvider extends ChangeNotifier {
         if (!emailExist && !usernameExist) {
           final QuerySnapshot phoneResults = await FirebaseFirestore.instance
               .collection('users')
-              .where("user_type", isEqualTo: UserType.tipper.name)
+              // .where("user_type", isEqualTo: UserType.tipper.name)
               .where('phone_number', isEqualTo: finalTipperPhoneNumber)
               .limit(1)
               .get();
@@ -1062,6 +1062,7 @@ class AuthenticationProvider extends ChangeNotifier {
       bool _nameUpdated = false;
       bool _phoneUpdated = false;
       bool _emailUpdated = false;
+      bool _photoUpdated = false;
       notifyListeners();
       String url = await uploadImage(file);
       print("Download url $url");
@@ -1072,6 +1073,7 @@ class AuthenticationProvider extends ChangeNotifier {
         updateTipperModel(_tipperModel.copyWith(
           imagePath: url,
         ));
+        _photoUpdated = true;
       }
       if (_editNameController.text.trim().length == 0 &&
           _tipperModel.name != "") {
@@ -1155,7 +1157,7 @@ class AuthenticationProvider extends ChangeNotifier {
         }
       }
       print("$_nameUpdated - $_phoneUpdated - $_emailUpdated");
-      if (_nameUpdated || _phoneUpdated || _emailUpdated) {
+      if (_nameUpdated || _phoneUpdated || _emailUpdated || _photoUpdated) {
         _navigationService.pop();
       }
       _loading = false;
@@ -1189,6 +1191,10 @@ class AuthenticationProvider extends ChangeNotifier {
     _editUsernameController.clear();
     _editPassController.clear();
     _editConfirmPassController.clear();
+    _editNameController.clear();
+    _editPhoneNumberController.clear();
+    _editEmailController.clear();
+    _downloadUrl = "";
     notifyListeners();
   }
 }
