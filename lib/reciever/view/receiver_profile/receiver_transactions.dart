@@ -62,7 +62,16 @@ class ReceiverTransactions extends StatelessWidget {
                                 fontSize: 16,
                               ),
                               widthSpacer(9),
-                              UserIcon(),
+                              authenticationProvider.receiverModel.imagePath ==
+                                      ""
+                                  ? UserIcon()
+                                  : CircleAvatar(
+                                      radius: setCurrentWidth(25),
+                                      backgroundColor: appColor.greyColor,
+                                      backgroundImage: NetworkImage(
+                                          authenticationProvider
+                                              .receiverModel.imagePath!),
+                                    ),
 
                               widthSpacer(19),
                             ],

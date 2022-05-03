@@ -23,6 +23,8 @@ class ReceiverModel {
     this.username,
     this.name,
     this.password,
+    this.phoneNumber,
+    this.imagePath,
   });
 
   String? userType;
@@ -32,6 +34,8 @@ class ReceiverModel {
   String? username;
   String? name;
   String? password;
+  String? phoneNumber;
+  String? imagePath;
 
   factory ReceiverModel.fromJson(Map<String, dynamic> json) => ReceiverModel(
         userType: json["user_type"],
@@ -41,6 +45,8 @@ class ReceiverModel {
         username: json["username"],
         name: json["name"],
         password: json["password"],
+        phoneNumber: json["phone_number"],
+        imagePath: json["image_path"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,17 +57,22 @@ class ReceiverModel {
         "username": username,
         "name": name,
         "password": password,
+        "phone_number": phoneNumber,
+        "image_path": imagePath,
       };
 
   @override
   ReceiverModel copy() => ReceiverModel(
-      userType: userType,
-      balance: balance,
-      userId: userId,
-      email: email,
-      username: username,
-      name: name,
-      password: password);
+        userType: userType,
+        balance: balance,
+        userId: userId,
+        email: email,
+        username: username,
+        name: name,
+        password: password,
+        imagePath: imagePath,
+        phoneNumber: phoneNumber,
+      );
   @override
   ReceiverModel copyWith({
     String? userType,
@@ -71,6 +82,8 @@ class ReceiverModel {
     String? username,
     String? name,
     String? password,
+    String? phoneNumber,
+    String? imagePath,
   }) =>
       ReceiverModel(
         userType: userType ?? this.userType,
@@ -80,5 +93,7 @@ class ReceiverModel {
         username: username ?? this.username,
         name: name ?? this.name,
         password: password ?? this.password,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        imagePath: imagePath ?? this.imagePath,
       );
 }

@@ -1056,7 +1056,7 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
-  updateReceiverPersonalDetails(File? file) async {
+  updateTipperPersonalDetails(File? file) async {
     try {
       _loading = true;
       bool _nameUpdated = false;
@@ -1150,6 +1150,123 @@ class AuthenticationProvider extends ChangeNotifier {
               "phone_number": _editPhoneNumberController.text.trim(),
             });
             updateTipperModel(_tipperModel.copyWith(
+              phoneNumber: _editPhoneNumberController.text.trim(),
+            ));
+            _phoneUpdated = true;
+          }
+        }
+      }
+      print("$_nameUpdated - $_phoneUpdated - $_emailUpdated");
+      if (_nameUpdated || _phoneUpdated || _emailUpdated || _photoUpdated) {
+        _navigationService.pop();
+      }
+      _loading = false;
+      notifyListeners();
+    } catch (e) {
+      print('update personal details error : $e');
+      _loading = false;
+      notifyListeners();
+      errorMessageProvider.setSomethingWentWrrongMessage();
+    }
+  }
+
+  updateReceiverPersonalDetails(File? file) async {
+    try {
+      _loading = true;
+      bool _nameUpdated = false;
+      bool _phoneUpdated = false;
+      bool _emailUpdated = false;
+      bool _photoUpdated = false;
+      notifyListeners();
+      String url = await uploadImage(file);
+      print("Download url $url");
+      if (url != "") {
+        await _firestore.collection('users').doc(_receiverModel.userId).update({
+          "image_path": url,
+        });
+        updateReciverModel(_receiverModel.copyWith(
+          imagePath: url,
+        ));
+        _photoUpdated = true;
+      }
+      if (_editNameController.text.trim().length == 0 &&
+          _receiverModel.name != "") {
+        errorMessageProvider.setErrorMessage(message: "Invalid name");
+      }
+      if (_editNameController.text.trim() != _receiverModel.name &&
+          _editNameController.text.trim().length != 0) {
+        if (_editNameController.text.trim().length <= 1) {
+          errorMessageProvider.setErrorMessage(message: "Invalid name");
+        } else {
+          await _firestore
+              .collection('users')
+              .doc(_receiverModel.userId)
+              .update({
+            "name": _editNameController.text.trim(),
+          });
+          updateReciverModel(_receiverModel.copyWith(
+            name: _editNameController.text.trim(),
+          ));
+          _nameUpdated = true;
+        }
+      }
+      if (!EmailValidator.validate(_editEmailController.text.trim())) {
+        errorMessageProvider.setErrorMessage(message: "Invalid email");
+      } else {
+        if (_editEmailController.text.trim() != _receiverModel.email) {
+          final QuerySnapshot emailResult = await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: _editEmailController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> emailDocs = emailResult.docs;
+          if (emailDocs.length > 0) {
+            errorMessageProvider.setErrorMessage(
+                message: "Email already exist");
+          } else {
+            await _firestore
+                .collection('users')
+                .doc(_receiverModel.userId)
+                .update({
+              "email": _editEmailController.text.trim(),
+            });
+            updateReciverModel(_receiverModel.copyWith(
+              email: _editEmailController.text.trim(),
+            ));
+            _emailUpdated = true;
+          }
+        }
+      }
+      if (_editPhoneNumberController.text.trim().length != 0) {
+        dynamic result = await PhoneNumberUtil.isValidNumber(
+            phoneNumber:
+                _editPhoneNumberController.text.trim().replaceAll('+971', ''),
+            isoCode: "AE");
+        if (result as bool == false) {
+          errorMessageProvider.setErrorMessage(
+              message: "Enter valid phone number");
+        }
+        if (_editPhoneNumberController.text.trim() !=
+            _receiverModel.phoneNumber) {
+          final QuerySnapshot phoneResults = await FirebaseFirestore.instance
+              .collection('users')
+              .where('phone_number',
+                  isEqualTo: _editPhoneNumberController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> phoneDocs = phoneResults.docs;
+          print('here');
+          if (phoneDocs.length > 0) {
+            errorMessageProvider.setErrorMessage(
+                message: "Phone number already exist");
+          } else {
+            await _firestore
+                .collection('users')
+                .doc(_receiverModel.userId)
+                .update({
+              "phone_number": _editPhoneNumberController.text.trim(),
+            });
+            updateReciverModel(_receiverModel.copyWith(
               phoneNumber: _editPhoneNumberController.text.trim(),
             ));
             _phoneUpdated = true;

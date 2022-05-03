@@ -43,9 +43,21 @@ class ReceiverProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      UserIcon(
-                        height: 105,
-                      ),
+                      authenticationProvider.receiverModel.imagePath == null
+                          ? UserIcon(
+                              height: 105,
+                            )
+                          : authenticationProvider.receiverModel.imagePath == ""
+                              ? UserIcon(
+                                  height: 105,
+                                )
+                              : CircleAvatar(
+                                  radius: setCurrentWidth(52),
+                                  backgroundColor: appColor.greyColor,
+                                  backgroundImage: NetworkImage(
+                                      authenticationProvider
+                                          .receiverModel.imagePath!),
+                                ),
                       heighSpacer(17),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +87,10 @@ class ReceiverProfilePage extends StatelessWidget {
                 children: [
                   heighSpacer(11),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      _navigationService.navigateTo(
+                          name: kReceiverPersonalDetails);
+                    },
                     child: ProfileSelectionContainer(
                       icon: SettingsIcon(),
                       text: "Personal details",

@@ -88,7 +88,17 @@ class ReceiverWalletPage extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  UserIcon(),
+                                  authenticationProvider
+                                              .receiverModel.imagePath ==
+                                          ""
+                                      ? UserIcon()
+                                      : CircleAvatar(
+                                          radius: setCurrentWidth(25),
+                                          backgroundColor: appColor.greyColor,
+                                          backgroundImage: NetworkImage(
+                                              authenticationProvider
+                                                  .receiverModel.imagePath!),
+                                        ),
                                   Spacer(),
                                   GlobalText(
                                     text: authenticationProvider

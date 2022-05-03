@@ -6,6 +6,7 @@ import 'package:tipperapp/reciever/view/receiver_profile/receiver_account_settin
 
 import 'package:tipperapp/reciever/view/receiver_notification_page/receiver_all_notifications_page.dart';
 import 'package:tipperapp/reciever/view/receiver_notification_page/receiver_notification_detail_page.dart';
+import 'package:tipperapp/reciever/view/receiver_profile/receiver_personal_details.dart';
 import 'package:tipperapp/reciever/view/receiver_profile/receiver_wallet_page.dart';
 import 'package:tipperapp/reciever/view/receiver_root_page.dart';
 import 'package:tipperapp/reciever/view/receiver_profile/receiver_transactions.dart';
@@ -146,6 +147,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _fadeRoute(
         settings.name,
         TipperPersonalDetailsPage(),
+      );
+    case kReceiverPersonalDetails:
+      return _fadeRoute(
+        settings.name,
+        ReceiverPersonalDetailsPage(),
       );
     default:
       return _errorRoute();

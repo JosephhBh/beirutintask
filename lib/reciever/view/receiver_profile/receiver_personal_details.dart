@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
@@ -17,15 +15,17 @@ import 'package:tipperapp/widgets/loading/global_loading.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
-class TipperPersonalDetailsPage extends StatefulWidget {
+class ReceiverPersonalDetailsPage extends StatefulWidget {
+  const ReceiverPersonalDetailsPage({Key? key}) : super(key: key);
+
   @override
-  State<TipperPersonalDetailsPage> createState() =>
-      _TipperPersonalDetailsPageState();
+  State<ReceiverPersonalDetailsPage> createState() =>
+      _ReceiverPersonalDetailsPageState();
 }
 
-class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
+class _ReceiverPersonalDetailsPageState
+    extends State<ReceiverPersonalDetailsPage> {
   final NavigationService _navigationService = locator<NavigationService>();
-
   String _imagePath = "";
   File? _currentFile;
 
@@ -39,18 +39,16 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
     var authenticationProvider =
         Provider.of<AuthenticationProvider>(context, listen: false);
     authenticationProvider.editNameController.text =
-        authenticationProvider.tipperModel.name!;
+        authenticationProvider.receiverModel.name!;
     authenticationProvider.editPhoneNumberController.text =
-        authenticationProvider.tipperModel.phoneNumber!;
+        authenticationProvider.receiverModel.phoneNumber!;
     authenticationProvider.editEmailController.text =
-        authenticationProvider.tipperModel.email!;
+        authenticationProvider.receiverModel.email!;
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    // var authenticationProvider =
-    //     Provider.of<AuthenticationProvider>(context, listen: false);
     return GlobalScaffold(
       backgroundColor: appColor.greyColor,
       child: Stack(
@@ -113,13 +111,14 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 heighSpacer(34),
-                                authenticationProvider.tipperModel.imagePath ==
+                                authenticationProvider
+                                            .receiverModel.imagePath ==
                                         null
                                     ? UserIcon(
                                         height: 100,
                                       )
                                     : authenticationProvider
-                                                    .tipperModel.imagePath ==
+                                                    .receiverModel.imagePath ==
                                                 "" &&
                                             _imagePath == ""
                                         ? GestureDetector(
@@ -143,7 +142,7 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
                                                 setState(() {});
                                               }
                                               print(authenticationProvider
-                                                  .tipperModel.imagePath);
+                                                  .receiverModel.imagePath);
                                             },
                                             child: UserIcon(
                                               height: 100,
@@ -170,32 +169,31 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
                                                 setState(() {});
                                               }
                                               print(authenticationProvider
-                                                  .tipperModel.imagePath);
+                                                  .receiverModel.imagePath);
                                             },
                                             child: CircleAvatar(
                                                 radius: setCurrentWidth(60),
                                                 backgroundColor:
                                                     appColor.greyColor,
-                                                backgroundImage:
-                                                    authenticationProvider
-                                                                    .tipperModel
-                                                                    .imagePath ==
-                                                                "" &&
-                                                            _imagePath == ""
-                                                        ? null
-                                                        : _imagePath == ""
-                                                            ? NetworkImage(
-                                                                authenticationProvider
-                                                                    .tipperModel
-                                                                    .imagePath!)
-                                                            : Image.file(File(
-                                                                    _imagePath))
-                                                                .image),
+                                                backgroundImage: authenticationProvider
+                                                                .receiverModel
+                                                                .imagePath ==
+                                                            "" &&
+                                                        _imagePath == ""
+                                                    ? null
+                                                    : _imagePath == ""
+                                                        ? NetworkImage(
+                                                            authenticationProvider
+                                                                .receiverModel
+                                                                .imagePath!)
+                                                        : Image.file(File(
+                                                                _imagePath))
+                                                            .image),
                                           ),
                                 heighSpacer(27),
                                 GlobalText(
                                   text: authenticationProvider
-                                          .tipperModel.username ??
+                                          .receiverModel.username ??
                                       "",
                                   color: appColor.blackColor.withOpacity(0.66),
                                 ),
@@ -427,7 +425,7 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
                           onTap: () async {
                             // await uploadFile();
                             await authenticationProvider
-                                .updateTipperPersonalDetails(_currentFile);
+                                .updateReceiverPersonalDetails(_currentFile);
                           },
                           child: Container(
                             height: setCurrentHeight(33),
@@ -462,23 +460,5 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
         ],
       ),
     );
-  }
-
-  Future<UploadTask?> uploadFile() async {
-    try {
-      UploadTask? task;
-      final fileName = _currentFile!.path;
-      final destination = 'user-images/$fileName';
-
-      final ref = FirebaseStorage.instance.ref(destination);
-      task = ref.putFile(_currentFile!);
-
-      // setState(() {});
-      final TaskSnapshot downloadUrl = (await task);
-      final String url = await downloadUrl.ref.getDownloadURL();
-      print("Download linl $url");
-    } catch (e) {
-      print("error uploading image : $e");
-    }
   }
 }
