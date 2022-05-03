@@ -10,6 +10,8 @@ import 'package:tipperapp/widgets/buttons/logout_button.dart';
 import 'package:tipperapp/widgets/containers/profile_selection_container.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/about_us_icon.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/home_icon.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/payment_methods_icon.dart';
+import 'package:tipperapp/widgets/icons/profile_icons/personal_details_icon.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/profile_support_icon.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/settings_icon.dart';
 import 'package:tipperapp/widgets/icons/profile_icons/transactions_icon.dart';
@@ -92,7 +94,7 @@ class TipperProfilePage extends StatelessWidget {
                           name: kTipperPersonalDetails);
                     },
                     child: ProfileSelectionContainer(
-                      icon: SettingsIcon(),
+                      icon: PersonalDetailsIcon(),
                       text: "Personal details",
                     ),
                   ),
@@ -104,7 +106,7 @@ class TipperProfilePage extends StatelessWidget {
                           name: kTipperPaymentMethodPage);
                     },
                     child: ProfileSelectionContainer(
-                      icon: WalletIcon(),
+                      icon: PaymentMethodsIcon(),
                       text: "Payment methods",
                     ),
                   ),
