@@ -293,7 +293,8 @@ class _TipperAccountSettingsState extends State<TipperAccountSettings> {
                             GestureDetector(
                               onTap: () {
                                 _navigationService.pop();
-                                authenticationProvider.clearEditFunction();
+                                authenticationProvider
+                                    .clearEditAccountSettingsFunction();
                               },
                               child: Container(
                                 height: setCurrentHeight(33),

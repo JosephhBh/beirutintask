@@ -295,7 +295,8 @@ class _ReceiverAccountSettingsState extends State<ReceiverAccountSettings> {
                             GestureDetector(
                               onTap: () {
                                 _navigationService.pop();
-                                authenticationProvider.clearEditFunction();
+                                authenticationProvider
+                                    .clearEditAccountSettingsFunction();
                               },
                               child: Container(
                                 height: setCurrentHeight(33),

@@ -382,9 +382,11 @@
 // }
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -431,6 +433,11 @@ class AuthenticationProvider extends ChangeNotifier {
   TextEditingController _editUsernameController = TextEditingController();
   TextEditingController _editPassController = TextEditingController();
   TextEditingController _editConfirmPassController = TextEditingController();
+  TextEditingController _editNameController = TextEditingController();
+  TextEditingController _editPhoneNumberController = TextEditingController();
+  TextEditingController _editEmailController = TextEditingController();
+  // File? _pickedFile = null;
+  String _downloadUrl = "";
 
   AuthenticationType get authenticationType => _authenticationType;
   TextEditingController get emailController => _emailController;
@@ -458,11 +465,26 @@ class AuthenticationProvider extends ChangeNotifier {
   TextEditingController get editPassController => _editPassController;
   TextEditingController get editConfirmPassController =>
       _editConfirmPassController;
+  TextEditingController get editNameController => _editNameController;
+  TextEditingController get editPhoneNumberController =>
+      _editPhoneNumberController;
+  TextEditingController get editEmailController => _editEmailController;
+  // File? get pickedFile => _pickedFile;
+  String get downloadUrl => _downloadUrl;
 
-  clearEditFunction() {
+  clearEditAccountSettingsFunction() {
     _editUsernameController.clear();
     _editPassController.clear();
     _editConfirmPassController.clear();
+    notifyListeners();
+  }
+
+  clearEditPersonalDetailsFunction() {
+    _editNameController.clear();
+    _editPhoneNumberController.clear();
+    _editEmailController.clear();
+    // _pickedFile = null;
+    _downloadUrl = "";
     notifyListeners();
   }
 
@@ -888,7 +910,7 @@ class AuthenticationProvider extends ChangeNotifier {
             }
 
             _navigationService.pop();
-            clearEditFunction();
+            clearEditAccountSettingsFunction();
           }
         } else {
           if (_editPassController.text.trim() ==
@@ -904,7 +926,7 @@ class AuthenticationProvider extends ChangeNotifier {
               password: _editPassController.text.trim(),
             ));
             _navigationService.pop();
-            clearEditFunction();
+            clearEditAccountSettingsFunction();
           }
         }
       }
@@ -975,7 +997,7 @@ class AuthenticationProvider extends ChangeNotifier {
             }
 
             _navigationService.pop();
-            clearEditFunction();
+            clearEditAccountSettingsFunction();
           }
         } else {
           if (_editPassController.text.trim() ==
@@ -992,7 +1014,7 @@ class AuthenticationProvider extends ChangeNotifier {
               password: _editPassController.text.trim(),
             ));
             _navigationService.pop();
-            clearEditFunction();
+            clearEditAccountSettingsFunction();
           }
         }
       }
@@ -1001,6 +1023,145 @@ class AuthenticationProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print("update user error $e");
+      _loading = false;
+      notifyListeners();
+      errorMessageProvider.setSomethingWentWrrongMessage();
+    }
+  }
+
+  Future<String> uploadImage(File? file) async {
+    try {
+      if (file != null) {
+        UploadTask? task;
+        final fileName = file.path;
+        final destination = 'user-images/$fileName';
+
+        final ref = FirebaseStorage.instance.ref(destination);
+        task = ref.putFile(file);
+
+        // setState(() {});
+        final TaskSnapshot downloadUrl = (await task);
+        final String url = await downloadUrl.ref.getDownloadURL();
+        _downloadUrl = url;
+
+        return url;
+      } else {
+        _downloadUrl = "";
+        return "";
+      }
+    } catch (e) {
+      print("error uploading image : $e");
+      _downloadUrl = "";
+      return "";
+    }
+  }
+
+  updateReceiverPersonalDetails(File? file) async {
+    try {
+      _loading = true;
+      bool _nameUpdated = false;
+      bool _phoneUpdated = false;
+      bool _emailUpdated = false;
+      notifyListeners();
+      String url = await uploadImage(file);
+      print("Download url $url");
+      if (url != "") {
+        await _firestore.collection('users').doc(_tipperModel.userId).update({
+          "image_path": url,
+        });
+        updateTipperModel(_tipperModel.copyWith(
+          imagePath: url,
+        ));
+      }
+      if (_editNameController.text.trim().length == 0 &&
+          _tipperModel.name != "") {
+        errorMessageProvider.setErrorMessage(message: "Invalid name");
+      }
+      if (_editNameController.text.trim() != _tipperModel.name &&
+          _editNameController.text.trim().length != 0) {
+        if (_editNameController.text.trim().length <= 1) {
+          errorMessageProvider.setErrorMessage(message: "Invalid name");
+        } else {
+          await _firestore.collection('users').doc(_tipperModel.userId).update({
+            "name": _editNameController.text.trim(),
+          });
+          updateTipperModel(_tipperModel.copyWith(
+            name: _editNameController.text.trim(),
+          ));
+          _nameUpdated = true;
+        }
+      }
+      if (!EmailValidator.validate(_editEmailController.text.trim())) {
+        errorMessageProvider.setErrorMessage(message: "Invalid email");
+      } else {
+        if (_editEmailController.text.trim() != _tipperModel.email) {
+          final QuerySnapshot emailResult = await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: _editEmailController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> emailDocs = emailResult.docs;
+          if (emailDocs.length > 0) {
+            errorMessageProvider.setErrorMessage(
+                message: "Email already exist");
+          } else {
+            await _firestore
+                .collection('users')
+                .doc(_tipperModel.userId)
+                .update({
+              "email": _editEmailController.text.trim(),
+            });
+            updateTipperModel(_tipperModel.copyWith(
+              email: _editEmailController.text.trim(),
+            ));
+            _emailUpdated = true;
+          }
+        }
+      }
+      if (_editPhoneNumberController.text.trim().length != 0) {
+        dynamic result = await PhoneNumberUtil.isValidNumber(
+            phoneNumber:
+                _editPhoneNumberController.text.trim().replaceAll('+971', ''),
+            isoCode: "AE");
+        if (result as bool == false) {
+          errorMessageProvider.setErrorMessage(
+              message: "Enter valid phone number");
+        }
+        if (_editPhoneNumberController.text.trim() !=
+            _tipperModel.phoneNumber) {
+          final QuerySnapshot phoneResults = await FirebaseFirestore.instance
+              .collection('users')
+              .where('phone_number',
+                  isEqualTo: _editPhoneNumberController.text.trim())
+              .limit(1)
+              .get();
+          final List<DocumentSnapshot> phoneDocs = phoneResults.docs;
+          print('here');
+          if (phoneDocs.length > 0) {
+            errorMessageProvider.setErrorMessage(
+                message: "Phone number already exist");
+          } else {
+            await _firestore
+                .collection('users')
+                .doc(_tipperModel.userId)
+                .update({
+              "phone_number": _editPhoneNumberController.text.trim(),
+            });
+            updateTipperModel(_tipperModel.copyWith(
+              phoneNumber: _editPhoneNumberController.text.trim(),
+            ));
+            _phoneUpdated = true;
+          }
+        }
+      }
+      print("$_nameUpdated - $_phoneUpdated - $_emailUpdated");
+      if (_nameUpdated || _phoneUpdated || _emailUpdated) {
+        _navigationService.pop();
+      }
+      _loading = false;
+      notifyListeners();
+    } catch (e) {
+      print('update personal details error : $e');
       _loading = false;
       notifyListeners();
       errorMessageProvider.setSomethingWentWrrongMessage();

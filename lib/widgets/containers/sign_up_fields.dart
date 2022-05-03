@@ -72,56 +72,54 @@ class SignUpFields extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: TextField(
-                          controller: controller,
-                          onChanged: (String value) => onChnaged(value),
-                          style: GoogleFonts.fredokaOne(
-                            color: appColor.blackColor,
-                            fontSize: setFontSize(18),
+                        controller: controller,
+                        onChanged: (String value) => onChnaged(value),
+                        style: GoogleFonts.fredokaOne(
+                          color: appColor.blackColor,
+                          fontSize: setFontSize(18),
+                        ),
+                        textInputAction: TextInputAction.next,
+                        keyboardType: isPhoneNumber
+                            ? TextInputType.phone
+                            : TextInputType.name,
+                        cursorColor: appColor.blackColor,
+                        decoration: InputDecoration(
+                          alignLabelWithHint: false,
+                          contentPadding: EdgeInsets.fromLTRB(
+                              setCurrentWidth(16), setCurrentHeight(8), 8, 12),
+                          fillColor: appColor.transparentColor,
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                            borderRadius: BorderRadius.circular(9),
                           ),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: isPhoneNumber
-                              ? TextInputType.phone
-                              : TextInputType.name,
-                          cursorColor: appColor.blackColor,
-                          decoration: InputDecoration(
-                            alignLabelWithHint: false,
-                            contentPadding: EdgeInsets.fromLTRB(
-                                setCurrentWidth(16),
-                                setCurrentHeight(8),
-                                8,
-                                12),
-                            fillColor: appColor.transparentColor,
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(9),
-                            ),
-                            hintText: hint,
-                            hintStyle: GoogleFonts.fredokaOne(
-                              color: appColor.blackColor.withOpacity(0.6),
-                              fontSize: setFontSize(16),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                          hintText: hint,
+                          hintStyle: GoogleFonts.fredokaOne(
+                            color: appColor.blackColor.withOpacity(0.6),
+                            fontSize: setFontSize(16),
                           ),
-                          obscureText: isPassword ? true : false,
-                          inputFormatters: isPhoneNumber
-                              ? [
-                                  AsYouTypeFormatter(
-                                    isoCode: "ARE",
-                                    dialCode: "+971",
-                                    onInputFormatted: (TextEditingValue value) {
-                                      controller.value = value;
-                                    },
-                                  )
-                                ]
-                              : []),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        obscureText: isPassword ? true : false,
+                        inputFormatters: isPhoneNumber
+                            ? [
+                                AsYouTypeFormatter(
+                                  isoCode: "ARE",
+                                  dialCode: "+971",
+                                  onInputFormatted: (TextEditingValue value) {
+                                    controller.value = value;
+                                  },
+                                )
+                              ]
+                            : [],
+                      ),
                     ),
                   ],
                 ),

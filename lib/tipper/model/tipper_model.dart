@@ -24,6 +24,8 @@ class TipperModel {
     this.phoneNumber,
     this.email,
     this.username,
+    this.name,
+    this.imagePath,
   });
 
   // String? emiratesId;
@@ -34,6 +36,8 @@ class TipperModel {
   String? phoneNumber;
   String? email;
   String? username;
+  String? name;
+  String? imagePath;
 
   factory TipperModel.fromJson(Map<String, dynamic> json) => TipperModel(
         // emiratesId: json["emirates_id"],
@@ -44,6 +48,8 @@ class TipperModel {
         phoneNumber: json["phone_number"],
         email: json["email"],
         username: json["username"],
+        name: json["name"],
+        imagePath: json["image_path"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,6 +61,8 @@ class TipperModel {
         "phone_number": phoneNumber,
         "email": email,
         "username": username,
+        "name": name,
+        "image_path": imagePath,
       };
 
   @override
@@ -67,11 +75,12 @@ class TipperModel {
         phoneNumber: phoneNumber,
         email: email,
         username: username,
+        name: name,
+        imagePath: imagePath,
       );
 
   @override
   TipperModel copyWith({
-    String? emiratesId,
     String? password,
     String? userType,
     dynamic? balance,
@@ -79,9 +88,10 @@ class TipperModel {
     String? phoneNumber,
     String? email,
     String? username,
+    String? name,
+    String? imagePath,
   }) =>
       TipperModel(
-        // emiratesId: emiratesId ?? this.emiratesId,
         password: password ?? this.password,
         userType: userType ?? this.userType,
         balance: balance ?? this.balance,
@@ -89,5 +99,7 @@ class TipperModel {
         phoneNumber: phoneNumber ?? this.phoneNumber,
         email: email ?? this.email,
         username: username ?? this.username,
+        name: name ?? this.name,
+        imagePath: imagePath ?? this.imagePath,
       );
 }

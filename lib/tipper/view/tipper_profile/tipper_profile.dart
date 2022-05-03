@@ -44,9 +44,21 @@ class TipperProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      UserIcon(
-                        height: 105,
-                      ),
+                      authenticationProvider.tipperModel.imagePath == null
+                          ? UserIcon(
+                              height: 105,
+                            )
+                          : authenticationProvider.tipperModel.imagePath == ""
+                              ? UserIcon(
+                                  height: 105,
+                                )
+                              : CircleAvatar(
+                                  radius: setCurrentWidth(52),
+                                  backgroundColor: appColor.greyColor,
+                                  backgroundImage: NetworkImage(
+                                      authenticationProvider
+                                          .tipperModel.imagePath!),
+                                ),
                       heighSpacer(9),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +89,7 @@ class TipperProfilePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(
-                          name: kTipperAccountSettings);
+                          name: kTipperPersonalDetails);
                     },
                     child: ProfileSelectionContainer(
                       icon: SettingsIcon(),

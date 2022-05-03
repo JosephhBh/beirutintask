@@ -20,3 +20,4 @@ const String kReceiverAccountSettings = "ReceiverAccountSettings";
 const String kAboutUsPage = "AboutUsPage";
 const String kTipperWalletPage = "TipperWalletPage";
 const String kReceiverWalletPage = "ReceiverWalletPage";
+const String kTipperPersonalDetails = "TipperPersonalDetails";

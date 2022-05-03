@@ -12,6 +12,7 @@ import 'package:tipperapp/reciever/view/receiver_profile/receiver_transactions.d
 import 'package:tipperapp/root_page.dart';
 import 'package:tipperapp/starting_screen.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_account_settings.dart';
+import 'package:tipperapp/tipper/view/tipper_profile/tipper_personal_details.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_transactions.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_wallet_page.dart';
 import 'package:tipperapp/tipper/view/tipping_pages/payment_success_page.dart';
@@ -140,6 +141,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _fadeRoute(
         settings.name,
         ReceiverWalletPage(),
+      );
+    case kTipperPersonalDetails:
+      return _fadeRoute(
+        settings.name,
+        TipperPersonalDetailsPage(),
       );
     default:
       return _errorRoute();

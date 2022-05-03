@@ -81,7 +81,22 @@ class TipperHomePage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 textBaseline: TextBaseline.ideographic,
                                 children: [
-                                  UserIcon(),
+                                  authenticationProvider
+                                              .tipperModel.imagePath ==
+                                          null
+                                      ? UserIcon()
+                                      : authenticationProvider
+                                                  .tipperModel.imagePath ==
+                                              ""
+                                          ? UserIcon()
+                                          : CircleAvatar(
+                                              radius: setCurrentWidth(25),
+                                              backgroundColor:
+                                                  appColor.greyColor,
+                                              backgroundImage: NetworkImage(
+                                                  authenticationProvider
+                                                      .tipperModel.imagePath!),
+                                            ),
                                   widthSpacer(7),
                                   GlobalText(
                                     text: authenticationProvider
