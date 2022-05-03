@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/controller/provider/error_message_provider/error_message_provider.dart';
+import 'package:tipperapp/core/controller/provider/payment_methods_provider/payment_provider.dart';
 
 import 'package:tipperapp/core/controller/provider/tipping_provider/tipping_provider.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (context) => ErrorMessageProvider()),
         ChangeNotifierProvider(create: (context) => TippingProvider()),
+        ChangeNotifierProvider(create: (context) => PaymentProvider()),
       ],
       child: Listener(
         onPointerUp: (_) {

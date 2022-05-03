@@ -100,14 +100,16 @@ class TipperProfilePage extends StatelessWidget {
 
                   GestureDetector(
                     onTap: () {
-                      _navigationService.navigateTo(name: kTipperTransactions);
+                      _navigationService.navigateTo(
+                          name: kTipperPaymentMethodPage);
                     },
                     child: ProfileSelectionContainer(
-                      icon: TransactionsIcon(),
-                      text: "Transactions",
+                      icon: WalletIcon(),
+                      text: "Payment methods",
                     ),
                   ),
                   heighSpacer(16),
+
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(
@@ -119,16 +121,27 @@ class TipperProfilePage extends StatelessWidget {
                     ),
                   ),
                   heighSpacer(16),
+
                   GestureDetector(
                     onTap: () {
-                      _navigationService.navigateTo(name: kTipperWalletPage);
+                      _navigationService.navigateTo(name: kTipperTransactions);
                     },
                     child: ProfileSelectionContainer(
-                      icon: WalletIcon(),
-                      text: "Wallet",
+                      icon: TransactionsIcon(),
+                      text: "Transactions",
                     ),
                   ),
                   heighSpacer(16),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     _navigationService.navigateTo(name: kTipperWalletPage);
+                  //   },
+                  //   child: ProfileSelectionContainer(
+                  //     icon: WalletIcon(),
+                  //     text: "Wallet",
+                  //   ),
+                  // ),
+                  // heighSpacer(16),
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(name: kAboutUsPage);
