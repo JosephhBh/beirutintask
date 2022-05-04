@@ -399,9 +399,9 @@ class _ReceiverPersonalDetailsPageState
                       children: [
                         GestureDetector(
                           onTap: () {
-                            // _navigationService.pop();
-                            authenticationProvider
-                                .clearEditPersonalDetailsFunction();
+                            _navigationService.pop();
+                            // authenticationProvider
+                            //     .clearEditPersonalDetailsFunction();
                           },
                           child: Container(
                             height: setCurrentHeight(33),

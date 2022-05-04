@@ -479,7 +479,7 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  clearEditPersonalDetailsFunction() {
+  clearEditPersonalDetailsFunctions() {
     _editNameController.clear();
     _editPhoneNumberController.clear();
     _editEmailController.clear();

@@ -144,7 +144,7 @@ class AboutUsPage extends StatelessWidget {
                           0,
                           0,
                           Container(
-                            width: setCurrentWidth(70),
+                            width: setCurrentWidth(50),
                             child: Divider(
                               height: 2,
                               thickness: 3,
@@ -152,7 +152,7 @@ class AboutUsPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        widthSpacer(5),
+                        widthSpacer(15),
                         Expanded(
                           flex: 1,
                           child: RichText(
@@ -164,8 +164,7 @@ class AboutUsPage extends StatelessWidget {
                                   text: 'Tipr',
                                   style: GoogleFonts.fredokaOne(
                                       fontSize: setFontSize(30),
-                                      color: appColor.yellowColor
-                                          .withOpacity(0.6)),
+                                      color: appColor.yellowColor),
                                 ),
                                 TextSpan(
                                   text:
