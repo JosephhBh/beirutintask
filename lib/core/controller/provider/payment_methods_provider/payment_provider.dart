@@ -8,7 +8,7 @@ import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/tipper/model/selected_paymen_details.dart';
 
-enum PaymentMethod { none, card }
+// enum PaymentMethod { none, card, apple, google }
 
 enum SelectedPaymentMethod {
   none,
@@ -22,7 +22,7 @@ class PaymentProvider extends ChangeNotifier {
   final NavigationService _navigationService = locator<NavigationService>();
 
   bool _isLoading = false;
-  PaymentMethod _currentPaymentMethod = PaymentMethod.none;
+  // PaymentMethod _currentPaymentMethod = PaymentMethod.none;
   SelectedPaymentMethod _selectedPaymentMethod = SelectedPaymentMethod.none;
   MaskedTextController _cardNumberController =
       MaskedTextController(mask: "0000 0000 0000 0000");
@@ -40,7 +40,7 @@ class PaymentProvider extends ChangeNotifier {
       SelectedPaymentDetailsModel();
 
   bool get isLoading => _isLoading;
-  PaymentMethod get currentPaymentMethod => _currentPaymentMethod;
+  // PaymentMethod get currentPaymentMethod => _currentPaymentMethod;
   SelectedPaymentMethod get selectedPaymentMethod => _selectedPaymentMethod;
   MaskedTextController get cardNumberController => _cardNumberController;
   TextEditingController get cardHolderNameController =>
@@ -56,8 +56,8 @@ class PaymentProvider extends ChangeNotifier {
   SelectedPaymentDetailsModel get selectedPaymentDetailsModel =>
       _selectedPaymentDetailsModel;
 
-  setPaymentMethod(PaymentMethod paymentMethod) {
-    _currentPaymentMethod = paymentMethod;
+  setPaymentMethod(SelectedPaymentMethod paymentMethod) {
+    _selectedPaymentMethod = paymentMethod;
     notifyListeners();
   }
 
@@ -133,10 +133,11 @@ class PaymentProvider extends ChangeNotifier {
     } else if (!_isCVCValid) {
       errorMessageProvider.setErrorMessage(message: "Enter valid cvc");
       valid = false;
-    } else if (!_isAmountValid || _amountController.text.length == 0) {
-      errorMessageProvider.setErrorMessage(message: "Enter valid amount");
-      valid = false;
     }
+    // else if (!_isAmountValid || _amountController.text.length == 0) {
+    //   errorMessageProvider.setErrorMessage(message: "Enter valid amount");
+    //   valid = false;
+    // }
     return valid;
   }
 
@@ -148,8 +149,11 @@ class PaymentProvider extends ChangeNotifier {
           Provider.of<AuthenticationProvider>(context, listen: false);
       bool isValid = validatePaymentFields();
       if (isValid) {
+        dynamic addedAmount = _amountController.text.trim().length == 0
+            ? "100"
+            : _amountController.text.trim();
         dynamic finalBalance = authenticationProvider.tipperModel.balance +
-            double.tryParse(_amountController.text.trim());
+            double.tryParse(addedAmount);
         await _firestore
             .collection("users")
             .doc(authenticationProvider.tipperModel.userId)
@@ -160,7 +164,7 @@ class PaymentProvider extends ChangeNotifier {
             .updateTipperModel(authenticationProvider.tipperModel.copyWith(
           balance: finalBalance,
         ));
-        _currentPaymentMethod = PaymentMethod.card;
+        // _currentPaymentMethod = PaymentMethod.card;
         setSelectedPaymentDetails(SelectedPaymentDetailsModel(
           cardNumber: "**** **** **** " +
               _cardNumberController.text

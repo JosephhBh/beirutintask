@@ -711,82 +711,82 @@ class TopUpBank extends StatelessWidget {
                             ),
                           ],
                         ),
-                        heighSpacer(30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            GlobalText(
-                              text: "Amount",
-                              fontSize: 16,
-                              color: appColor.darkBlueColor.withOpacity(0.67),
-                            ),
-                          ],
-                        ),
-                        heighSpacer(8),
-                        Container(
-                          height: setCurrentHeight(50),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: appColor.whiteColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: TextField(
-                                    controller:
-                                        paymetnProvider.amountController,
-                                    onChanged: (String value) {
-                                      if (value.length < 1) {
-                                        paymetnProvider.setIsAmountValid(false);
-                                      } else {
-                                        paymetnProvider.setIsAmountValid(true);
-                                      }
-                                    },
-                                    style: GoogleFonts.fredokaOne(
-                                      color: appColor.blackColor,
-                                      fontSize: setFontSize(18),
-                                    ),
-                                    textInputAction: TextInputAction.next,
-                                    keyboardType: TextInputType.number,
-                                    cursorColor: appColor.blackColor,
-                                    decoration: InputDecoration(
-                                      // hintText: "01-24",
-                                      alignLabelWithHint: false,
-                                      contentPadding: EdgeInsets.fromLTRB(
-                                          setCurrentWidth(16),
-                                          setCurrentHeight(8),
-                                          8,
-                                          12),
-                                      fillColor: appColor.transparentColor,
-                                      filled: true,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                        ),
-                                        borderRadius: BorderRadius.circular(9),
-                                      ),
-                                      hintStyle: GoogleFonts.fredokaOne(
-                                        color: appColor.blackColor
-                                            .withOpacity(0.2),
-                                        fontSize: setFontSize(16),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        heighSpacer(23),
+                        // heighSpacer(30),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     GlobalText(
+                        //       text: "Amount",
+                        //       fontSize: 16,
+                        //       color: appColor.darkBlueColor.withOpacity(0.67),
+                        //     ),
+                        //   ],
+                        // ),
+                        // heighSpacer(8),
+                        // Container(
+                        //   height: setCurrentHeight(50),
+                        //   width: double.infinity,
+                        //   decoration: BoxDecoration(
+                        //     color: appColor.whiteColor,
+                        //     borderRadius: BorderRadius.circular(12),
+                        //   ),
+                        //   child: Center(
+                        //     child: Row(
+                        //       children: [
+                        //         Expanded(
+                        //           flex: 1,
+                        //           child: TextField(
+                        //             controller:
+                        //                 paymetnProvider.amountController,
+                        //             onChanged: (String value) {
+                        //               if (value.length < 1) {
+                        //                 paymetnProvider.setIsAmountValid(false);
+                        //               } else {
+                        //                 paymetnProvider.setIsAmountValid(true);
+                        //               }
+                        //             },
+                        //             style: GoogleFonts.fredokaOne(
+                        //               color: appColor.blackColor,
+                        //               fontSize: setFontSize(18),
+                        //             ),
+                        //             textInputAction: TextInputAction.next,
+                        //             keyboardType: TextInputType.number,
+                        //             cursorColor: appColor.blackColor,
+                        //             decoration: InputDecoration(
+                        //               // hintText: "01-24",
+                        //               alignLabelWithHint: false,
+                        //               contentPadding: EdgeInsets.fromLTRB(
+                        //                   setCurrentWidth(16),
+                        //                   setCurrentHeight(8),
+                        //                   8,
+                        //                   12),
+                        //               fillColor: appColor.transparentColor,
+                        //               filled: true,
+                        //               enabledBorder: OutlineInputBorder(
+                        //                 borderSide: BorderSide(
+                        //                   color: Colors.transparent,
+                        //                 ),
+                        //                 borderRadius: BorderRadius.circular(9),
+                        //               ),
+                        //               hintStyle: GoogleFonts.fredokaOne(
+                        //                 color: appColor.blackColor
+                        //                     .withOpacity(0.2),
+                        //                 fontSize: setFontSize(16),
+                        //               ),
+                        //               focusedBorder: OutlineInputBorder(
+                        //                 borderSide: BorderSide(
+                        //                   color: Colors.transparent,
+                        //                 ),
+                        //                 borderRadius: BorderRadius.circular(8),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                        heighSpacer(120),
                         GestureDetector(
                           onTap: () async {
                             await paymetnProvider.updateAmount(context);
