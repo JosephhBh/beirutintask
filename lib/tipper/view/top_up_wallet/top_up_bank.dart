@@ -565,7 +565,7 @@ class TopUpBank extends StatelessWidget {
                                             controller: paymetnProvider
                                                 .expiryDateController,
                                             onChanged: (String value) {
-                                              if (value.length < 4) {
+                                              if (value.length < 9) {
                                                 paymetnProvider
                                                     .setIsDateValid(false);
                                               } else {
@@ -789,7 +789,7 @@ class TopUpBank extends StatelessWidget {
                         heighSpacer(120),
                         GestureDetector(
                           onTap: () async {
-                            await paymetnProvider.updateAmount(context);
+                            await paymetnProvider.updateCardInfo();
                           },
                           child: Container(
                             height: setCurrentHeight(48),

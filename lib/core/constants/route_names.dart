@@ -23,3 +23,4 @@ const String kReceiverWalletPage = "ReceiverWalletPage";
 const String kTipperPersonalDetails = "TipperPersonalDetails";
 const String kReceiverPersonalDetails = "ReceiverPersonalDetails";
 const String kTipperPaymentMethodPage = "TipperPaymentMethod";
+const String kTopUpSuccessfulPage = "TopUpSuccessfulPage";

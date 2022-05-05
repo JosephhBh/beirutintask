@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:provider/provider.dart';
+import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
@@ -30,12 +31,12 @@ class PaymentProvider extends ChangeNotifier {
   TextEditingController _cvcController = TextEditingController();
   MaskedTextController _expiryDateController =
       MaskedTextController(mask: "00 / 0000");
-  TextEditingController _amountController = TextEditingController();
+  TextEditingController _amountController = TextEditingController(text: "50");
   bool _isNameValid = false;
   bool _isCardValid = false;
   bool _isDateValid = false;
   bool _isCVCValid = false;
-  bool _isAmountValid = false;
+  bool _isAmountValid = true;
   SelectedPaymentDetailsModel _selectedPaymentDetailsModel =
       SelectedPaymentDetailsModel();
 
@@ -55,6 +56,11 @@ class PaymentProvider extends ChangeNotifier {
   bool get isAmountValid => _isAmountValid;
   SelectedPaymentDetailsModel get selectedPaymentDetailsModel =>
       _selectedPaymentDetailsModel;
+
+  setIsAmountValid(bool val) {
+    _isAmountValid = val;
+    notifyListeners();
+  }
 
   setPaymentMethod(SelectedPaymentMethod paymentMethod) {
     _selectedPaymentMethod = paymentMethod;
@@ -108,11 +114,6 @@ class PaymentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setIsAmountValid(bool val) {
-    _isAmountValid = val;
-    notifyListeners();
-  }
-
   setSelectedPaymentDetails(
       SelectedPaymentDetailsModel selectedPaymentDetailsModel) {
     _selectedPaymentDetailsModel = selectedPaymentDetailsModel;
@@ -141,17 +142,63 @@ class PaymentProvider extends ChangeNotifier {
     return valid;
   }
 
-  updateAmount(BuildContext context) async {
+  updateCardInfo() async {
     try {
       _isLoading = true;
       notifyListeners();
-      var authenticationProvider =
-          Provider.of<AuthenticationProvider>(context, listen: false);
+
       bool isValid = validatePaymentFields();
       if (isValid) {
-        dynamic addedAmount = _amountController.text.trim().length == 0
-            ? "100"
-            : _amountController.text.trim();
+        // dynamic addedAmount = _amountController.text.trim().length == 0
+        //     ? "100"
+        //     : _amountController.text.trim();
+        // dynamic finalBalance = authenticationProvider.tipperModel.balance +
+        //     double.tryParse(addedAmount);
+        // await _firestore
+        //     .collection("users")
+        //     .doc(authenticationProvider.tipperModel.userId)
+        //     .update({
+        //   "balance": finalBalance,
+        // });
+        // authenticationProvider
+        //     .updateTipperModel(authenticationProvider.tipperModel.copyWith(
+        //   balance: finalBalance,
+        // ));
+        // _currentPaymentMethod = PaymentMethod.card;
+        setSelectedPaymentDetails(SelectedPaymentDetailsModel(
+          cardNumber: "**** **** **** " +
+              _cardNumberController.text
+                  .substring(_cardNumberController.text.length - 4),
+          exipryDate: _expiryDateController.text,
+        ));
+        // _amountController = TextEditingController(text: "50");
+        _navigationService.pop();
+      }
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      print("update card error : $e");
+      _isLoading = false;
+      notifyListeners();
+      errorMessageProvider.setSomethingWentWrrongMessage();
+    }
+  }
+
+  addAmount(BuildContext context) async {
+    try {
+      errorMessageProvider.clearErrorMessage();
+      _isLoading = true;
+      notifyListeners();
+      if (_amountController.text.trim().length == 0) {
+        _isAmountValid = false;
+      }
+      if (_isAmountValid &&
+          _selectedPaymentDetailsModel.cardNumber != "" &&
+          _selectedPaymentMethod == SelectedPaymentMethod.card) {
+        var authenticationProvider =
+            Provider.of<AuthenticationProvider>(context, listen: false);
+        dynamic addedAmount = _amountController.text.trim();
+
         dynamic finalBalance = authenticationProvider.tipperModel.balance +
             double.tryParse(addedAmount);
         await _firestore
@@ -164,15 +211,13 @@ class PaymentProvider extends ChangeNotifier {
             .updateTipperModel(authenticationProvider.tipperModel.copyWith(
           balance: finalBalance,
         ));
-        // _currentPaymentMethod = PaymentMethod.card;
-        setSelectedPaymentDetails(SelectedPaymentDetailsModel(
-          cardNumber: "**** **** **** " +
-              _cardNumberController.text
-                  .substring(_cardNumberController.text.length - 4),
-          exipryDate: _expiryDateController.text,
-        ));
-        _amountController.clear();
-        _navigationService.pop();
+        _navigationService.replaceRoute(name: kTopUpSuccessfulPage);
+      } else if (_selectedPaymentDetailsModel.cardNumber == "") {
+        errorMessageProvider.setErrorMessage(message: "Enter card details");
+      } else if (_selectedPaymentMethod != SelectedPaymentMethod.card) {
+        errorMessageProvider.setErrorMessage(message: "Please choose card");
+      } else {
+        errorMessageProvider.setErrorMessage(message: "Enter valid amount");
       }
       _isLoading = false;
       notifyListeners();
@@ -182,5 +227,26 @@ class PaymentProvider extends ChangeNotifier {
       notifyListeners();
       errorMessageProvider.setSomethingWentWrrongMessage();
     }
+  }
+
+  clearAmountController() {
+    _amountController = TextEditingController(text: "50");
+    notifyListeners();
+  }
+
+  deletePaymentMethod() {
+    _selectedPaymentMethod = SelectedPaymentMethod.none;
+    _selectedPaymentDetailsModel = SelectedPaymentDetailsModel();
+    _cardNumberController.clear();
+    _cardHolderNameController.clear();
+    _cvcController.clear();
+    _expiryDateController.clear();
+    _amountController.clear();
+    _isNameValid = false;
+    _isCardValid = false;
+    _isDateValid = false;
+    _isCVCValid = false;
+
+    notifyListeners();
   }
 }

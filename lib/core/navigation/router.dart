@@ -23,6 +23,7 @@ import 'package:tipperapp/tipper/view/tipper_notifications/tipper_all_notificati
 import 'package:tipperapp/tipper/view/tipper_root_page.dart';
 import 'package:tipperapp/tipper/view/tipping_pages/qr_page.dart';
 import 'package:tipperapp/tipper/view/top_up_wallet/top_up_bank.dart';
+import 'package:tipperapp/tipper/view/top_up_wallet/top_up_successful_page.dart';
 
 import 'package:tipperapp/tipper/view/top_up_wallet/top_up_wallet.dart';
 
@@ -158,6 +159,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _fadeRoute(
         settings.name,
         TipperPaymenMethods(),
+      );
+    case kTopUpSuccessfulPage:
+      return _fadeRoute(
+        settings.name,
+        TopUpSuccessfullPage(),
       );
     default:
       return _errorRoute();

@@ -178,18 +178,7 @@ class _TippingPageState extends State<TippingPage> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    // child: Focus(
-                                    // focusNode: FocusNode(
-                                    //   canRequestFocus: false,
-                                    // ),
-                                    // onFocusChange: (focus) {
-                                    //   if (tippingProvider
-                                    //           .isOtherAmountSelected ==
-                                    //       false) {
-                                    //     tippingProvider
-                                    //         .toggleIsOtherAmountSelected();
-                                    //   }
-                                    // },
+
                                     child: TextField(
                                       // au: false,
                                       style: GoogleFonts.fredokaOne(
