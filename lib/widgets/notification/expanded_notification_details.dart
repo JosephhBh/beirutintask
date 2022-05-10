@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tipperapp/core/controller/services/notification_service/notification_service.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
-import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
 
 class ExpandedNotificationDetails extends StatelessWidget {

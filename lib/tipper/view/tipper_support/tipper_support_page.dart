@@ -1,15 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
-import 'package:tipperapp/core/controller/services/notification_service/notification_service.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
-import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/icons/social/facebook_icon.dart';
 import 'package:tipperapp/widgets/icons/social/instagram_icon.dart';
 import 'package:tipperapp/widgets/icons/social/linkedin_icon.dart';
 import 'package:tipperapp/widgets/icons/support/background_icon.dart';
-import 'package:tipperapp/widgets/icons/support/call_us_icon.dart';
 import 'package:tipperapp/widgets/icons/support/email.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';

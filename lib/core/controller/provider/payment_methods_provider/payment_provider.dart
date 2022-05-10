@@ -77,11 +77,6 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   setCardPaymentMethod() {
-    // if (_selectedPaymentMethod == SelectedPaymentMethod.card) {
-    //   _selectedPaymentMethod = SelectedPaymentMethod.none;
-    // } else {
-    //   _selectedPaymentMethod = SelectedPaymentMethod.card;
-    // }
     _selectedPaymentMethod = SelectedPaymentMethod.card;
     notifyListeners();
   }
@@ -166,10 +161,6 @@ class PaymentProvider extends ChangeNotifier {
       errorMessageProvider.setErrorMessage(message: "Enter valid cvc");
       valid = false;
     }
-    // else if (!_isAmountValid || _amountController.text.length == 0) {
-    //   errorMessageProvider.setErrorMessage(message: "Enter valid amount");
-    //   valid = false;
-    // }
     return valid;
   }
 
@@ -192,22 +183,6 @@ class PaymentProvider extends ChangeNotifier {
 
       bool isValid = validatePaymentFields();
       if (isValid) {
-        // dynamic addedAmount = _amountController.text.trim().length == 0
-        //     ? "100"
-        //     : _amountController.text.trim();
-        // dynamic finalBalance = authenticationProvider.tipperModel.balance +
-        //     double.tryParse(addedAmount);
-        // await _firestore
-        //     .collection("users")
-        //     .doc(authenticationProvider.tipperModel.userId)
-        //     .update({
-        //   "balance": finalBalance,
-        // });
-        // authenticationProvider
-        //     .updateTipperModel(authenticationProvider.tipperModel.copyWith(
-        //   balance: finalBalance,
-        // ));
-        // _currentPaymentMethod = PaymentMethod.card;
         setSelectedPaymentDetails(SelectedPaymentDetailsModel(
           cardNumber: _cardNumberController.text.substring(0, 4) +
               " **** **** " +
@@ -260,33 +235,6 @@ class PaymentProvider extends ChangeNotifier {
       } else {
         errorMessageProvider.setErrorMessage(message: "Enter valid amount");
       }
-      // if (_isAmountValid &&
-      //     _selectedPaymentDetailsModel.cardNumber != "" &&
-      //     _selectedPaymentMethod == SelectedPaymentMethod.card) {
-      //   var authenticationProvider =
-      //       Provider.of<AuthenticationProvider>(context, listen: false);
-      //   dynamic addedAmount = _amountController.text.trim();
-
-      //   dynamic finalBalance = authenticationProvider.tipperModel.balance +
-      //       double.tryParse(addedAmount);
-      //   await _firestore
-      //       .collection("users")
-      //       .doc(authenticationProvider.tipperModel.userId)
-      //       .update({
-      //     "balance": finalBalance,
-      //   });
-      //   authenticationProvider
-      //       .updateTipperModel(authenticationProvider.tipperModel.copyWith(
-      //     balance: finalBalance,
-      //   ));
-      //   _navigationService.replaceRoute(name: kTopUpSuccessfulPage);
-      // } else if (_selectedPaymentDetailsModel.cardNumber == "") {
-      //   errorMessageProvider.setErrorMessage(message: "Enter card details");
-      // } else if (_selectedPaymentMethod != SelectedPaymentMethod.card) {
-      //   errorMessageProvider.setErrorMessage(message: "Please choose card");
-      // } else {
-      //   errorMessageProvider.setErrorMessage(message: "Enter valid amount");
-      // }
       _isLoading = false;
       notifyListeners();
     } catch (e) {

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,12 +34,6 @@ class _RootPageState extends State<RootPage> {
   }
 
   checkUserStatus() async {
-    // Future.delayed(Duration.zero, () {
-    //   setState(() {
-    //     _authStatus = AuthStatus.showHomePage;
-    //   });
-    // });
-    // User? _firebaseUser = FirebaseAuth.instance.currentUser;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uid = prefs.getString('uid');
     print("the uid is $uid");

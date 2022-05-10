@@ -271,15 +271,6 @@ class _ReceiverPersonalDetailsPageState
                       child: Center(
                         child: Row(
                           children: [
-                            // Row(
-                            //   children: [
-                            //     widthSpacer(8),
-                            //     GlobalText(
-                            //       text: "+971",
-                            //       fontSize: 18,
-                            //     ),
-                            //   ],
-                            // ),
                             Expanded(
                               flex: 1,
                               child: TextField(
@@ -316,17 +307,6 @@ class _ReceiverPersonalDetailsPageState
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                                // inputFormatters: [
-                                //   AsYouTypeFormatter(
-                                //     isoCode: "ARE",
-                                //     dialCode: "+971",
-                                //     onInputFormatted: (TextEditingValue value) {
-                                //       authenticationProvider
-                                //           .editPhoneNumberController
-                                //           .value = value;
-                                //     },
-                                //   )
-                                // ],
                               ),
                             ),
                           ],

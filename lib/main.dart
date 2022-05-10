@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,12 +47,6 @@ class MyApp extends StatelessWidget {
               child: child!,
             );
           },
-          // theme: ThemeData(
-          //   textSelectionTheme: TextSelectionThemeData(
-          //     selectionColor: Colors.transparent,
-          //     selectionHandleColor: Colors.transparent,
-          //   ),
-          // ),
           navigatorKey: locator<NavigationService>().navigatorKey,
           debugShowCheckedModeBanner: false,
           initialRoute: kStartingScreen,

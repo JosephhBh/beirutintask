@@ -6,9 +6,7 @@ import 'package:tipperapp/core/controller/services/transactions_service/transact
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
-import 'package:tipperapp/widgets/icons/back_icon.dart';
 import 'package:tipperapp/widgets/icons/back_icon_withcolor.dart';
-import 'package:tipperapp/widgets/icons/notification_icon.dart';
 import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
@@ -167,11 +165,6 @@ class TipperTransactions extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        // Divider(
-                                        //   height: 1,
-                                        //   thickness: 0.4,
-                                        //   color: appColor.dividerColor,
-                                        // ),
                                         heighSpacer(10),
                                       ],
                                     );

@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
@@ -273,15 +272,6 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
                       child: Center(
                         child: Row(
                           children: [
-                            // Row(
-                            //   children: [
-                            //     widthSpacer(8),
-                            //     GlobalText(
-                            //       text: "+971",
-                            //       fontSize: 18,
-                            //     ),
-                            //   ],
-                            // ),
                             Expanded(
                               flex: 1,
                               child: TextField(
@@ -318,17 +308,6 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                                // inputFormatters: [
-                                //   AsYouTypeFormatter(
-                                //     isoCode: "ARE",
-                                //     dialCode: "+971",
-                                //     onInputFormatted: (TextEditingValue value) {
-                                //       authenticationProvider
-                                //           .editPhoneNumberController
-                                //           .value = value;
-                                //     },
-                                //   )
-                                // ],
                               ),
                             ),
                           ],
@@ -402,8 +381,6 @@ class _TipperPersonalDetailsPageState extends State<TipperPersonalDetailsPage> {
                         GestureDetector(
                           onTap: () {
                             _navigationService.pop();
-                            // authenticationProvider
-                            //     .clearEditPersonalDetailsFunction();
                           },
                           child: Container(
                             height: setCurrentHeight(33),

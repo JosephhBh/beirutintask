@@ -166,11 +166,6 @@ class ReceiverTransactions extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        // Divider(
-                                        //   height: 1,
-                                        //   thickness: 0.4,
-                                        //   color: appColor.dividerColor,
-                                        // ),
                                         heighSpacer(10),
                                       ],
                                     );

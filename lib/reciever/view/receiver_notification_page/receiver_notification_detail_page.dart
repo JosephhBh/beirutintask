@@ -177,28 +177,6 @@ class ReceiverNotificationDetailsPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Align(
-                        //   alignment: Alignment.center,
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     // crossAxisAlignment: CrossAxisAlignment.center,
-                        //     children: [
-                        //       Expanded(
-                        //         flex: 1,
-                        //         child: GlobalText(
-                        //           text: "Worker " +
-                        //               authenticationProvider
-                        //                   .receiverModel.name! +
-                        //               " says thank you 😊",
-                        //           color: appColor.whiteColor,
-                        //           fontSize: 14,
-                        //           showEllipsis: false,
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Spacer(),
                         GestureDetector(
                           onTap: () {
                             _notificationService

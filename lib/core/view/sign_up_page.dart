@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
@@ -11,7 +9,6 @@ import 'package:tipperapp/widgets/containers/sign_up_fields.dart';
 import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/back_icon.dart';
 import 'package:tipperapp/widgets/icons/registration_icons/email_icon.dart';
-import 'package:tipperapp/widgets/icons/registration_icons/emirates_id_icon.dart';
 import 'package:tipperapp/widgets/icons/face_id_icon.dart';
 import 'package:tipperapp/widgets/icons/registration_icons/password_icon.dart';
 import 'package:tipperapp/widgets/icons/registration_icons/phone_number_icon.dart';
@@ -95,15 +92,6 @@ class SignUpPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               heighSpacer(38),
-                              // SignUpFields(
-                              //   icon: EmiratesIdIcon(),
-                              //   controller:
-                              //       authenticationProvider.emiratesIdController,
-                              //   hint: "Emirates ID",
-                              //   condition: false,
-                              //   onChnaged: (val) {},
-                              // ),
-                              // heighSpacer(31),
                               SignUpFields(
                                 icon: UsernameYellowIcon(),
                                 controller: authenticationProvider
@@ -177,9 +165,6 @@ class SignUpPage extends StatelessWidget {
                         currentFocus.unfocus();
 
                         await authenticationProvider.registerTipper();
-                        // var result = await PhoneNumberUtil.isValidNumber(
-                        //     phoneNumber: "550000000", isoCode: "AE");
-                        // print(result);
                       },
                     ),
                   ],

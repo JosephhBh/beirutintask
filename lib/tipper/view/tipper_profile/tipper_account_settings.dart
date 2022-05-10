@@ -7,7 +7,6 @@ import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/back_icon.dart';
-import 'package:tipperapp/widgets/icons/flags/emirates_flag.dart';
 import 'package:tipperapp/widgets/loading/global_loading.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';

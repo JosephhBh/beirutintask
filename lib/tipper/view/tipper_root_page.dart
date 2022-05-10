@@ -15,12 +15,7 @@ import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/tipper/view/tipper_home_page/tipper_home_page.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_profile.dart';
 import 'package:tipperapp/tipper/view/tipper_support/tipper_support_page.dart';
-import 'package:tipperapp/widgets/icons/bottom_navigation_icons/home_icon.dart';
-import 'package:tipperapp/widgets/icons/bottom_navigation_icons/phone_icon.dart';
-import 'package:tipperapp/widgets/icons/bottom_navigation_icons/profile_icon.dart';
 import 'package:tipperapp/widgets/icons/notification_icon.dart';
-import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
-import 'package:tipperapp/widgets/text/global_text.dart';
 
 class TipperRootPage extends StatefulWidget {
   @override
@@ -48,11 +43,6 @@ class _TipperRootPageState extends State<TipperRootPage> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
-        // icon: BtmNavigationHome(
-        //   color: _controller.index == 0
-        //       ? appColor.yellowColor
-        //       : appColor.greyColor,
-        // ),
         title: ("Home"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
@@ -64,17 +54,11 @@ class _TipperRootPageState extends State<TipperRootPage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.person_crop_circle_fill),
-        // icon: BtmNavigationProfile(
-        //   color: _controller.index == 1
-        //       ? appColor.yellowColor
-        //       : appColor.greyColor,
-        // ),
         title: ("Profile"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
         iconSize: setCurrentHeight(42),
         contentPadding: 0,
-
         textStyle: GoogleFonts.fredokaOne(
           fontSize: setFontSize(10),
           letterSpacing: 0.4,
@@ -82,11 +66,6 @@ class _TipperRootPageState extends State<TipperRootPage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.phone),
-        // icon: BtmNavigationPhone(
-        //   color: _controller.index == 2
-        //       ? appColor.yellowColor
-        //       : appColor.greyColor,
-        // ),
         title: ("Support"),
         iconSize: setCurrentHeight(38),
         activeColorPrimary: appColor.yellowColor,
@@ -219,30 +198,7 @@ class _TipperRootPageState extends State<TipperRootPage> {
                       ),
                     );
                   },
-                )
-                // return Stack(
-                //   fit: StackFit.loose,
-                //   children: [
-                //     Padding(
-                //       padding: EdgeInsets.only(
-                //         top: setCurrentHeight(3),
-                //         left: setCurrentWidth(4),
-                //       ),
-                //       child: NotificationIcon(),
-                //     ),
-                //     Align(
-                //       alignment: Alignment.topRight,
-                //       child: Container(
-                //         height: 10,
-                //         width: 10,
-                //         decoration: BoxDecoration(
-                //             color: appColor.yellowColor, shape: BoxShape.circle),
-                //       ),
-                //     ),
-                //   ],
-                // );
-
-                ),
+                )),
           ),
         ],
       ),

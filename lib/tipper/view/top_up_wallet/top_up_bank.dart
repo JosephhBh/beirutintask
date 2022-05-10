@@ -119,13 +119,7 @@ class TopUpBank extends StatelessWidget {
                                   child: TextField(
                                     controller: paymetnProvider
                                         .bankAccountHolderController,
-                                    onChanged: (String value) {
-                                      // if (value.length <= 2) {
-                                      //   paymetnProvider.setIsNameValid(false);
-                                      // } else {
-                                      //   paymetnProvider.setIsNameValid(true);
-                                      // }
-                                    },
+                                    onChanged: (String value) {},
                                     style: GoogleFonts.fredokaOne(
                                       color: appColor.blackColor,
                                       fontSize: setFontSize(18),
@@ -193,15 +187,7 @@ class TopUpBank extends StatelessWidget {
                                   child: TextField(
                                     controller:
                                         paymetnProvider.ibanNumberController,
-                                    onChanged: (String value) {
-                                      // if (value.length > 0 &&
-                                      //     value.replaceAll(" ", '').length <
-                                      //         16) {
-                                      //   paymetnProvider.setIsCardValid(false);
-                                      // } else {
-                                      //   paymetnProvider.setIsCardValid(true);
-                                      // }
-                                    },
+                                    onChanged: (String value) {},
                                     style: GoogleFonts.fredokaOne(
                                       color: appColor.blackColor,
                                       fontSize: setFontSize(18),
@@ -243,82 +229,6 @@ class TopUpBank extends StatelessWidget {
                           ),
                         ),
                         heighSpacer(30),
-
-                        // heighSpacer(30),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     GlobalText(
-                        //       text: "Amount",
-                        //       fontSize: 16,
-                        //       color: appColor.darkBlueColor.withOpacity(0.67),
-                        //     ),
-                        //   ],
-                        // ),
-                        // heighSpacer(8),
-                        // Container(
-                        //   height: setCurrentHeight(50),
-                        //   width: double.infinity,
-                        //   decoration: BoxDecoration(
-                        //     color: appColor.whiteColor,
-                        //     borderRadius: BorderRadius.circular(12),
-                        //   ),
-                        //   child: Center(
-                        //     child: Row(
-                        //       children: [
-                        //         Expanded(
-                        //           flex: 1,
-                        //           child: TextField(
-                        //             controller:
-                        //                 paymetnProvider.amountController,
-                        //             onChanged: (String value) {
-                        //               if (value.length < 1) {
-                        //                 paymetnProvider.setIsAmountValid(false);
-                        //               } else {
-                        //                 paymetnProvider.setIsAmountValid(true);
-                        //               }
-                        //             },
-                        //             style: GoogleFonts.fredokaOne(
-                        //               color: appColor.blackColor,
-                        //               fontSize: setFontSize(18),
-                        //             ),
-                        //             textInputAction: TextInputAction.next,
-                        //             keyboardType: TextInputType.number,
-                        //             cursorColor: appColor.blackColor,
-                        //             decoration: InputDecoration(
-                        //               // hintText: "01-24",
-                        //               alignLabelWithHint: false,
-                        //               contentPadding: EdgeInsets.fromLTRB(
-                        //                   setCurrentWidth(16),
-                        //                   setCurrentHeight(8),
-                        //                   8,
-                        //                   12),
-                        //               fillColor: appColor.transparentColor,
-                        //               filled: true,
-                        //               enabledBorder: OutlineInputBorder(
-                        //                 borderSide: BorderSide(
-                        //                   color: Colors.transparent,
-                        //                 ),
-                        //                 borderRadius: BorderRadius.circular(9),
-                        //               ),
-                        //               hintStyle: GoogleFonts.fredokaOne(
-                        //                 color: appColor.blackColor
-                        //                     .withOpacity(0.2),
-                        //                 fontSize: setFontSize(16),
-                        //               ),
-                        //               focusedBorder: OutlineInputBorder(
-                        //                 borderSide: BorderSide(
-                        //                   color: Colors.transparent,
-                        //                 ),
-                        //                 borderRadius: BorderRadius.circular(8),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                         heighSpacer(120),
                         GestureDetector(
                           onTap: () {
@@ -340,52 +250,6 @@ class TopUpBank extends StatelessWidget {
                           ),
                         ),
                         heighSpacer(15),
-                        // Row(
-                        //   textBaseline: TextBaseline.ideographic,
-                        //   children: [
-                        //     Expanded(
-                        //       flex: 1,
-                        //       child: Divider(
-                        //         height: 1,
-                        //         color: appColor.yellowColor,
-                        //         thickness: 2.5,
-                        //       ),
-                        //     ),
-                        //     Expanded(
-                        //       flex: 1,
-                        //       child: Row(
-                        //         mainAxisAlignment: MainAxisAlignment.center,
-                        //         children: [
-                        //           GlobalText(
-                        //             text: "Or pay with",
-                        //             color: appColor.blackColor,
-                        //             fontSize: 16,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     Expanded(
-                        //       flex: 1,
-                        //       child: Divider(
-                        //         height: 1,
-                        //         color: appColor.yellowColor,
-                        //         thickness: 2.5,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // heighSpacer(15),
-                        // PaymentContainer(
-                        //   text: 'Apple pay',
-                        //   icon: ApplyPayeIcon(),
-                        //   height: 48,
-                        // ),
-                        // heighSpacer(15),
-                        // PaymentContainer(
-                        //   text: 'Google pay',
-                        //   icon: GooglePayIcon(),
-                        //   height: 48,
-                        // ),
                       ],
                     );
                   }),

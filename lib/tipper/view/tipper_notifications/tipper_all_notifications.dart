@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tipperapp/core/constants/route_names.dart';
 import 'package:tipperapp/core/controller/provider/authenticaion_provider/authentication_provider.dart';
 import 'package:tipperapp/core/controller/services/notification_service/notification_service.dart';
 import 'package:tipperapp/core/device_utils/device_utils.dart';
@@ -175,11 +174,7 @@ class _TipperAllNotificationsPageState
                                     return Column(
                                       children: [
                                         GestureDetector(
-                                          onTap: () {
-                                            // _navigationService.navigateTo(
-                                            //     name: kReceiverNotificationsDetailPage,
-                                            //     arguments: data);
-                                          },
+                                          onTap: () {},
                                           child: ReceiverNotificationWidget(
                                             title: data['title'],
                                             message: data['message'],
@@ -245,11 +240,7 @@ class _TipperAllNotificationsPageState
                                       return Column(
                                         children: [
                                           GestureDetector(
-                                            onTap: () {
-                                              // _navigationService.navigateTo(
-                                              //     name: kReceiverNotificationsDetailPage,
-                                              //     arguments: data);
-                                            },
+                                            onTap: () {},
                                             child: ReceiverNotificationWidget(
                                               title: data['title'],
                                               message: data['message'],

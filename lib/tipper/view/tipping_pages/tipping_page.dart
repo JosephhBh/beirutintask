@@ -131,8 +131,6 @@ class _TippingPageState extends State<TippingPage> {
                                       widthSpacer(3),
                                       GlobalText(
                                         text: 'AED',
-                                        // isBold: true,
-                                        // isFredokaOne: false,
                                       ),
                                     ],
                                   ),
@@ -149,9 +147,6 @@ class _TippingPageState extends State<TippingPage> {
                           color: appColor.transparentColor,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            // color: tippingProvider.isOtherAmountSelected
-                            //     ? appColor.yellowColor
-                            //     : appColor.transparentColor,
                             color: appColor.transparentColor,
                             width: 2,
                           ),
@@ -168,17 +163,10 @@ class _TippingPageState extends State<TippingPage> {
                                 fontSize: 16,
                               ),
                               heighSpacer(10),
-                              // GlobalText(
-                              //   text: '50 AED',
-                              //   isBold: true,
-                              //   isFredokaOne: false,
-                              //   fontSize: 20,
-                              // ),
                               Row(
                                 children: [
                                   Expanded(
                                     flex: 1,
-
                                     child: TextField(
                                       // au: false,
                                       style: GoogleFonts.fredokaOne(
@@ -244,12 +232,9 @@ class _TippingPageState extends State<TippingPage> {
                                               tippingAmount.first);
                                           FocusScope.of(context).unfocus();
                                         }
-                                        // print("the result $result");
                                       },
                                     ),
-                                    // ),
                                   ),
-                                  // Spacer(),
                                   GlobalText(
                                     text: 'AED',
                                     isBold: true,
@@ -396,14 +381,6 @@ class _TippingPageState extends State<TippingPage> {
                           await tippingProvider.tipWorker(
                             context,
                           );
-                          // authenticationProvider.tipperModel.copyWith(
-                          //   balance: 30,
-                          // );
-                          // authenticationProvider.updateTipperModel(
-                          //     authenticationProvider.tipperModel.copyWith(
-                          //   balance: 30,
-                          // ));
-                          // _navigationService.pop();
                         },
                       ),
                     ),

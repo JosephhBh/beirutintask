@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:tipperapp/core/constants/route_names.dart';
@@ -11,8 +8,6 @@ import 'package:tipperapp/core/controller/provider/tipping_provider/tipping_prov
 import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
-import 'package:tipperapp/reciever/model/selected_receiver.dart';
-import 'package:tipperapp/widgets/error_widgets/final_error_widget.dart';
 import 'package:tipperapp/widgets/icons/new_tip_icon.dart';
 
 import 'package:tipperapp/widgets/icons/top_up_icon.dart';
@@ -20,7 +15,6 @@ import 'package:tipperapp/widgets/icons/user_icon.dart';
 import 'package:tipperapp/widgets/icons/wallet_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
 import 'package:tipperapp/widgets/text/global_text.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class TipperHomePage extends StatelessWidget {
   final NavigationService _navigationService = locator<NavigationService>();
@@ -28,18 +22,8 @@ class TipperHomePage extends StatelessWidget {
   NumberFormat numberFormat = NumberFormat.decimalPattern('hi');
   @override
   Widget build(BuildContext context) {
-    // var authenticationProvider =
-    //     Provider.of<AuthenticationProvider>(context, listen: false);
     return GlobalScaffold(
       backgroundColor: appColor.greyColor,
-      // child: Center(
-      //   child: GestureDetector(
-      //     onTap: () async {
-      //       await authenticationProvider.signOut();
-      //     },
-      //     child: GlobalText(text: 'Sign out'),
-      //   ),
-      // ),
       child: Stack(
         fit: StackFit.loose,
         children: [
@@ -58,13 +42,8 @@ class TipperHomePage extends StatelessWidget {
                     child: Container(
                       height: setCurrentHeight(209),
                       width: double.infinity,
-                      // color: appColor.whiteColor,
                       decoration: BoxDecoration(
                         color: appColor.whiteColor,
-                        // border: Border.all(
-                        //   width: 0.8,
-                        //   color: appColor.dividerColor,
-                        // ),
                       ),
                       child: applyPadding(
                         8,
@@ -127,12 +106,6 @@ class TipperHomePage extends StatelessWidget {
                               ),
                               heighSpacer(5),
                               GlobalText(
-                                // text: authenticationProvider.tipperModel.balance
-                                //         .toString() +
-                                //     " AED",
-                                // text: formatter.format(authenticationProvider
-                                //         .tipperModel.balance) +
-                                //     " AED",
                                 text: authenticationProvider
                                             .tipperModel.balance ==
                                         null

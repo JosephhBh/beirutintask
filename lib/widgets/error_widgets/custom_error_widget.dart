@@ -38,11 +38,7 @@ class _CustomErrorWidgetState extends State<CustomErrorWidget> {
       if (mounted) {
         if (widget.errorMessage != "") {
           await Future.delayed(Duration.zero, () {
-            // var errorMessageProvider =
-            //     Provider.of<ErrorMessageProvider>(context, listen: false);
-            // paymentProvider.clearErrorMessage();
             widget.onTap();
-            // errorMessageProvider.clearErrorMessage();
           });
         }
       }
@@ -98,16 +94,6 @@ class _CustomErrorWidgetState extends State<CustomErrorWidget> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           widget.hasTitle
-                              // ? CustomTextWidget(
-                              //     text: widget.title,
-                              //     fontSize: 14,
-                              //     color: zappColor.customWhiteColor,
-                              //     fontFamily: MONTESERRATBOLD,
-                              //     textAlign: TextAlign.center,
-                              //     letterSpacing: 0,
-                              //     height: 1,
-                              //     textOverflow: TextOverflow.clip,
-                              //   )
                               ? GlobalText(
                                   text: widget.title,
                                   fontSize: 14,

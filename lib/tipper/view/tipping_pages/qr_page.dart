@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -55,11 +54,6 @@ class _QrPageState extends State<QrPage> {
                   controller.scannedDataStream.listen((scanData) async {
                     print('the scanned messge ${scanData.code!}');
                     await tippingProvider.checkIfWorkerExists(scanData.code!);
-                    // await reservationProvider.openDoor(
-                    //   authenticationProvider.userInfoData.id!,
-                    //   scanData.code!,
-                    //   authenticationProvider.userInfoData.firstName!,
-                    // );
                   });
                 },
                 overlay: QrScannerOverlayShape(

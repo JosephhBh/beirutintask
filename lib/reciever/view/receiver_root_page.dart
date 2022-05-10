@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -15,15 +14,8 @@ import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/reciever/view/receiver_home_page/receiver_home_page.dart';
 import 'package:tipperapp/reciever/view/receiver_profile/receriver_profile_page.dart';
 import 'package:tipperapp/reciever/view/receiver_support/receiver_support_page.dart';
-import 'package:tipperapp/widgets/icons/bottom_navigation_icons/home_icon.dart';
-import 'package:tipperapp/widgets/icons/bottom_navigation_icons/phone_icon.dart';
-import 'package:tipperapp/widgets/icons/bottom_navigation_icons/profile_icon.dart';
 
 import 'package:tipperapp/widgets/icons/notification_icon.dart';
-import 'package:tipperapp/widgets/icons/profile_icons/home_icon.dart';
-import 'package:tipperapp/widgets/icons/profile_icons/profile_support_icon.dart';
-import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
-import 'package:tipperapp/widgets/text/global_text.dart';
 
 class ReceiverRootPage extends StatefulWidget {
   @override
@@ -51,11 +43,6 @@ class _ReceiverRootPageState extends State<ReceiverRootPage> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
-        // icon: BtmNavigationHome(
-        //   color: _controller.index == 0
-        //       ? appColor.yellowColor
-        //       : appColor.greyColor,
-        // ),
         title: ("Home"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
@@ -67,17 +54,11 @@ class _ReceiverRootPageState extends State<ReceiverRootPage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.person_crop_circle_fill),
-        // icon: BtmNavigationProfile(
-        //   color: _controller.index == 1
-        //       ? appColor.yellowColor
-        //       : appColor.greyColor,
-        // ),
         title: ("Profile"),
         activeColorPrimary: appColor.yellowColor,
         inactiveColorPrimary: appColor.greyColor,
         iconSize: setCurrentHeight(42),
         contentPadding: 0,
-
         textStyle: GoogleFonts.fredokaOne(
           fontSize: setFontSize(10),
           letterSpacing: 0.4,
@@ -85,11 +66,6 @@ class _ReceiverRootPageState extends State<ReceiverRootPage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.phone),
-        // icon: BtmNavigationPhone(
-        //   color: _controller.index == 2
-        //       ? appColor.yellowColor
-        //       : appColor.greyColor,
-        // ),
         title: ("Support"),
         iconSize: setCurrentHeight(38),
         activeColorPrimary: appColor.yellowColor,
@@ -229,30 +205,7 @@ class _ReceiverRootPageState extends State<ReceiverRootPage> {
                       ),
                     );
                   },
-                )
-                // return Stack(
-                //   fit: StackFit.loose,
-                //   children: [
-                //     Padding(
-                //       padding: EdgeInsets.only(
-                //         top: setCurrentHeight(3),
-                //         left: setCurrentWidth(4),
-                //       ),
-                //       child: NotificationIcon(),
-                //     ),
-                //     Align(
-                //       alignment: Alignment.topRight,
-                //       child: Container(
-                //         height: 10,
-                //         width: 10,
-                //         decoration: BoxDecoration(
-                //             color: appColor.yellowColor, shape: BoxShape.circle),
-                //       ),
-                //     ),
-                //   ],
-                // );
-
-                ),
+                )),
           ),
         ],
       ),

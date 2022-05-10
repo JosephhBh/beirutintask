@@ -6,9 +6,7 @@ import 'package:tipperapp/core/device_utils/device_utils.dart';
 import 'package:tipperapp/core/navigation/navigation_service.dart';
 import 'package:tipperapp/locator.dart';
 import 'package:tipperapp/widgets/icons/back_icon.dart';
-import 'package:tipperapp/widgets/icons/payment_icons/apple_icon.dart';
 import 'package:tipperapp/widgets/icons/payment_icons/check_circle.dart';
-import 'package:tipperapp/widgets/icons/payment_icons/google_pay.dart';
 import 'package:tipperapp/widgets/icons/payment_icons/hsbc_logo.dart';
 import 'package:tipperapp/widgets/icons/payment_icons/master_card_icon.dart';
 import 'package:tipperapp/widgets/scaffold/global_scaffold.dart';
@@ -243,103 +241,6 @@ class TipperPaymentMethods extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // heighSpacer(42),
-                    // Container(
-                    //   height: setCurrentHeight(63),
-                    //   width: double.infinity,
-                    //   color: appColor.transparentColor,
-                    //   child: Stack(
-                    //     fit: StackFit.loose,
-                    //     children: [
-                    //       Column(
-                    //         mainAxisAlignment: MainAxisAlignment.start,
-                    //         crossAxisAlignment: CrossAxisAlignment.start,
-                    //         children: [
-                    //           Container(
-                    //             height: setCurrentHeight(63),
-                    //             width: double.infinity,
-                    //             decoration: BoxDecoration(
-                    //               color: appColor.whiteColor,
-                    //               border: Border.all(
-                    //                 color: appColor.transparentColor,
-                    //                 width: 2,
-                    //               ),
-                    //             ),
-                    //             child: Center(
-                    //               child: Row(
-                    //                 mainAxisAlignment: MainAxisAlignment.start,
-                    //                 children: [
-                    //                   widthSpacer(14),
-                    //                   GooglePayIcon(
-                    //                     height: 45,
-                    //                   ),
-                    //                   widthSpacer(28),
-                    //                   GlobalText(
-                    //                     text: "Google pay",
-                    //                     color: appColor.blackColor
-                    //                         .withOpacity(0.66),
-                    //                     fontSize: 14,
-                    //                   ),
-                    //                   Spacer(),
-                    //                   widthSpacer(15),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // heighSpacer(42),
-                    // Container(
-                    //   height: setCurrentHeight(63),
-                    //   width: double.infinity,
-                    //   color: appColor.transparentColor,
-                    //   child: Stack(
-                    //     fit: StackFit.loose,
-                    //     children: [
-                    //       Column(
-                    //         mainAxisAlignment: MainAxisAlignment.start,
-                    //         crossAxisAlignment: CrossAxisAlignment.start,
-                    //         children: [
-                    //           Container(
-                    //             height: setCurrentHeight(63),
-                    //             width: double.infinity,
-                    //             decoration: BoxDecoration(
-                    //               color: appColor.whiteColor,
-                    //               border: Border.all(
-                    //                 color: appColor.transparentColor,
-                    //                 width: 2,
-                    //               ),
-                    //             ),
-                    //             child: Center(
-                    //               child: Row(
-                    //                 mainAxisAlignment: MainAxisAlignment.start,
-                    //                 children: [
-                    //                   widthSpacer(14),
-                    //                   ApplyPayeIcon(
-                    //                     height: 45,
-                    //                   ),
-                    //                   widthSpacer(26),
-                    //                   GlobalText(
-                    //                     text: "Apple pay",
-                    //                     color: appColor.blackColor
-                    //                         .withOpacity(0.66),
-                    //                     fontSize: 14,
-                    //                   ),
-                    //                   Spacer(),
-                    //                   widthSpacer(15),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // Spacer(),
                     heighSpacer(470),
                     Container(
                       height: setCurrentHeight(63),
