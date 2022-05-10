@@ -103,7 +103,7 @@ class TipperProfilePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       _navigationService.navigateTo(
-                          name: kTipperPaymentMethodPage);
+                          name: kTipperPaymentMethods);
                     },
                     child: ProfileSelectionContainer(
                       icon: PaymentMethodsIcon(),

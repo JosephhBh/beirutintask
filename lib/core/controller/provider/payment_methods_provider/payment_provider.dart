@@ -14,6 +14,7 @@ import 'package:tipperapp/tipper/model/selected_paymen_details.dart';
 enum SelectedPaymentMethod {
   none,
   card,
+  hsbc,
   apple,
   google,
 }
@@ -24,14 +25,17 @@ class PaymentProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   // PaymentMethod _currentPaymentMethod = PaymentMethod.none;
-  SelectedPaymentMethod _selectedPaymentMethod = SelectedPaymentMethod.none;
+  SelectedPaymentMethod _selectedPaymentMethod = SelectedPaymentMethod.card;
   MaskedTextController _cardNumberController =
       MaskedTextController(mask: "0000 0000 0000 0000");
   TextEditingController _cardHolderNameController = TextEditingController();
   TextEditingController _cvcController = TextEditingController();
   MaskedTextController _expiryDateController =
-      MaskedTextController(mask: "00 / 0000");
+      MaskedTextController(mask: "00 / 00");
   TextEditingController _amountController = TextEditingController(text: "50");
+  TextEditingController _bankAccountHolderController = TextEditingController();
+  TextEditingController _ibanNumberController = TextEditingController();
+  bool _isConfirmIbanPressed = false;
   bool _isNameValid = false;
   bool _isCardValid = false;
   bool _isDateValid = false;
@@ -49,6 +53,11 @@ class PaymentProvider extends ChangeNotifier {
   TextEditingController get cvcController => _cvcController;
   MaskedTextController get expiryDateController => _expiryDateController;
   TextEditingController get amountController => _amountController;
+  TextEditingController get ibanNumberController => _ibanNumberController;
+  TextEditingController get bankAccountHolderController =>
+      _bankAccountHolderController;
+
+  bool get isConfirmIbanPressed => _isConfirmIbanPressed;
   bool get isNameValid => _isNameValid;
   bool get isCardValid => _isCardValid;
   bool get isDateValid => _isDateValid;
@@ -68,10 +77,20 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   setCardPaymentMethod() {
-    if (_selectedPaymentMethod == SelectedPaymentMethod.card) {
-      _selectedPaymentMethod = SelectedPaymentMethod.none;
-    } else {
+    // if (_selectedPaymentMethod == SelectedPaymentMethod.card) {
+    //   _selectedPaymentMethod = SelectedPaymentMethod.none;
+    // } else {
+    //   _selectedPaymentMethod = SelectedPaymentMethod.card;
+    // }
+    _selectedPaymentMethod = SelectedPaymentMethod.card;
+    notifyListeners();
+  }
+
+  setHSBCPaymentMethod() {
+    if (_selectedPaymentMethod == SelectedPaymentMethod.hsbc) {
       _selectedPaymentMethod = SelectedPaymentMethod.card;
+    } else {
+      _selectedPaymentMethod = SelectedPaymentMethod.hsbc;
     }
     notifyListeners();
   }
@@ -120,6 +139,18 @@ class PaymentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  clearCardDetails() {
+    _selectedPaymentDetailsModel = SelectedPaymentDetailsModel();
+    notifyListeners();
+  }
+
+  clearBankAccountDetails() {
+    _bankAccountHolderController.clear();
+    _ibanNumberController.clear();
+    _isConfirmIbanPressed = false;
+    notifyListeners();
+  }
+
   bool validatePaymentFields() {
     bool valid = true;
     if (!_isNameValid) {
@@ -140,6 +171,18 @@ class PaymentProvider extends ChangeNotifier {
     //   valid = false;
     // }
     return valid;
+  }
+
+  updateBankAccountDetails() {
+    if (_bankAccountHolderController.text.trim().length == 0) {
+      errorMessageProvider.setErrorMessage(message: "Enter valid name");
+    } else if (_ibanNumberController.text.trim().length == 0) {
+      errorMessageProvider.setErrorMessage(message: "Enter valid iban number");
+    } else {
+      _isConfirmIbanPressed = true;
+      notifyListeners();
+      _navigationService.pop();
+    }
   }
 
   updateCardInfo() async {
@@ -166,7 +209,8 @@ class PaymentProvider extends ChangeNotifier {
         // ));
         // _currentPaymentMethod = PaymentMethod.card;
         setSelectedPaymentDetails(SelectedPaymentDetailsModel(
-          cardNumber: "**** **** **** " +
+          cardNumber: _cardNumberController.text.substring(0, 4) +
+              " **** **** " +
               _cardNumberController.text
                   .substring(_cardNumberController.text.length - 4),
           exipryDate: _expiryDateController.text,
@@ -193,8 +237,7 @@ class PaymentProvider extends ChangeNotifier {
         _isAmountValid = false;
       }
       if (_isAmountValid &&
-          _selectedPaymentDetailsModel.cardNumber != "" &&
-          _selectedPaymentMethod == SelectedPaymentMethod.card) {
+          _selectedPaymentMethod != SelectedPaymentMethod.none) {
         var authenticationProvider =
             Provider.of<AuthenticationProvider>(context, listen: false);
         dynamic addedAmount = _amountController.text.trim();
@@ -212,13 +255,38 @@ class PaymentProvider extends ChangeNotifier {
           balance: finalBalance,
         ));
         _navigationService.replaceRoute(name: kTopUpSuccessfulPage);
-      } else if (_selectedPaymentDetailsModel.cardNumber == "") {
-        errorMessageProvider.setErrorMessage(message: "Enter card details");
-      } else if (_selectedPaymentMethod != SelectedPaymentMethod.card) {
-        errorMessageProvider.setErrorMessage(message: "Please choose card");
+      } else if (_selectedPaymentMethod == SelectedPaymentMethod.none) {
+        errorMessageProvider.setErrorMessage(message: "Choose payment method");
       } else {
         errorMessageProvider.setErrorMessage(message: "Enter valid amount");
       }
+      // if (_isAmountValid &&
+      //     _selectedPaymentDetailsModel.cardNumber != "" &&
+      //     _selectedPaymentMethod == SelectedPaymentMethod.card) {
+      //   var authenticationProvider =
+      //       Provider.of<AuthenticationProvider>(context, listen: false);
+      //   dynamic addedAmount = _amountController.text.trim();
+
+      //   dynamic finalBalance = authenticationProvider.tipperModel.balance +
+      //       double.tryParse(addedAmount);
+      //   await _firestore
+      //       .collection("users")
+      //       .doc(authenticationProvider.tipperModel.userId)
+      //       .update({
+      //     "balance": finalBalance,
+      //   });
+      //   authenticationProvider
+      //       .updateTipperModel(authenticationProvider.tipperModel.copyWith(
+      //     balance: finalBalance,
+      //   ));
+      //   _navigationService.replaceRoute(name: kTopUpSuccessfulPage);
+      // } else if (_selectedPaymentDetailsModel.cardNumber == "") {
+      //   errorMessageProvider.setErrorMessage(message: "Enter card details");
+      // } else if (_selectedPaymentMethod != SelectedPaymentMethod.card) {
+      //   errorMessageProvider.setErrorMessage(message: "Please choose card");
+      // } else {
+      //   errorMessageProvider.setErrorMessage(message: "Enter valid amount");
+      // }
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -235,18 +303,20 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   deletePaymentMethod() {
-    _selectedPaymentMethod = SelectedPaymentMethod.none;
+    _selectedPaymentMethod = SelectedPaymentMethod.card;
     _selectedPaymentDetailsModel = SelectedPaymentDetailsModel();
     _cardNumberController.clear();
     _cardHolderNameController.clear();
     _cvcController.clear();
     _expiryDateController.clear();
-    _amountController.clear();
+    _amountController = TextEditingController(text: "50");
+    _ibanNumberController.clear();
+    _bankAccountHolderController.clear();
     _isNameValid = false;
     _isCardValid = false;
     _isDateValid = false;
     _isCVCValid = false;
-
+    _isConfirmIbanPressed = false;
     notifyListeners();
   }
 }

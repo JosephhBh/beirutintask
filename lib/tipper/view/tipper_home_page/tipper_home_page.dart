@@ -158,8 +158,7 @@ class TipperHomePage extends StatelessWidget {
                         // print(authenticationProvider.tipperModel.toJson());
                         if (authenticationProvider.tipperModel.balance! <
                             tippingAmount.first) {
-                          _navigationService.navigateTo(
-                              name: kTipperPaymentMethodPage);
+                          _navigationService.navigateTo(name: kTopUpWalletPage);
                         } else {
                           var status = await Permission.camera.request();
                           print(status);
@@ -200,8 +199,7 @@ class TipperHomePage extends StatelessWidget {
                   heighSpacer(83),
                   GestureDetector(
                     onTap: () async {
-                      _navigationService.navigateTo(
-                          name: kTipperPaymentMethodPage);
+                      _navigationService.navigateTo(name: kTopUpWalletPage);
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(19),

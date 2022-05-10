@@ -14,6 +14,8 @@ import 'package:tipperapp/root_page.dart';
 import 'package:tipperapp/starting_screen.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_account_settings.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_payment_methods.dart';
+import 'package:tipperapp/tipper/view/top_up_wallet/top_up_bank.dart';
+import 'package:tipperapp/tipper/view/top_up_wallet/top_up_wallet.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_personal_details.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_transactions.dart';
 import 'package:tipperapp/tipper/view/tipper_profile/tipper_wallet_page.dart';
@@ -22,10 +24,10 @@ import 'package:tipperapp/tipper/view/tipping_pages/tipping_page.dart';
 import 'package:tipperapp/tipper/view/tipper_notifications/tipper_all_notifications.dart';
 import 'package:tipperapp/tipper/view/tipper_root_page.dart';
 import 'package:tipperapp/tipper/view/tipping_pages/qr_page.dart';
-import 'package:tipperapp/tipper/view/top_up_wallet/top_up_bank.dart';
+import 'package:tipperapp/tipper/view/top_up_wallet/top_up_card.dart';
 import 'package:tipperapp/tipper/view/top_up_wallet/top_up_successful_page.dart';
 
-import 'package:tipperapp/tipper/view/top_up_wallet/top_up_wallet.dart';
+import 'package:tipperapp/tipper/view/top_up_wallet/top_up_wallet2.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -76,12 +78,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _fadeRoute(
         settings.name,
         TopUpWallet(),
-      );
-
-    case kTopUpBankAccount:
-      return _fadeRoute(
-        settings.name,
-        TopUpBank(),
       );
 
     case kTipperAllNotificationsPage:
@@ -155,16 +151,33 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         settings.name,
         ReceiverPersonalDetailsPage(),
       );
-    case kTipperPaymentMethodPage:
+    case kTopUpWalletPage:
       return _fadeRoute(
         settings.name,
-        TipperPaymenMethods(),
+        TipperTopUpWalletPage(),
       );
     case kTopUpSuccessfulPage:
       return _fadeRoute(
         settings.name,
         TopUpSuccessfullPage(),
       );
+    case kTipperPaymentMethods:
+      return _fadeRoute(
+        settings.name,
+        TipperPaymentMethods(),
+      );
+
+    case kTopUCardAccount:
+      return _fadeRoute(
+        settings.name,
+        TopUpCard(),
+      );
+    case kTopUBankAccount:
+      return _fadeRoute(
+        settings.name,
+        TopUpBank(),
+      );
+
     default:
       return _errorRoute();
   }
