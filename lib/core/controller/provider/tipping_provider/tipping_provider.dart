@@ -27,7 +27,7 @@ class TippingProvider extends ChangeNotifier {
   GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   int _selectedAmount = tippingAmount.first;
   SelectedReceiver _selectedReceiver = SelectedReceiver();
-  TextEditingController _otherAmount = TextEditingController(text: "0");
+  TextEditingController _otherAmount = TextEditingController(text: "");
   bool _isOtherAmountSelected = false;
   dynamic _finalAmount = 0.0;
   bool _isLoading = false;
@@ -57,7 +57,7 @@ class TippingProvider extends ChangeNotifier {
   void setSelectedAmount(int val) {
     _isOtherAmountSelected = false;
     _selectedAmount = val;
-    _otherAmount = TextEditingController(text: "");
+    _otherAmount.clear();
     notifyListeners();
   }
 
@@ -289,7 +289,7 @@ class TippingProvider extends ChangeNotifier {
     _isScanned = false;
     _selectedAmount = tippingAmount.first;
     _selectedReceiver = SelectedReceiver();
-    _otherAmount = TextEditingController(text: "");
+    _otherAmount.clear();
     _isOtherAmountSelected = false;
     _finalAmount = 0.0;
     _isLoading = false;

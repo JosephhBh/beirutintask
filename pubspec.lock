@@ -327,9 +327,11 @@ packages:
   intl_phone_number_input:
     dependency: "direct main"
     description:
-      path: "/Users/josephbhanini/Desktop/tipper-packages/intl_phone_number_input"
-      relative: false
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: d0631025ff39d748fc8c5b9a619d81b260f47fbd
+      url: "https://github.com/JosephhBh/phone-number-formatter-tipr.git"
+    source: git
     version: "0.7.0+2"
   js:
     dependency: transitive

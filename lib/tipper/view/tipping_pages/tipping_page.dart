@@ -189,7 +189,7 @@ class _TippingPageState extends State<TippingPage> {
                                           borderRadius:
                                               BorderRadius.circular(9),
                                         ),
-                                        hintText: "50",
+                                        // hintText: "50",
                                         hintStyle: GoogleFonts.fredokaOne(
                                           color: appColor.blackColor
                                               .withOpacity(0.3),

@@ -260,15 +260,8 @@ class AuthenticationProvider extends ChangeNotifier {
 
   bool validateRegistrationFields() {
     bool valid = false;
-    // if (_emiratesIdController.text.length <= 2) {
-    //   errorMessageProvider.setErrorMessage(message: 'Invalid emirates id');
-    // }
-    // else
     if (_tipperUsernameController.text.trim().length <= 2) {
       errorMessageProvider.setErrorMessage(message: 'Invalid username');
-    } else if (!EmailValidator.validate(
-        _tipperEmailAddressController.text.trim())) {
-      errorMessageProvider.setErrorMessage(message: 'Invalid email');
     } else if (_tipperPhoneNumberController.text.trim().length <= 6) {
       errorMessageProvider.setErrorMessage(message: 'Invalid phone');
     } else if (_tipperPasswordController.text.trim().length <= 6) {
@@ -278,6 +271,10 @@ class AuthenticationProvider extends ChangeNotifier {
     } else if (_tipperPasswordController.text.trim() !=
         _tipperConfirmPasswordController.text.trim()) {
       errorMessageProvider.setErrorMessage(message: "Password does not match");
+    } else if (_tipperEmailAddressController.text.trim().length != 0) {
+      if (!EmailValidator.validate(_tipperEmailAddressController.text.trim())) {
+        errorMessageProvider.setErrorMessage(message: 'Invalid email');
+      }
     } else {
       valid = true;
     }
@@ -298,15 +295,15 @@ class AuthenticationProvider extends ChangeNotifier {
       bool usernameExist = false;
       bool phoneExist = false;
       bool isValid = validateRegistrationFields();
-      dynamic result = await PhoneNumberUtil.isValidNumber(
+      dynamic phoneNumberresult = await PhoneNumberUtil.isValidNumber(
           phoneNumber:
               _tipperPhoneNumberController.text.trim().replaceAll(' ', ''),
           isoCode: "AE");
-      if (result as bool == false) {
+      if (phoneNumberresult as bool == false) {
         errorMessageProvider.setErrorMessage(
             message: "Enter valid phone number");
       }
-      if (isValid && result) {
+      if (isValid && phoneNumberresult) {
         /// check if email exist
         final QuerySnapshot emailResult = await FirebaseFirestore.instance
             .collection('users')
@@ -353,8 +350,8 @@ class AuthenticationProvider extends ChangeNotifier {
                 message: "Phone number already exist");
           }
         }
-
         if (!emailExist && !usernameExist && !phoneExist) {
+          /// Insert tipper details
           SharedPreferences prefs = await SharedPreferences.getInstance();
           String userId = _firestore.collection('users').doc().id;
           await _firestore.collection('users').doc(userId).set({
@@ -369,6 +366,7 @@ class AuthenticationProvider extends ChangeNotifier {
             "image_path": ''
           });
 
+          /// create notifications collection for the tipper
           await _firestore
               .collection('users')
               .doc(userId)
@@ -378,6 +376,7 @@ class AuthenticationProvider extends ChangeNotifier {
             "is_read": true,
           });
 
+          /// create transactions collection for the tipper
           await _firestore
               .collection('users')
               .doc(userId)
@@ -675,6 +674,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
   updateTipperPersonalDetails(File? file) async {
     try {
+      errorMessageProvider.clearErrorMessage();
       _loading = true;
       bool _nameUpdated = false;
       bool _phoneUpdated = false;
@@ -710,33 +710,36 @@ class AuthenticationProvider extends ChangeNotifier {
           _nameUpdated = true;
         }
       }
-      if (!EmailValidator.validate(_editEmailController.text.trim())) {
-        errorMessageProvider.setErrorMessage(message: "Invalid email");
-      } else {
-        if (_editEmailController.text.trim() != _tipperModel.email) {
-          final QuerySnapshot emailResult = await FirebaseFirestore.instance
-              .collection('users')
-              .where('email', isEqualTo: _editEmailController.text.trim())
-              .limit(1)
-              .get();
-          final List<DocumentSnapshot> emailDocs = emailResult.docs;
-          if (emailDocs.length > 0) {
-            errorMessageProvider.setErrorMessage(
-                message: "Email already exist");
-          } else {
-            await _firestore
+      if (_editEmailController.text.trim().length != 0) {
+        if (!EmailValidator.validate(_editEmailController.text.trim())) {
+          errorMessageProvider.setErrorMessage(message: "Invalid email");
+        } else {
+          if (_editEmailController.text.trim() != _tipperModel.email) {
+            final QuerySnapshot emailResult = await FirebaseFirestore.instance
                 .collection('users')
-                .doc(_tipperModel.userId)
-                .update({
-              "email": _editEmailController.text.trim(),
-            });
-            updateTipperModel(_tipperModel.copyWith(
-              email: _editEmailController.text.trim(),
-            ));
-            _emailUpdated = true;
+                .where('email', isEqualTo: _editEmailController.text.trim())
+                .limit(1)
+                .get();
+            final List<DocumentSnapshot> emailDocs = emailResult.docs;
+            if (emailDocs.length > 0) {
+              errorMessageProvider.setErrorMessage(
+                  message: "Email already exist");
+            } else {
+              await _firestore
+                  .collection('users')
+                  .doc(_tipperModel.userId)
+                  .update({
+                "email": _editEmailController.text.trim(),
+              });
+              updateTipperModel(_tipperModel.copyWith(
+                email: _editEmailController.text.trim(),
+              ));
+              _emailUpdated = true;
+            }
           }
         }
       }
+
       if (_editPhoneNumberController.text.trim().length != 0) {
         dynamic result = await PhoneNumberUtil.isValidNumber(
             phoneNumber:
